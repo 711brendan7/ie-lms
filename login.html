@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IE-LMS — ログイン</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background: #1e1b4b; font-family: sans-serif;
+    }
+    .card {
+      background: #fff; border-radius: 16px; padding: 48px 36px;
+      width: 320px; text-align: center;
+      box-shadow: 0 12px 40px rgba(0,0,0,.4);
+    }
+    .icon { font-size: 40px; margin-bottom: 12px; }
+    h1 { font-size: 22px; color: #1e1b4b; margin-bottom: 6px; }
+    p  { font-size: 13px; color: #6b7280; margin-bottom: 28px; }
+    input {
+      width: 100%; padding: 12px; font-size: 22px; letter-spacing: 10px;
+      border: 2px solid #e5e7eb; border-radius: 10px;
+      text-align: center; outline: none;
+    }
+    input:focus { border-color: #7c3aed; }
+    button {
+      margin-top: 14px; width: 100%; padding: 13px;
+      background: #7c3aed; color: #fff; border: none;
+      border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer;
+    }
+    button:hover { background: #6d28d9; }
+    .err { margin-top: 10px; font-size: 13px; color: #ef4444; min-height: 20px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">🏭</div>
+    <h1>IE-LMS</h1>
+    <p>パスワードを入力してください</p>
+    <input type="password" id="pw" maxlength="20" placeholder="••••" autofocus>
+    <button id="btn">ログイン</button>
+    <div class="err" id="err"></div>
+  </div>
+
+  <script>
+    const HASH = '2926a2731f4b312c08982cacf8061eb14bf65c1a87cc5d70e864e079c6220731';
+    const from  = new URLSearchParams(location.search).get('from') || 'index.html';
+
+    async function login() {
+      const val = document.getElementById('pw').value;
+      if (!val) return;
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(val));
+      const hex = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+      if (hex === HASH) {
+        sessionStorage.setItem('ie_lms_auth', '1');
+        location.href = from;
+      } else {
+        document.getElementById('err').textContent = 'パスワードが違います';
+        document.getElementById('pw').value = '';
+        document.getElementById('pw').focus();
+      }
+    }
+
+    document.getElementById('btn').addEventListener('click', login);
+    document.getElementById('pw').addEventListener('keydown', e => {
+      if (e.key === 'Enter') login();
+    });
+  </script>
+</body>
+</html>
