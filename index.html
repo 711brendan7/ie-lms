@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IE/QC/TPM-LMS | 製造業専門技術者育成プラットフォーム</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo">
+      <div class="logo-icon">🏭</div>
+      <div>
+        <div class="logo-text">IE/QC/TPM-LMS</div>
+        <div class="logo-sub">製造業専門技術者育成プラットフォーム</div>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="index.html" class="nav-link">講座一覧</a>
+      <a href="cases.html" class="nav-link">事例集</a>
+      <a href="papers.html" class="nav-link">論文・文献</a>
+      <a href="improvements.html" class="nav-link">改善案件</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-badge">製造業 専門技術者育成プログラム</div>
+  <h1>IE・QC・TPM・課題解決を体系的に学ぶ<br>専門技術者育成プラットフォーム</h1>
+  <p>工程分析・品質管理・設備保全・課題解決など、製造現場から経営まで幅広く活用できる手法を体系的に学ぶ。</p>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num" id="total-courses">0</div>
+      <div class="stat-label">総講座数</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">4</div>
+      <div class="stat-label">科目</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="total-minutes">0</div>
+      <div class="stat-label">合計時間（分）</div>
+    </div>
+  </div>
+</section>
+
+<main class="main-content">
+
+  <div class="filter-row">
+    <span class="filter-label">科目：</span>
+    <button class="filter-btn active" data-filter="all">すべて</button>
+    <button class="filter-btn" data-filter="IE">IE（生産工学）</button>
+    <button class="filter-btn" data-filter="QC">QC（品質管理）</button>
+    <button class="filter-btn" data-filter="TPM">TPM（設備保全）</button>
+    <button class="filter-btn" data-filter="PS">PS（課題解決）</button>
+  </div>
+
+  <div id="courses-container"></div>
+
+</main>
+
+<footer class="site-footer">
+  <p>IE/QC/TPM-LMS &copy; 2026 — 製造業専門技術者育成プラットフォーム</p>
+</footer>
+
+<script src="data/ie_additional_courses.js"></script>
+<script src="data/qc_courses.js"></script>
+<script src="data/tpm_courses.js"></script>
+<script src="data/ps_courses.js"></script>
+<script src="data/courses.js"></script>
+<script>
+  const LEVEL_LABELS = ['', '入門', '基礎', '応用', '発展'];
+  const SUBJECT_CONFIG = {
+    IE:  { label: 'IE基礎講座',  subtitle: 'Industrial Engineering — 生産工学', icon: '🏭', color: '#3b82f6' },
+    QC:  { label: 'QC基礎講座',  subtitle: 'Quality Control — 品質管理',        icon: '🔍', color: '#10b981' },
+    TPM: { label: 'TPM基礎講座', subtitle: 'Total Productive Maintenance — 設備保全', icon: '⚙️', color: '#f59e0b' },
+    PS:  { label: '課題設定・課題解決講座', subtitle: 'Problem Setting & Solving — 汎用思考・フレームワーク', icon: '🎯', color: '#8b5cf6' },
+  };
+
+  function getCourseSubject(c) {
+    return c.subject || 'IE';
+  }
+
+  function calcTotalMinutes() {
+    return COURSES.reduce((sum, c) => {
+      const m = parseInt(c.duration);
+      return sum + (isNaN(m) ? 0 : m);
+    }, 0);
+  }
+
+  function renderCard(c) {
+    return `
+      <a href="course.html?id=${c.id}" class="course-card">
+        <div class="card-header">
+          <div class="card-icon">${c.icon}</div>
+          <div class="card-meta">
+            <div class="card-badges">
+              <span class="badge badge-category">${c.category}</span>
+              <span class="badge badge-level">Lv.${c.level} ${LEVEL_LABELS[c.level]}</span>
+            </div>
+            <div class="card-title">${c.title}</div>
+            <div class="card-subtitle">${c.subtitle}</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-desc">${c.description}</div>
+        </div>
+        <div class="card-footer">
+          <span class="card-duration">⏱ ${c.duration}</span>
+          <span class="card-cta">学習を始める →</span>
+        </div>
+      </a>
+    `;
+  }
+
+  function renderSubjectSection(subject, courses) {
+    const cfg = SUBJECT_CONFIG[subject] || { label: subject + '講座', subtitle: '', icon: '📚', color: '#6b7280' };
+    return `
+      <div class="subject-section" data-subject="${subject}">
+        <div class="subject-header" style="border-left-color: ${cfg.color}">
+          <div class="subject-header-left">
+            <span class="subject-icon">${cfg.icon}</span>
+            <div>
+              <div class="subject-title">${cfg.label}</div>
+              <div class="subject-subtitle">${cfg.subtitle}</div>
+            </div>
+          </div>
+          <span class="subject-count">${courses.length}講座</span>
+        </div>
+        <div class="courses-grid">
+          ${courses.map(renderCard).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  function renderAll(filter) {
+    const container = document.getElementById('courses-container');
+    const filtered = filter === 'all' ? COURSES : COURSES.filter(c => getCourseSubject(c) === filter);
+
+    if (filter !== 'all') {
+      // 単一科目の場合はグリッドのみ
+      container.innerHTML = `<div class="courses-grid">${filtered.map(renderCard).join('')}</div>`;
+      return;
+    }
+
+    // すべて表示の場合は科目別セクション
+    const subjects = ['IE', 'QC', 'TPM', 'PS'];
+    container.innerHTML = subjects.map(subj => {
+      const subCourses = filtered.filter(c => getCourseSubject(c) === subj);
+      return subCourses.length > 0 ? renderSubjectSection(subj, subCourses) : '';
+    }).join('');
+  }
+
+  // Init stats
+  document.getElementById('total-courses').textContent = COURSES.length;
+  document.getElementById('total-minutes').textContent = calcTotalMinutes();
+
+  // Filter buttons
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderAll(btn.dataset.filter);
+    });
+  });
+
+  renderAll('all');
+</script>
+
+
+<link rel="stylesheet" href="chat-widget.css">
+<script src="chat-widget.js"></script>
+</body>
+</html>

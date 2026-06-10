@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文献詳細 | IE/QC/TPM-LMS</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .paper-hero {
+      background: linear-gradient(135deg, #4c1d95 0%, #6d28d9 60%, #7c3aed 100%);
+      color: #fff;
+      padding: 40px 24px 36px;
+    }
+    .paper-hero-inner { max-width: 860px; margin: 0 auto; }
+    .paper-back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; color: rgba(255,255,255,0.75);
+      text-decoration: none; margin-bottom: 20px;
+      transition: color 0.15s;
+    }
+    .paper-back-link:hover { color: #fff; }
+
+    .paper-type-row {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap;
+    }
+    .paper-type-badge {
+      font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 20px;
+    }
+    .type-book  { background: rgba(255,255,255,0.2); color: #fff; }
+    .type-paper { background: rgba(167,243,208,0.25); color: #d1fae5; }
+    .type-standard { background: rgba(253,230,138,0.25); color: #fef3c7; }
+
+    .paper-hero-title { font-size: 22px; font-weight: 800; line-height: 1.4; margin-bottom: 8px; }
+    .paper-hero-title-ja { font-size: 15px; opacity: 0.85; margin-bottom: 16px; line-height: 1.5; }
+    .paper-hero-meta { font-size: 13px; opacity: 0.8; display: flex; gap: 20px; flex-wrap: wrap; }
+    .paper-hero-meta span { display: flex; align-items: center; gap: 5px; }
+
+    .paper-tag {
+      font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: 600;
+    }
+    .tag-ie  { background: #dbeafe; color: #1e40af; }
+    .tag-qc  { background: #d1fae5; color: #065f46; }
+    .tag-tpm { background: #fef3c7; color: #92400e; }
+    .tag-ps  { background: #ede9fe; color: #5b21b6; }
+    .tag-book{ background: #f1f5f9; color: #334155; }
+
+    .paper-body { max-width: 860px; margin: 0 auto; padding: 32px 24px 60px; }
+
+    .detail-section { margin-bottom: 36px; }
+    .detail-section-title {
+      font-size: 16px; font-weight: 700; color: #1f2937;
+      margin-bottom: 14px; padding-bottom: 8px;
+      border-bottom: 2px solid #e5e7eb;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .summary-box {
+      background: #f5f3ff; border: 1px solid #c4b5fd;
+      border-radius: 10px; padding: 18px 20px;
+      font-size: 14px; color: #374151; line-height: 1.8;
+    }
+
+    .points-list { list-style: none; padding: 0; margin: 0; }
+    .points-list li {
+      display: flex; gap: 12px; padding: 10px 0;
+      border-bottom: 1px dotted #e5e7eb;
+      font-size: 14px; color: #1f2937; line-height: 1.6;
+    }
+    .points-list li:last-child { border-bottom: none; }
+    .point-num {
+      flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%;
+      background: #7c3aed; color: #fff;
+      font-size: 11px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 2px;
+    }
+
+    .reading-notes-box {
+      background: #fff7ed; border: 1px solid #fed7aa;
+      border-left: 4px solid #f97316;
+      border-radius: 8px; padding: 16px 20px;
+      font-size: 14px; color: #374151; line-height: 1.8;
+    }
+    .reading-notes-label {
+      font-size: 11px; font-weight: 700; color: #ea580c;
+      text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;
+    }
+
+    .course-links { display: flex; flex-wrap: wrap; gap: 10px; }
+    .course-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #fff; border: 1px solid #e5e7eb;
+      border-radius: 8px; padding: 8px 14px;
+      font-size: 13px; color: #1f2937; text-decoration: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .course-link:hover { border-color: #7c3aed; box-shadow: 0 2px 8px rgba(124,58,237,0.12); color: #7c3aed; }
+    .course-link-icon { font-size: 16px; }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+    }
+    .related-card {
+      background: #fff; border: 1px solid #e5e7eb;
+      border-radius: 10px; padding: 14px 16px;
+      text-decoration: none; color: inherit;
+      transition: box-shadow 0.15s, border-color 0.15s;
+    }
+    .related-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-color: #7c3aed; }
+    .related-card-title { font-size: 13px; font-weight: 700; color: #1f2937; margin-bottom: 4px; line-height: 1.4; }
+    .related-card-title-ja { font-size: 11px; color: #6b7280; margin: 2px 0 4px; font-style: italic; }
+    .related-card-authors { font-size: 11px; color: #6b7280; }
+
+    .classic-badge {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      background: #fef3c7; color: #92400e; border: 1px solid #fcd34d;
+      border-radius: 6px; padding: 1px 7px;
+    }
+    .year-badge {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      background: #f5f3ff; color: #5b21b6; border: 1px solid #c4b5fd;
+      border-radius: 6px; padding: 1px 7px;
+    }
+
+    .not-found {
+      text-align: center; padding: 80px 24px; color: #6b7280;
+    }
+    .not-found h2 { font-size: 20px; margin-bottom: 12px; color: #374151; }
+    .not-found a { color: #7c3aed; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo">
+      <div class="logo-icon">🏭</div>
+      <div>
+        <div class="logo-text">IE/QC/TPM-LMS</div>
+        <div class="logo-sub">製造業専門技術者育成プラットフォーム</div>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="index.html" class="nav-link">講座一覧</a>
+      <a href="cases.html" class="nav-link">事例集</a>
+      <a href="papers.html" class="nav-link active">論文・文献</a>
+      <a href="improvements.html" class="nav-link">改善案件</a>
+    </nav>
+  </div>
+</header>
+
+<div id="paper-hero"></div>
+<div id="paper-body"></div>
+
+<script src="data/papers_extended.js"></script>
+<script>
+// Course name map
+const COURSE_NAMES = {
+  "operations-analysis": { name: "稼働分析・ワークサンプリング", icon: "📊" },
+  "standard-time": { name: "標準時間の設定", icon: "⏱" },
+  "line-balancing": { name: "ラインバランシング", icon: "⚖️" },
+  "kaizen-methods": { name: "改善の手法", icon: "🔧" },
+  "ie-facility-layout": { name: "施設レイアウト設計", icon: "🏭" },
+  "ie-vsm": { name: "バリューストリームマッピング", icon: "🗺" },
+  "ie-smed": { name: "SMED・段取り改善", icon: "⚡" },
+  "ie-visual-management": { name: "見える化・ビジュアル管理", icon: "👁" },
+  "ie-logistics": { name: "物流・運搬分析", icon: "🚚" },
+  "ie-analysis-cases": { name: "IE分析事例集", icon: "📋" },
+  "ie-improvement-cases": { name: "IE改善事例集", icon: "📈" },
+};
+
+const TAG_CLASS_MAP = {
+  "IE":   "tag-ie",
+  "QC":   "tag-qc",
+  "TPM":  "tag-tpm",
+  "PS":   "tag-ps",
+  "book": "tag-book",
+};
+
+function getTagClass(tag) {
+  return TAG_CLASS_MAP[tag] || "tag-book";
+}
+
+function getTypeLabel(footer) {
+  if (footer.includes('書籍')) return { label: '📘 書籍', cls: 'type-book' };
+  if (footer.includes('JIS') || footer.includes('国際規格') || footer.includes('政府') || footer.includes('業界')) return { label: '📋 規格・標準', cls: 'type-standard' };
+  return { label: '📄 学術論文', cls: 'type-paper' };
+}
+
+function renderHero(data, ext) {
+  const typeInfo = getTypeLabel(data.footer || '');
+  const tags = (data.tags || []).filter(t => t !== 'book');
+
+  const tagHtml = tags.map(t => {
+    const labels = {IE:'IE',QC:'QC',TPM:'TPM',PS:'PS'};
+    return `<span class="paper-tag ${getTagClass(t)}">${labels[t]||t}</span>`;
+  }).join('');
+
+  const classicBadge = data.isClassic ? '<span class="classic-badge">クラシック</span>' : '';
+
+  document.getElementById('paper-hero').innerHTML = `
+    <div class="paper-hero">
+      <div class="paper-hero-inner">
+        <a href="papers.html" class="paper-back-link">← 論文・文献一覧に戻る</a>
+        <div class="paper-type-row">
+          <span class="paper-type-badge ${typeInfo.cls}">${typeInfo.label}</span>
+          ${tagHtml}
+          <span class="year-badge">${data.year || ''}</span>
+          ${classicBadge}
+        </div>
+        <div class="paper-hero-title">${data.title || ''}</div>
+        <div class="paper-hero-title-ja">${data.titleJa || ''}</div>
+        <div class="paper-hero-meta">
+          <span>✍ ${data.authors || ''}</span>
+          <span>📰 ${data.journal || ''}</span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderBody(data, ext, allCards) {
+  const pointsHtml = (data.points || []).map((p, i) => `
+    <li>
+      <span class="point-num">${i+1}</span>
+      <span>${p}</span>
+    </li>
+  `).join('');
+
+  const courseLinks = (ext.relatedCourses || []).map(id => {
+    const c = COURSE_NAMES[id];
+    if (!c) return '';
+    return `<a href="course.html?id=${id}" class="course-link">
+      <span class="course-link-icon">${c.icon}</span>
+      <span>${c.name}</span>
+    </a>`;
+  }).join('');
+
+  // Related papers (same tags, different index)
+  const myTags = new Set(data.tags || []);
+  const related = allCards
+    .filter(c => c.index !== data.index && c.tags.some(t => myTags.has(t)))
+    .slice(0, 6);
+
+  const relatedHtml = related.length === 0
+    ? '<p style="color:#9ca3af;font-size:13px;">関連する文献が見つかりませんでした。</p>'
+    : `<div class="related-grid">
+        ${related.map(c => `
+          <a href="paper.html?i=${c.index}" class="related-card" onclick="try{sessionStorage.setItem('paper_${c.index}',JSON.stringify(${JSON.stringify(c)}))}catch(e){}">
+            <div class="related-card-title">${c.title}</div>
+            ${c.titleJa ? `<div class="related-card-title-ja">${c.titleJa}</div>` : ''}
+            <div class="related-card-authors">${c.authors}</div>
+          </a>
+        `).join('')}
+      </div>`;
+
+  document.getElementById('paper-body').innerHTML = `
+    <main class="paper-body">
+
+      <div class="detail-section">
+        <div class="detail-section-title">📝 概要・アブストラクト</div>
+        <div class="summary-box">${data.summary || '（概要情報なし）'}</div>
+      </div>
+
+      <div class="detail-section">
+        <div class="detail-section-title">🔑 主要なポイント・学べること</div>
+        <ul class="points-list">${pointsHtml}</ul>
+      </div>
+
+      <div class="detail-section">
+        <div class="detail-section-title">💡 活用のポイント・読み方ガイド</div>
+        <div class="reading-notes-box">
+          <div class="reading-notes-label">実務への活用</div>
+          ${ext.readingNotes || 'この文献は各講座の理論的背景として参照してください。'}
+        </div>
+      </div>
+
+      ${courseLinks ? `
+      <div class="detail-section">
+        <div class="detail-section-title">🎓 関連する講座</div>
+        <div class="course-links">${courseLinks}</div>
+      </div>
+      ` : ''}
+
+      <div class="detail-section">
+        <div class="detail-section-title">📚 関連する文献</div>
+        ${relatedHtml}
+      </div>
+
+    </main>
+  `;
+}
+
+// ---- Main ----
+const params = new URLSearchParams(location.search);
+const idx = parseInt(params.get('i'), 10);
+
+// Try sessionStorage first (fast path)
+let cardData = null;
+try {
+  const stored = sessionStorage.getItem(`paper_${idx}`);
+  if (stored) cardData = JSON.parse(stored);
+} catch(e) {}
+
+// Also load all cards data for related papers
+let allCardsCache = [];
+try {
+  const stored = sessionStorage.getItem('all_paper_cards');
+  if (stored) allCardsCache = JSON.parse(stored);
+} catch(e) {}
+
+if (!cardData && !isNaN(idx) && allCardsCache[idx]) {
+  cardData = allCardsCache[idx];
+}
+
+if (!cardData || isNaN(idx)) {
+  document.getElementById('paper-hero').innerHTML = '';
+  document.getElementById('paper-body').innerHTML = `
+    <div class="not-found">
+      <h2>文献が見つかりませんでした</h2>
+      <p><a href="papers.html">← 論文・文献一覧に戻る</a></p>
+    </div>`;
+} else {
+  const ext = (PAPERS_EXTENDED && PAPERS_EXTENDED[idx]) || {};
+  document.title = `${cardData.title} | IE/QC/TPM-LMS`;
+  renderHero(cardData, ext);
+  renderBody(cardData, ext, allCardsCache);
+}
+</script>
+
+<link rel="stylesheet" href="chat-widget.css">
+<script src="chat-widget.js"></script>
+</body>
+</html>

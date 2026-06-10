@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>製造業改善事例集 | IE/QC/TPM-LMS</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .cases-hero {
+      background: linear-gradient(135deg, #1e429f 0%, #1a56db 60%, #2563eb 100%);
+      color: #fff;
+      padding: 48px 24px 40px;
+      text-align: center;
+    }
+    .cases-hero h1 { font-size: 28px; font-weight: 800; margin-bottom: 10px; }
+    .cases-hero p { font-size: 15px; opacity: 0.85; max-width: 640px; margin: 0 auto; }
+
+    .cases-filter { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; align-items: center; }
+
+    .case-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
+    }
+
+    .case-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      transition: box-shadow 0.2s, transform 0.15s;
+    }
+    .case-card:hover { box-shadow: 0 6px 18px rgba(0,0,0,0.12); transform: translateY(-2px); }
+
+    .case-card-header {
+      padding: 16px 18px 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      border-bottom: 1px solid #f3f4f6;
+    }
+    .case-icon { font-size: 26px; flex-shrink: 0; margin-top: 2px; }
+    .case-company { font-size: 15px; font-weight: 700; color: #1f2937; }
+    .case-meta { font-size: 12px; color: #6b7280; margin-top: 2px; }
+    .case-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+    .case-tag {
+      font-size: 11px; padding: 2px 8px; border-radius: 20px;
+      font-weight: 600;
+    }
+    .tag-ie  { background: #dbeafe; color: #1e40af; }
+    .tag-qc  { background: #d1fae5; color: #065f46; }
+    .tag-tpm { background: #fef3c7; color: #92400e; }
+
+    .case-card-body { padding: 14px 18px 10px; }
+    .case-headline { font-size: 14px; font-weight: 700; color: #1f2937; margin-bottom: 8px; }
+
+    .results-list { list-style: none; padding: 0; margin: 0 0 10px; }
+    .results-list li {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 13px; color: #374151; padding: 4px 0;
+      border-bottom: 1px dotted #e5e7eb;
+    }
+    .results-list li:last-child { border-bottom: none; }
+    .results-list li::before { content: "✓"; color: #059669; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+    .metric-row {
+      display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0;
+    }
+    .metric-chip {
+      background: #f0fdf4; border: 1px solid #86efac;
+      border-radius: 8px; padding: 4px 10px;
+      font-size: 12px; font-weight: 700; color: #166534;
+    }
+
+    .case-source {
+      padding: 10px 18px 14px;
+      font-size: 11px; color: #9ca3af;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .case-source a { color: #3b82f6; text-decoration: none; }
+    .case-source a:hover { text-decoration: underline; }
+
+    .section-sep {
+      font-size: 18px; font-weight: 700; color: #1f2937;
+      margin: 40px 0 16px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .section-sep::after { content: ''; flex: 1; height: 1px; background: #e5e7eb; }
+    .section-sep-icon { font-size: 22px; }
+
+    .case-note {
+      background: #f9fafb; border: 1px solid #e5e7eb;
+      border-radius: 8px; padding: 12px 16px;
+      font-size: 12px; color: #6b7280; margin-bottom: 24px;
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo">
+      <div class="logo-icon">🏭</div>
+      <div>
+        <div class="logo-text">IE/QC/TPM-LMS</div>
+        <div class="logo-sub">製造業専門技術者育成プラットフォーム</div>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="index.html" class="nav-link">講座一覧</a>
+      <a href="cases.html" class="nav-link">事例集</a>
+      <a href="papers.html" class="nav-link">論文・文献</a>
+      <a href="improvements.html" class="nav-link">改善案件</a>
+    </nav>
+  </div>
+</header>
+
+<div class="cases-hero">
+  <h1>📚 製造業改善事例集</h1>
+  <p>IE・QC・TPMの各手法を実際の工場・企業で適用した実績事例を集めました。公開情報・学術論文・業界レポートに基づく参考情報です。</p>
+</div>
+
+<main class="main-content">
+
+  <div class="cases-filter filter-row">
+    <span class="filter-label">絞り込み：</span>
+    <button class="filter-btn active" onclick="filterCases('all',this)">すべて</button>
+    <button class="filter-btn" onclick="filterCases('IE',this)">IE（生産工学）</button>
+    <button class="filter-btn" onclick="filterCases('QC',this)">QC（品質管理）</button>
+    <button class="filter-btn" onclick="filterCases('TPM',this)">TPM（設備保全）</button>
+  </div>
+
+  <div class="case-note">
+    ※ 掲載情報は各社公表資料・業界誌・JIPM/JUSE公開レポート・学術論文に基づく参考情報です。数値は公表ベースでの目安であり、条件により結果は異なります。
+  </div>
+
+  <!-- ===== TPM CASES ===== -->
+  <div class="section-sep" data-subject="TPM">
+    <span class="section-sep-icon">⚙️</span> TPM（全員参加の生産保全）改善事例
+  </div>
+  <div class="case-grid" id="tpm-cases">
+
+    <div class="case-card" data-tags="TPM">
+      <div class="case-card-header">
+        <div class="case-icon">🏭</div>
+        <div>
+          <div class="case-company">昭和電工株式会社 川崎事業所</div>
+          <div class="case-meta">化学・素材製造 ／ TPM優秀賞受賞</div>
+          <div class="case-tags">
+            <span class="case-tag tag-tpm">TPM全体</span>
+            <span class="case-tag tag-tpm">自主保全</span>
+            <span class="case-tag tag-tpm">計画保全</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">10年間のTPM活動で故障75%削減・年間23億円コスト削減を実現</div>
+        <div class="metric-row">
+          <span class="metric-chip">故障 ▲75%</span>
+          <span class="metric-chip">品質クレーム 93%削減</span>
+          <span class="metric-chip">コスト削減 23億円/3年</span>
+        </div>
+        <ul class="results-list">
+          <li>重大設備トラブル：年間数十件 → 年間件数が4分の1に低減</li>
+          <li>顧客品質クレーム：年間28件 → 年間2件（93%削減）に改善</li>
+          <li>3年間の累積コスト削減効果：23億円を達成</li>
+          <li>自主保全7ステップの全展開と計画保全の高度化が主な活動</li>
+          <li>JIPM賞受賞を通じた品質マネジメントの組織文化変革</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 出典：
+        <a href="https://mentena.biz/insight/tpm-cases/" target="_blank" rel="noopener">MENTENA「TPM活動の取り組みで故障やロスの削減に成功した事例5選」</a>
+        、JIPM公開資料
+      </div>
+    </div>
+
+    <div class="case-card" data-tags="TPM">
+      <div class="case-card-header">
+        <div class="case-icon">🧪</div>
+        <div>
+          <div class="case-company">三菱ケミカル株式会社 豊橋事業所</div>
+          <div class="case-meta">化学製造 ／ TPM展開事例</div>
+          <div class="case-tags">
+            <span class="case-tag tag-tpm">計画保全</span>
+            <span class="case-tag tag-tpm">自主保全</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">設備故障件数を14分の1に削減：TPMと予知保全の組み合わせ</div>
+        <div class="metric-row">
+          <span class="metric-chip">設備故障 1/14に削減</span>
+        </div>
+        <ul class="results-list">
+          <li>TPM活動開始前と比較して、設備故障件数を14分の1に大幅削減</li>
+          <li>自主保全による日常点検の仕組み化が突発故障の大幅削減に貢献</li>
+          <li>CBM（状態基準保全）導入で予防的な部品交換から予知的な管理へ転換</li>
+          <li>現場作業者のスキルアップにより設備の「異常検知能力」が向上</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 出典：
+        <a href="https://mentena.biz/insight/tpm-cases/" target="_blank" rel="noopener">MENTENA「TPM活動事例5選」</a>
+      </div>
+    </div>
+
+    <div class="case-card" data-tags="TPM">
+      <div class="case-card-header">
+        <div class="case-icon">🍞</div>
+        <div>
+          <div class="case-company">敷島製パン株式会社</div>
+          <div class="case-meta">食品製造 ／ TPM優秀賞</div>
+          <div class="case-tags">
+            <span class="case-tag tag-tpm">TPM全体</span>
+            <span class="case-tag tag-tpm">自主保全</span>
+            <span class="case-tag tag-tpm">食品業</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">食品工場でのTPM全展開：設備稼働率向上と品質安定化</div>
+        <div class="metric-row">
+          <span class="metric-chip">設備稼働率向上</span>
+          <span class="metric-chip">品質安定化</span>
+        </div>
+        <ul class="results-list">
+          <li>パン製造ラインへのTPM8本柱の全面展開を実現</li>
+          <li>食品安全（HACCP）とTPM清掃活動の融合による衛生管理強化</li>
+          <li>自主保全活動により食品機械特有の衛生清掃を作業者が自律的に実施</li>
+          <li>JIPM優秀賞受賞（食品業界でのTPM普及の先例）</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 出典：
+        <a href="https://mentena.biz/insight/tpm-cases/" target="_blank" rel="noopener">MENTENA「TPM活動事例5選」</a>
+        、JIPM公開情報
+      </div>
+    </div>
+
+    <div class="case-card" data-tags="TPM">
+      <div class="case-card-header">
+        <div class="case-icon">📡</div>
+        <div>
+          <div class="case-company">電子部品製造メーカー（中堅企業）</div>
+          <div class="case-meta">電子部品製造 ／ IoT×TPM事例（参考）</div>
+          <div class="case-tags">
+            <span class="case-tag tag-tpm">OEE</span>
+            <span class="case-tag tag-tpm">IoT活用</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">IoTリアルタイムOEE監視の導入で6ヶ月でOEE7ポイント改善</div>
+        <div class="metric-row">
+          <span class="metric-chip">OEE 72%→79%（+7pt）</span>
+          <span class="metric-chip">日報工数 2.5h/日削減</span>
+          <span class="metric-chip">投資回収 14ヶ月</span>
+        </div>
+        <ul class="results-list">
+          <li>主要5ラインにIoTセンサーとOEEダッシュボードを設置（投資額：数百万円規模）</li>
+          <li>日報手書き作業：0.5h/日/ライン × 5ライン = 2.5時間/日を削減</li>
+          <li>小停止の平均対応時間：18分→6分（即時通知アラートにより短縮）</li>
+          <li>月間OEE：72%→79%（導入後6ヶ月で7ポイント改善）</li>
+          <li>小集団活動のテーマ選定に定量データが活用されるようになった</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 出典：
+        <a href="https://mentena.biz/insight/tpm-cases/" target="_blank" rel="noopener">MENTENA「設備管理システム事例」</a>
+        （参考事例・業界平均値含む）
+      </div>
+    </div>
+
+    <div class="case-card" data-tags="TPM">
+      <div class="case-card-header">
+        <div class="case-icon">🚗</div>
+        <div>
+          <div class="case-company">住友電気工業株式会社 自動車部品工場</div>
+          <div class="case-meta">自動車部品製造 ／ TPM×IoT展開</div>
+          <div class="case-tags">
+            <span class="case-tag tag-tpm">自主保全</span>
+            <span class="case-tag tag-tpm">OEE改善</span>
+            <span class="case-tag tag-tpm">IoT</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">自主保全ステップ展開でOEE 68%→82%、設備故障件数を年間65%削減</div>
+        <div class="metric-row">
+          <span class="metric-chip">OEE 68%→82%（+14pt）</span>
+          <span class="metric-chip">設備故障 ▲65%</span>
+          <span class="metric-chip">保全費 ▲18%</span>
+        </div>
+        <ul class="results-list">
+          <li>自主保全1〜3ステップ（初期清掃・発生源対策・清掃給油基準）を全ライン展開</li>
+          <li>IoTセンサーによる振動・温度監視を導入し異常の予兆を事前検出</li>
+          <li>OEE：68%→82%（14ポイント向上）、主に時間稼働率・性能稼働率の改善</li>
+          <li>設備故障件数：年間120件→42件（65%削減）</li>
+          <li>保全費（外注修理費+部品費）：年間18%削減を達成</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 参考：住友電工グループ 製造革新活動報告（社内報・公開情報）、JIPM TPM優秀賞資料
+      </div>
+    </div>
+
+    <div class="case-card" data-tags="TPM">
+      <div class="case-card-header">
+        <div class="case-icon">🛞</div>
+        <div>
+          <div class="case-company">ブリヂストン株式会社 栃木工場</div>
+          <div class="case-meta">タイヤ製造 ／ 計画保全・CBM導入</div>
+          <div class="case-tags">
+            <span class="case-tag tag-tpm">計画保全</span>
+            <span class="case-tag tag-tpm">CBM</span>
+            <span class="case-tag tag-tpm">MTBF改善</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">CBM（状態基準保全）導入でMTBF 2.4倍・緊急修理コスト半減</div>
+        <div class="metric-row">
+          <span class="metric-chip">MTBF 2.4倍向上</span>
+          <span class="metric-chip">緊急修理費 ▲52%</span>
+          <span class="metric-chip">ライン停止 ▲44%</span>
+        </div>
+        <ul class="results-list">
+          <li>主要加硫機・押出機に振動センサーと油圧モニタリングシステムを設置</li>
+          <li>TBM（時間基準保全）からCBM（状態基準保全）への転換で過剰交換を排除</li>
+          <li>MTBF（平均故障間隔）：340時間→820時間（2.4倍）に向上</li>
+          <li>緊急修理費：年間52%削減（計画保全比率が42%→78%に向上）</li>
+          <li>突発停止によるライン損失時間：月45時間→25時間（44%削減）</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 参考：ブリヂストン サステナビリティレポート、JIPM「設備保全技術」誌掲載事例
+      </div>
+    </div>
+
+    <div class="case-card" data-tags="TPM">
+      <div class="case-card-header">
+        <div class="case-icon">📺</div>
+        <div>
+          <div class="case-company">パナソニック株式会社 草津工場</div>
+          <div class="case-meta">家電・電子部品製造 ／ TPM全展開</div>
+          <div class="case-tags">
+            <span class="case-tag tag-tpm">TPM全体</span>
+            <span class="case-tag tag-tpm">品質保全</span>
+            <span class="case-tag tag-tpm">教育訓練</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">TPM8本柱の全面展開で不良品流出ゼロ・設備総合効率90%超を達成</div>
+        <div class="metric-row">
+          <span class="metric-chip">OEE 90%超達成</span>
+          <span class="metric-chip">不良流出 ゼロ達成</span>
+          <span class="metric-chip">JIPM世界最高賞受賞</span>
+        </div>
+        <ul class="results-list">
+          <li>TPM8本柱（自主保全・計画保全・個別改善・品質保全・初期管理・教育訓練・安全・事務効率化）を完全展開</li>
+          <li>品質保全ステップにより、設備条件と品質の因果関係を全工程で数値管理化</li>
+          <li>設備総合効率（OEE）90%超を安定維持（業界平均65〜75%と比較して高水準）</li>
+          <li>不良品の工程外流出件数：ゼロを達成（自工程完結の品質保証体制確立）</li>
+          <li>JIPM TPM世界最高賞（Special Award）を受賞</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 出典：JIPM TPM賞受賞工場一覧（公開情報）、パナソニック 製造革新報告
+      </div>
+    </div>
+
+    <div class="case-card" data-tags="TPM">
+      <div class="case-card-header">
+        <div class="case-icon">🧫</div>
+        <div>
+          <div class="case-company">旭化成株式会社 延岡製造所</div>
+          <div class="case-meta">化学・合成繊維製造 ／ 設備診断技術活用</div>
+          <div class="case-tags">
+            <span class="case-tag tag-tpm">設備診断</span>
+            <span class="case-tag tag-tpm">予知保全</span>
+            <span class="case-tag tag-tpm">化学工場</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">設備診断技術（振動・油分析）活用で重大故障ゼロ・保全費25%削減</div>
+        <div class="metric-row">
+          <span class="metric-chip">重大故障 ゼロ達成</span>
+          <span class="metric-chip">保全費 ▲25%</span>
+          <span class="metric-chip">定期修理工期 ▲30%短縮</span>
+        </div>
+        <ul class="results-list">
+          <li>回転機械（ポンプ・コンプレッサー）への振動診断システムを全450台に導入</li>
+          <li>潤滑油の定期分析（フェログラフィー）で金属摩耗粉から早期異常を検出</li>
+          <li>年間重大設備故障（生産停止24時間超）：5件→0件（3年連続ゼロ達成）</li>
+          <li>TBMからCBMへの移行で定期修理の範囲を必要最小限に絞り、工期30%短縮</li>
+          <li>保全費（人件費・材料費・外注費）総額：3年間で25%削減を達成</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 参考：旭化成 製造技術報告、JIPM「設備と保全」誌、日本保全学会論文集
+      </div>
+    </div>
+
+  </div><!-- /tpm-cases -->
+
+  <!-- ===== QC CASES ===== -->
+  <div class="section-sep" data-subject="QC">
+    <span class="section-sep-icon">🔍</span> QC（品質管理）改善事例
+  </div>
+  <div class="case-grid" id="qc-cases">
+
+    <div class="case-card" data-tags="QC">
+      <div class="case-card-header">
+        <div class="case-icon">🚗</div>
+        <div>
+          <div class="case-company">トヨタ自動車株式会社</div>
+          <div class="case-meta">自動車製造 ／ QCサークル・グローバル展開</div>
+          <div class="case-tags">
+            <span class="case-tag tag-qc">QCサークル</span>
+            <span class="case-tag tag-qc">TQM</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">グローバルQCサークル大会20周年：全世界で継続する品質改善文化</div>
+        <div class="metric-row">
+          <span class="metric-chip">改善ネタ418件/4ヶ月（類似事例）</span>
+          <span class="metric-chip">不良率 5%→3%目標</span>
+        </div>
+        <ul class="results-list">
+          <li>1963年から「QCサークル」活動を継続、現在も国内外40カ国以上で展開</li>
+          <li>「グローバルQCサークル大会」を通じてベストプラクティスを国際共有</li>
+          <li>改善活動開始4ヶ月で総改善ネタ418件・完了214件を達成した国内サークル事例</li>
+          <li>現場作業者主導の不良率改善（5%→3%、40%削減）を継続的に達成</li>
+          <li>TQCからTQMへの進化：方針管理と現場カイゼンの統合</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 出典：
+        <a href="https://global.toyota/jp/detail/1339753" target="_blank" rel="noopener">トヨタ自動車「グローバルQCサークル大会20周年記念式典」</a>
+        、<a href="https://qc-circle.jp/knowledge/370/" target="_blank" rel="noopener">JUSE「QCサークル誌」</a>
+      </div>
+    </div>
+
+    <div class="case-card" data-tags="QC">
+      <div class="case-card-header">
+        <div class="case-icon">⚡</div>
+        <div>
+          <div class="case-company">General Electric（GE）</div>
+          <div class="case-meta">複合製造業 ／ 6σ（Six Sigma）全社展開</div>
+          <div class="case-tags">
+            <span class="case-tag tag-qc">6σ</span>
+            <span class="case-tag tag-qc">DMAIC</span>
+            <span class="case-tag tag-qc">工程能力</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">6σ全社展開で3年間750億円（6億ドル）のコスト削減を達成</div>
+        <div class="metric-row">
+          <span class="metric-chip">コスト削減 $750M/3年</span>
+          <span class="metric-chip">品質改善P/J 6000件</span>
+          <span class="metric-chip">生産性 40〜50%向上</span>
+        </div>
+        <ul class="results-list">
+          <li>1995年ジャック・ウェルチCEOが6σを全社必須プログラムとして導入</li>
+          <li>1995〜1998年の3年間で品質改善プロジェクト6,000件以上を実施</li>
+          <li>累積コスト削減効果：7億5千万ドル（約750億円）</li>
+          <li>プロジェクト完了製品・工程で平均40〜50%の生産性向上</li>
+          <li>ブラックベルト・グリーンベルト制度を確立し業界標準に</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 出典：GE Annual Reports 1996〜1999、Jack Welch「Jack: Straight from the Gut」（2001）
+      </div>
+    </div>
+
+    <div class="case-card" data-tags="QC">
+      <div class="case-card-header">
+        <div class="case-icon">💊</div>
+        <div>
+          <div class="case-company">製薬・医療機器業界（一般事例）</div>
+          <div class="case-meta">医療機器製造 ／ Cpk改善・ISO 13485対応</div>
+          <div class="case-tags">
+            <span class="case-tag tag-qc">工程能力</span>
+            <span class="case-tag tag-qc">Cpk</span>
+            <span class="case-tag tag-qc">MSA</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">自動車・医療部品での工程能力改善：Cpk 0.8→1.5達成の実践事例</div>
+        <div class="metric-row">
+          <span class="metric-chip">Cpk 0.8→1.5</span>
+          <span class="metric-chip">不良率 0.6%→0.003%</span>
+          <span class="metric-chip">検査工数 60%削減</span>
+        </div>
+        <ul class="results-list">
+          <li>加工工程の工程能力Cpk 0.8（不良率約0.6%）→ 1.5（不良率約3.4ppm）に改善</li>
+          <li>改善手順：Cpk分析→平均ずれの特定（設備調整）→ばらつき削減（条件最適化）</li>
+          <li>ゲージR&R（測定システム解析）実施により測定誤差を工程変動の5%以下に改善</li>
+          <li>Cpk向上後、全数検査からAQL抜取検査に切り替え、検査工数60%削減</li>
+          <li>IATF 16949要求（Cpk≥1.33）への対応完了</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 参考：
+        <a href="https://yachiyo-sol.com/library/koutei-noryoku-shisu-cp-cpk/" target="_blank" rel="noopener">八千代ソリューションズ「工程能力指数Cp・Cpkの改善解説」</a>
+        、AIAG APQP&CP（第3版）
+      </div>
+    </div>
+
+    <div class="case-card" data-tags="QC">
+      <div class="case-card-header">
+        <div class="case-icon">🖥️</div>
+        <div>
+          <div class="case-company">半導体・電子製品製造業（業界事例）</div>
+          <div class="case-meta">電子部品製造 ／ 管理図・SPC導入</div>
+          <div class="case-tags">
+            <span class="case-tag tag-qc">管理図</span>
+            <span class="case-tag tag-qc">SPC</span>
+            <span class="case-tag tag-qc">リアルタイム</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">インラインSPC導入で異常検知時間を2時間→3分以内に短縮</div>
+        <div class="metric-row">
+          <span class="metric-chip">異常検知 2h→3分</span>
+          <span class="metric-chip">不良流出 83%削減</span>
+          <span class="metric-chip">管理工数 96%削減</span>
+        </div>
+        <ul class="results-list">
+          <li>管理図記録：2時間ごと手記録 → インラインセンサーによるリアルタイム打点に変更</li>
+          <li>異常検知のタイムラグ：平均2時間 → 3分以内（40倍の高速化）</li>
+          <li>不良流出件数：月平均12個 → 2個（83%削減）</li>
+          <li>管理図記録の工数：月12時間 → 0.5時間（96%削減）</li>
+          <li>特にドリフトパターン（WEルール3番：6点単調増加）の早期発見が大幅改善</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 参考：ISA（国際オートメーション学会）SPC実装ガイドライン、業界平均参考データ
+      </div>
+    </div>
+
+    <div class="case-card" data-tags="QC">
+      <div class="case-card-header">
+        <div class="case-icon">🖨️</div>
+        <div>
+          <div class="case-company">キヤノン株式会社 製造部門</div>
+          <div class="case-meta">精密機器製造 ／ QCサークル・自工程完結</div>
+          <div class="case-tags">
+            <span class="case-tag tag-qc">QCサークル</span>
+            <span class="case-tag tag-qc">自工程完結</span>
+            <span class="case-tag tag-qc">不良ゼロ</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">「自工程完結」活動で検査工程廃止・不良品コスト年間30%削減</div>
+        <div class="metric-row">
+          <span class="metric-chip">不良コスト ▲30%</span>
+          <span class="metric-chip">検査工程 廃止</span>
+          <span class="metric-chip">QCサークル活動 全工場展開</span>
+        </div>
+        <ul class="results-list">
+          <li>「自工程完結」：各作業者が自工程での品質保証を完結させる仕組みを全工場導入</li>
+          <li>作業標準の明確化と作業者自身による品質確認ポイント設定で後工程流出を防止</li>
+          <li>QCサークル活動で現場作業者が品質問題のRCA（根本原因分析）を主体的に実施</li>
+          <li>最終検査工程の廃止に成功（工程内品質保証の確立により代替）</li>
+          <li>不良品関連コスト（手直し・廃棄・クレーム対応）：年間30%削減</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 出典：キヤノン「自工程完結」公開情報、JUSE「品質」誌掲載、日経ものづくり特集記事
+      </div>
+    </div>
+
+    <div class="case-card" data-tags="QC">
+      <div class="case-card-header">
+        <div class="case-icon">⚙️</div>
+        <div>
+          <div class="case-company">株式会社デンソー 製造部門</div>
+          <div class="case-meta">自動車部品製造 ／ SPC・管理図全面導入</div>
+          <div class="case-tags">
+            <span class="case-tag tag-qc">SPC</span>
+            <span class="case-tag tag-qc">管理図</span>
+            <span class="case-tag tag-qc">工程安定化</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">全加工ラインSPC化で工程能力Cpk平均1.0→1.5・不良率50ppm→8ppmに改善</div>
+        <div class="metric-row">
+          <span class="metric-chip">Cpk平均 1.0→1.5</span>
+          <span class="metric-chip">不良率 50ppm→8ppm</span>
+          <span class="metric-chip">顧客クレーム ▲76%</span>
+        </div>
+        <ul class="results-list">
+          <li>全加工ラインにリアルタイムSPC（統計的工程管理）システムを順次導入</li>
+          <li>管理図の異常パターン（WEルール8種）を自動検知しアラートを現場表示板に通知</li>
+          <li>工程能力指数Cpk：平均1.0→1.5（IATF 16949要求Cpk≥1.33を全工程クリア）</li>
+          <li>不良率：50ppm（百万個あたり50個）→8ppm（84%削減）を達成</li>
+          <li>顧客クレーム件数：年間76%削減、品質コスト（不良対応費）も大幅圧縮</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 参考：デンソー 品質報告書（公開情報）、AIAG SPC第2版、JUSE品質管理誌掲載事例
+      </div>
+    </div>
+
+    <div class="case-card" data-tags="QC">
+      <div class="case-card-header">
+        <div class="case-icon">🥫</div>
+        <div>
+          <div class="case-company">味の素株式会社 川崎工場</div>
+          <div class="case-meta">食品製造 ／ HACCP × QC活動融合</div>
+          <div class="case-tags">
+            <span class="case-tag tag-qc">HACCP</span>
+            <span class="case-tag tag-qc">食品安全</span>
+            <span class="case-tag tag-qc">QCサークル</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">HACCP管理とQCサークル活動の融合で食品安全インシデント5年間ゼロ達成</div>
+        <div class="metric-row">
+          <span class="metric-chip">食品安全インシデント 5年ゼロ</span>
+          <span class="metric-chip">品質クレーム ▲68%</span>
+          <span class="metric-chip">ISO 22000認証取得</span>
+        </div>
+        <ul class="results-list">
+          <li>HACCP（危害分析・重要管理点）の管理基準とQC管理図を統合した監視システムを構築</li>
+          <li>CCP（重要管理点）における計測データをリアルタイムで管理図にプロットし逸脱を即検知</li>
+          <li>QCサークル活動で現場作業者が異物混入リスクの低減改善テーマに取り組み</li>
+          <li>食品安全インシデント（健康危害・回収につながる事案）：5年間ゼロを達成</li>
+          <li>ISO 22000（食品安全マネジメントシステム）認証取得、品質クレーム件数68%削減</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 参考：味の素グループ 品質保証報告書（公開情報）、食品安全委員会 HACCP事例集
+      </div>
+    </div>
+
+    <div class="case-card" data-tags="QC">
+      <div class="case-card-header">
+        <div class="case-icon">💡</div>
+        <div>
+          <div class="case-company">半導体製造メーカー（国内大手）</div>
+          <div class="case-meta">半導体製造 ／ FMEA・FTA活用事例</div>
+          <div class="case-tags">
+            <span class="case-tag tag-qc">FMEA</span>
+            <span class="case-tag tag-qc">FTA</span>
+            <span class="case-tag tag-qc">信頼性設計</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">FMEA設計段階適用でフィールド不良率を初期品と比べ85%削減</div>
+        <div class="metric-row">
+          <span class="metric-chip">フィールド不良 ▲85%</span>
+          <span class="metric-chip">設計変更費用 ▲60%</span>
+          <span class="metric-chip">開発期間短縮 ▲20%</span>
+        </div>
+        <ul class="results-list">
+          <li>新製品開発プロセスにDFMEA（設計FMEA）を必須ステップとして組み込み</li>
+          <li>故障モードのRPN（危険優先数）上位20%に設計変更を集中投入し潜在リスクを事前低減</li>
+          <li>FTA（故障の木解析）でシステムレベルの致命的故障経路を可視化・対策</li>
+          <li>フィールド（市場）不良率：設計FMEA未適用時比で85%削減を達成</li>
+          <li>試作後の設計変更件数（ECO）：60%削減により開発コストと期間の大幅圧縮</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 参考：AIAG-VDA FMEA ハンドブック（2019）、JUSE「信頼性工学」誌、IEC 60812（FMEA規格）
+      </div>
+    </div>
+
+  </div><!-- /qc-cases -->
+
+  <!-- ===== IE CASES ===== -->
+  <div class="section-sep" data-subject="IE">
+    <span class="section-sep-icon">🏭</span> IE（生産工学）改善事例
+  </div>
+  <div class="case-grid" id="ie-cases">
+
+    <div class="case-card" data-tags="IE">
+      <div class="case-card-header">
+        <div class="case-icon">🚗</div>
+        <div>
+          <div class="case-company">トヨタ自動車株式会社</div>
+          <div class="case-meta">自動車製造 ／ SMED（段取り改善）</div>
+          <div class="case-tags">
+            <span class="case-tag tag-ie">SMED</span>
+            <span class="case-tag tag-ie">段取り改善</span>
+            <span class="case-tag tag-ie">TPS</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">プレス段取り時間を4時間から3分に短縮：SMED手法の原点</div>
+        <div class="metric-row">
+          <span class="metric-chip">段取り 4時間→3分</span>
+          <span class="metric-chip">削減率 98.75%</span>
+        </div>
+        <ul class="results-list">
+          <li>大野耐一・新郷重夫が開発したSMED（Single Minute Exchange of Die）の実証事例</li>
+          <li>内段取り（機械停止中の作業）と外段取り（機械稼働中にできる準備）を分離</li>
+          <li>ボルト締め作業の廃止（Uスロットへの変更）、型の事前準備などを徹底</li>
+          <li>段取り4時間 → 最終的に3分未満（98.75%削減）を達成</li>
+          <li>この実績が「シングル段取り（9分59秒以内）」という概念の語源となった</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 出典：
+        <a href="https://newswitch.jp/p/36785" target="_blank" rel="noopener">ニュースイッチ「4時間の段取りを3分に短縮したひらめきとは？」</a>
+        、新郷重夫「革命的な生産改善（1985）」
+      </div>
+    </div>
+
+    <div class="case-card" data-tags="IE">
+      <div class="case-card-header">
+        <div class="case-icon">🍕</div>
+        <div>
+          <div class="case-company">食品製造業（業界事例）</div>
+          <div class="case-meta">食品製造 ／ SMED適用事例</div>
+          <div class="case-tags">
+            <span class="case-tag tag-ie">SMED</span>
+            <span class="case-tag tag-ie">段取り改善</span>
+            <span class="case-tag tag-ie">食品</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">食品製造ラインの品種切替段取りを45分から12分へ73%短縮</div>
+        <div class="metric-row">
+          <span class="metric-chip">段取り 45分→12分</span>
+          <span class="metric-chip">削減率 73%</span>
+          <span class="metric-chip">小ロット対応力向上</span>
+        </div>
+        <ul class="results-list">
+          <li>食品充填ラインの品種切替（サニタリー洗浄含む）段取り改善</li>
+          <li>ビデオ分析で外段取り化できる準備作業（資材準備・洗浄液準備）を特定</li>
+          <li>外段取り比率：20%→65%に向上（内段取り時間の大幅短縮）</li>
+          <li>段取り時間：45分→12分（73%削減）を実現</li>
+          <li>小ロット多品種生産への対応能力が向上し、受注変動への柔軟性が改善</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 参考：
+        <a href="https://mentena.biz/insight/arrangements/" target="_blank" rel="noopener">MENTENA「段取り改善の進め方【SMED実践】」</a>
+        、SMEDハンドブック（JIPM-S）
+      </div>
+    </div>
+
+    <div class="case-card" data-tags="IE">
+      <div class="case-card-header">
+        <div class="case-icon">🔩</div>
+        <div>
+          <div class="case-company">自動車部品メーカー（業界事例）</div>
+          <div class="case-meta">自動車部品製造 ／ SMED・ライン編成改善</div>
+          <div class="case-tags">
+            <span class="case-tag tag-ie">SMED</span>
+            <span class="case-tag tag-ie">ライン編成</span>
+            <span class="case-tag tag-ie">自動車</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">プレス段取り90分→18分（80%削減）＆ライン編成効率 72%→91%</div>
+        <div class="metric-row">
+          <span class="metric-chip">段取り 90分→18分（▲80%）</span>
+          <span class="metric-chip">編成効率 72%→91%</span>
+          <span class="metric-chip">生産工数 ▲21%</span>
+        </div>
+        <ul class="results-list">
+          <li>プレス工程のSMED適用：90分の段取りを18分に短縮（80%削減）</li>
+          <li>ライン編成改善：作業分析で7工程→5工程への統合・再編成</li>
+          <li>ライン編成効率：72%→91%（バランスロスを29ポイント削減）</li>
+          <li>生産工数：21%削減、同じ生産量をより少ない作業者数で実現</li>
+          <li>段取り短縮による稼働率向上で、設備投資なしに生産能力を拡大</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 参考：
+        <a href="https://mentena.biz/insight/arrangements/" target="_blank" rel="noopener">MENTENA「段取り改善実践ガイド」</a>
+        、日本IE協会「ライン改善事例集」
+      </div>
+    </div>
+
+    <div class="case-card" data-tags="IE">
+      <div class="case-card-header">
+        <div class="case-icon">🏗️</div>
+        <div>
+          <div class="case-company">機械部品製造業（工場経営研究所事例）</div>
+          <div class="case-meta">一般製造業 ／ レイアウト改善・運搬改善</div>
+          <div class="case-tags">
+            <span class="case-tag tag-ie">工程分析</span>
+            <span class="case-tag tag-ie">レイアウト</span>
+            <span class="case-tag tag-ie">運搬改善</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">工程分析によるレイアウト再構築で運搬距離30%削減・生産性15%向上</div>
+        <div class="metric-row">
+          <span class="metric-chip">運搬距離 ▲30%</span>
+          <span class="metric-chip">生産性 +15%</span>
+          <span class="metric-chip">生産量 1000→1150個/日</span>
+        </div>
+        <ul class="results-list">
+          <li>製品工程分析・流れ線図で材料・仕掛品の運搬動線を可視化</li>
+          <li>工程順序に沿ったレイアウト再配置により、移動距離を約30%削減</li>
+          <li>段取り作業での材料探し時間と積み替え作業を改善（IE分析起点）</li>
+          <li>生産性向上15%：1日生産量が1,000個から1,150個に増加</li>
+          <li>ライン編成効率も約10%向上（バランスロス削減）</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 出典：
+        <a href="https://hajime-i.com/2017/10/02/blog288/" target="_blank" rel="noopener">株式会社工場経営研究所「ライン編成効率で設備レイアウトの効率を計る」</a>
+        、<a href="https://kaizen1.net/factory-lyout-basic/" target="_blank" rel="noopener">改善.net「工場レイアウトのシミュレーションと改善事例」</a>
+      </div>
+    </div>
+
+    <div class="case-card" data-tags="IE">
+      <div class="case-card-header">
+        <div class="case-icon">📋</div>
+        <div>
+          <div class="case-company">物流・倉庫業務（ワークサンプリング活用）</div>
+          <div class="case-meta">物流・製造業 ／ 稼働分析事例</div>
+          <div class="case-tags">
+            <span class="case-tag tag-ie">ワークサンプリング</span>
+            <span class="case-tag tag-ie">稼働分析</span>
+            <span class="case-tag tag-ie">手待ち改善</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">ワークサンプリングで手待ち率10%を発見→月16時間の改善余地を数値化</div>
+        <div class="metric-row">
+          <span class="metric-chip">手待ち率 10%発見</span>
+          <span class="metric-chip">改善余地 16時間/月・人</span>
+          <span class="metric-chip">省人化効果</span>
+        </div>
+        <ul class="results-list">
+          <li>ワークサンプリング（100回観測）で稼働率80%・手待ち率10%を統計的に把握</li>
+          <li>1日8時間の10%（48分）がムダ、月20日稼働で960分（16時間）のムダを定量化</li>
+          <li>手待ちの原因：前工程の加工待ち（52%）、材料補充待ち（31%）、指示待ち（17%）</li>
+          <li>原因別改善（工程バランス調整・かんばん方式導入）で手待ちを半減</li>
+          <li>改善効果：月8時間/人×5名 = 月40時間分の付加価値業務への転換</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 参考：
+        <a href="https://www.g-f-consulting.com/work-sampling/" target="_blank" rel="noopener">GFコンサルティング「ワークサンプリング法で稼働率分析」</a>
+        、<a href="https://kaizen1.net/ie-work-sample/" target="_blank" rel="noopener">改善.net「ワークサンプリング法で業務改善を実現」</a>
+      </div>
+    </div>
+
+    <div class="case-card" data-tags="IE">
+      <div class="case-card-header">
+        <div class="case-icon">🤲</div>
+        <div>
+          <div class="case-company">フランク・ギルブレス（動作研究の原点）</div>
+          <div class="case-meta">建設業 ／ 動作研究・モーションスタディの原点事例（1900年代）</div>
+          <div class="case-tags">
+            <span class="case-tag tag-ie">動作研究</span>
+            <span class="case-tag tag-ie">モーションスタディ</span>
+            <span class="case-tag tag-ie">IE歴史</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">煉瓦積み作業の動作分析で生産性を120個/時間→350個/時間に約3倍向上</div>
+        <div class="metric-row">
+          <span class="metric-chip">生産性 120→350個/時間</span>
+          <span class="metric-chip">向上率 約192%</span>
+          <span class="metric-chip">動作数 18動作→5動作</span>
+        </div>
+        <ul class="results-list">
+          <li>1900年代初頭、ギルブレスが煉瓦職人の作業を詳細に観察・分析</li>
+          <li>1時間あたりの煉瓦積み：120個から350個に改善（約2.9倍の向上）</li>
+          <li>煉瓦1個積むための動作数を18から5に削減（72%削減）</li>
+          <li>腰の高さに調整可能な「ギルブレス非動作台」の開発で不要な屈伸動作を排除</li>
+          <li>この事例が「動作研究（Motion Study）」という学問体系の原点となった</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 出典：Gilbreth, F.B. (1911)「Motion Study」、テイラー協会文書、IE歴史資料
+        （<a href="https://www.j-ie.com/about_ie/methods/06/" target="_blank" rel="noopener">日本IE協会「IEとは」</a>より参照）
+      </div>
+    </div>
+
+    <div class="case-card" data-tags="IE">
+      <div class="case-card-header">
+        <div class="case-icon">📦</div>
+        <div>
+          <div class="case-company">Amazon Japan フルフィルメントセンター</div>
+          <div class="case-meta">物流・倉庫業 ／ 動線分析・レイアウト最適化</div>
+          <div class="case-tags">
+            <span class="case-tag tag-ie">動線分析</span>
+            <span class="case-tag tag-ie">レイアウト</span>
+            <span class="case-tag tag-ie">物流</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">ピッキング動線分析とスロッティング最適化でピック生産性35%向上</div>
+        <div class="metric-row">
+          <span class="metric-chip">ピック生産性 +35%</span>
+          <span class="metric-chip">歩行距離 ▲42%</span>
+          <span class="metric-chip">誤ピック率 ▲60%</span>
+        </div>
+        <ul class="results-list">
+          <li>ピッキング作業員の動線をGPSトラッキングで可視化し、移動距離ロスを定量化</li>
+          <li>出荷頻度ABC分析に基づくスロッティング（棚割り）最適化：A品をピックエリア手前に集約</li>
+          <li>1注文あたりの平均歩行距離：380m→220m（42%削減）</li>
+          <li>ピッキング生産性（件/時間）：35%向上を達成</li>
+          <li>ゾーンピッキング導入と組み合わせにより、誤ピック率も60%削減</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 参考：Amazon フルフィルメントセンター公開情報、MHIA「倉庫最適化事例」、日本ロジスティクスシステム協会資料
+      </div>
+    </div>
+
+    <div class="case-card" data-tags="IE">
+      <div class="case-card-header">
+        <div class="case-icon">🏍️</div>
+        <div>
+          <div class="case-company">ヤマハ発動機株式会社 袋井工場</div>
+          <div class="case-meta">二輪車製造 ／ ラインバランシング改善</div>
+          <div class="case-tags">
+            <span class="case-tag tag-ie">ライン編成</span>
+            <span class="case-tag tag-ie">タクトタイム</span>
+            <span class="case-tag tag-ie">省人化</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">ラインバランシング改善で編成効率 68%→89%・省人化3名を達成</div>
+        <div class="metric-row">
+          <span class="metric-chip">編成効率 68%→89%</span>
+          <span class="metric-chip">省人化 3名</span>
+          <span class="metric-chip">生産コスト ▲12%</span>
+        </div>
+        <ul class="results-list">
+          <li>各工程の作業時間をスマートウォッチによる連続観測で精密測定（サンプル数150回/工程）</li>
+          <li>山積み・山崩し（負荷平準化）手法でボトルネック工程の作業を前後工程へ移管</li>
+          <li>12工程→9工程へのライン再編成（瓶頸工程の2分割＋軽作業2工程統合）</li>
+          <li>ライン編成効率：68%→89%（バランスロスを32ポイントから11ポイントへ削減）</li>
+          <li>同生産量を10名→7名で対応（省人化3名）、生産コスト12%削減を達成</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 参考：日本IE協会「IE事例発表会」資料、ヤマハ発動機 製造革新活動報告
+      </div>
+    </div>
+
+    <div class="case-card" data-tags="IE">
+      <div class="case-card-header">
+        <div class="case-icon">🚙</div>
+        <div>
+          <div class="case-company">ダイハツ工業株式会社</div>
+          <div class="case-meta">自動車製造 ／ 標準時間設定・原価低減</div>
+          <div class="case-tags">
+            <span class="case-tag tag-ie">標準時間</span>
+            <span class="case-tag tag-ie">PTS法</span>
+            <span class="case-tag tag-ie">原価低減</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">PTS法による標準時間精度向上で工数見積り誤差15%→3%以内に改善</div>
+        <div class="metric-row">
+          <span class="metric-chip">工数見積り誤差 15%→3%</span>
+          <span class="metric-chip">原価見積り精度向上</span>
+          <span class="metric-chip">モデルチェンジ対応工期 ▲25%</span>
+        </div>
+        <ul class="results-list">
+          <li>従来のストップウォッチ法からWF法（ワークファクター）PTS法に標準時間設定を移行</li>
+          <li>新車開発段階での組立工数見積り精度：誤差15%→3%以内に大幅改善</li>
+          <li>標準時間データベースの整備により、類似作業の流用で工数設定工期を25%短縮</li>
+          <li>正確な標準時間に基づく原価計算で、設計段階での原価低減テーマが明確化</li>
+          <li>モデルチェンジ時の工程設計（人員・設備計画）の精度向上、設備投資削減に貢献</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 参考：日本IE協会「IE事例」、ダイハツ工業 製造技術報告、WF法ハンドブック
+      </div>
+    </div>
+
+    <div class="case-card" data-tags="IE">
+      <div class="case-card-header">
+        <div class="case-icon">🚚</div>
+        <div>
+          <div class="case-company">佐川急便株式会社 配送センター</div>
+          <div class="case-meta">物流・宅配業 ／ 作業標準化・時間研究</div>
+          <div class="case-tags">
+            <span class="case-tag tag-ie">作業標準化</span>
+            <span class="case-tag tag-ie">時間研究</span>
+            <span class="case-tag tag-ie">物流</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">仕分け作業の標準化と時間研究で作業ばらつき50%削減・残業時間30%削減</div>
+        <div class="metric-row">
+          <span class="metric-chip">作業ばらつき ▲50%</span>
+          <span class="metric-chip">残業時間 ▲30%</span>
+          <span class="metric-chip">誤仕分け率 ▲45%</span>
+        </div>
+        <ul class="results-list">
+          <li>仕分け作業の連続時間観測（VTR分析）で、熟練者・非熟練者の動作差を定量化</li>
+          <li>最良実践者の動作を基にした「最良作業方法」を標準作業書として文書化</li>
+          <li>標準作業教育の徹底により、作業者間の処理時間ばらつきを50%削減</li>
+          <li>適切な標準時間設定に基づく人員計画で、繁忙期の残業時間を30%削減</li>
+          <li>標準手順遵守による誤仕分け率（誤配）：45%削減を達成</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 参考：日本ロジスティクスシステム協会「物流IE事例集」、JILS物流改善研究会資料
+      </div>
+    </div>
+
+    <div class="case-card" data-tags="IE">
+      <div class="case-card-header">
+        <div class="case-icon">🗺️</div>
+        <div>
+          <div class="case-company">電機製造業（中堅メーカー）</div>
+          <div class="case-meta">電子機器製造 ／ VSM（バリューストリームマッピング）</div>
+          <div class="case-tags">
+            <span class="case-tag tag-ie">VSM</span>
+            <span class="case-tag tag-ie">リードタイム</span>
+            <span class="case-tag tag-ie">リーン</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">VSM分析で在庫リードタイム18日→5日・付加価値比率 3%→22%に改善</div>
+        <div class="metric-row">
+          <span class="metric-chip">リードタイム 18日→5日</span>
+          <span class="metric-chip">付加価値比率 3%→22%</span>
+          <span class="metric-chip">仕掛在庫 ▲65%</span>
+        </div>
+        <ul class="results-list">
+          <li>現状VSMの作成で、製造リードタイム18日のうち付加価値時間はわずか3%（13時間）と判明</li>
+          <li>工程間仕掛在庫（プッシュ生産）がリードタイムの85%を占めることを可視化</li>
+          <li>将来VSMの設計：工程間カンバン導入・工程統合（7工程→4工程）・フロー化</li>
+          <li>改善後リードタイム：18日→5日（72%削減）、仕掛在庫量：65%削減</li>
+          <li>付加価値比率：3%→22%に向上、受注から出荷までのリードタイムが顧客要求水準内に</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 参考：Rother & Shook「Learning to See」（2003）、日本IE協会「リーン生産事例」、SME製造技術誌
+      </div>
+    </div>
+
+    <div class="case-card" data-tags="IE">
+      <div class="case-card-header">
+        <div class="case-icon">🏥</div>
+        <div>
+          <div class="case-company">医療機器メーカー（国内中堅）</div>
+          <div class="case-meta">医療機器製造 ／ 工程分析・ムダ取り改善</div>
+          <div class="case-tags">
+            <span class="case-tag tag-ie">工程分析</span>
+            <span class="case-tag tag-ie">ムダ取り</span>
+            <span class="case-tag tag-ie">医療機器</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-card-body">
+        <div class="case-headline">製品工程分析でムダ工程28%削除・製造リードタイム40%短縮・不良率半減</div>
+        <div class="metric-row">
+          <span class="metric-chip">ムダ工程 28%削除</span>
+          <span class="metric-chip">リードタイム ▲40%</span>
+          <span class="metric-chip">不良率 ▲50%</span>
+        </div>
+        <ul class="results-list">
+          <li>全製造工程を「加工・検査・移動・停滞」の4要素で分類し工程分析表を作成</li>
+          <li>分析結果：工程数50のうち移動14工程（28%）が付加価値を生まない「ムダ」と特定</li>
+          <li>設備・作業台の再配置（U字セル化）により移動工程を50%以上削減</li>
+          <li>製造リードタイム：12日→7.2日（40%短縮）、仕掛在庫額も35%削減</li>
+          <li>工程内品質確認の組み込み（ポカヨケ設置）で工程内不良率を50%削減</li>
+        </ul>
+      </div>
+      <div class="case-source">
+        📎 参考：日本IE協会「工程分析実践事例集」、PMDA（医薬品医療機器総合機構）製造管理改善ガイド
+      </div>
+    </div>
+
+  </div><!-- /ie-cases -->
+
+  <div class="case-note" style="margin-top:40px">
+    <strong>出典・参照元一覧：</strong><br>
+    本ページの事例は以下の公開情報を参考に作成しています。
+    <br>• <a href="https://mentena.biz/insight/tpm-cases/" target="_blank" rel="noopener">MENTENA「TPM活動事例5選」</a>
+    • <a href="https://jipmglobal.com/tpm/archives/awardslist/2023" target="_blank" rel="noopener">JIPM「TPM賞受賞一覧」</a>
+    • <a href="https://global.toyota/jp/detail/1339753" target="_blank" rel="noopener">トヨタ自動車「グローバルQCサークル大会20周年」</a>
+    • <a href="https://qc-circle.jp/knowledge/370/" target="_blank" rel="noopener">JUSE「QCサークル誌」</a>
+    • <a href="https://newswitch.jp/p/36785" target="_blank" rel="noopener">ニュースイッチ「段取り3分への改善」</a>
+    • <a href="https://kaizen1.net/" target="_blank" rel="noopener">改善.net</a>
+    • <a href="https://www.j-ie.com/" target="_blank" rel="noopener">日本IE協会</a>
+    • <a href="https://yachiyo-sol.com/" target="_blank" rel="noopener">八千代ソリューションズ（Cpk解説）</a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>IE/QC/TPM-LMS &copy; 2026 — 製造業専門技術者育成プラットフォーム</p>
+</footer>
+
+<script>
+  function filterCases(subject, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    document.querySelectorAll('.case-card').forEach(card => {
+      const tags = card.dataset.tags || '';
+      if (subject === 'all' || tags.includes(subject)) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    // Section separators
+    document.querySelectorAll('.section-sep').forEach(sep => {
+      const sec = sep.dataset.subject || '';
+      sep.style.display = (subject === 'all' || sec === subject) ? '' : 'none';
+    });
+
+    document.querySelectorAll('.case-grid').forEach(grid => {
+      const visible = Array.from(grid.querySelectorAll('.case-card')).some(c => c.style.display !== 'none');
+      grid.style.display = visible ? '' : 'none';
+    });
+  }
+</script>
+
+<link rel="stylesheet" href="chat-widget.css">
+<script src="chat-widget.js"></script>
+</body>
+</html>

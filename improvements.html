@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>改善案件管理 | IE-LMS</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo">
+      <div class="logo-icon">🏭</div>
+      <div>
+        <div class="logo-text">IE-LMS</div>
+        <div class="logo-sub">Industrial Engineering Platform</div>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="index.html" class="nav-link">講座一覧</a>
+      <a href="improvements.html" class="nav-link" style="color:#fff;font-weight:700">改善案件</a>
+    </nav>
+  </div>
+</header>
+
+<main class="main-content">
+
+  <div class="page-header">
+    <h1>🔧 改善案件管理</h1>
+    <p>工程ごとの課題を登録し、Claude AIによるIE視点の改善コメントを取得できます。</p>
+  </div>
+
+  <div id="alert-box"></div>
+
+  <!-- Tab -->
+  <div class="tab-row">
+    <button class="tab-btn active" onclick="showTab('list')">案件一覧</button>
+    <button class="tab-btn" onclick="showTab('new')">新規登録</button>
+  </div>
+
+  <!-- LIST TAB -->
+  <div id="tab-list">
+
+    <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap">
+      <button class="filter-btn active" onclick="loadList(null,this)">すべて</button>
+      <button class="filter-btn" onclick="loadList('open',this)">未着手</button>
+      <button class="filter-btn" onclick="loadList('in_progress',this)">進行中</button>
+      <button class="filter-btn" onclick="loadList('completed',this)">完了</button>
+      <button class="filter-btn" style="margin-left:auto" onclick="loadList(currentStatus)">🔄 更新</button>
+    </div>
+
+    <div id="impr-list-container">
+      <div class="empty-state">
+        <div class="empty-icon">⏳</div>
+        <div class="empty-text">読み込み中…</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- NEW TAB -->
+  <div id="tab-new" style="display:none">
+
+    <form class="form-card" id="new-form" onsubmit="submitNew(event)">
+      <h2>新規改善案件の登録</h2>
+
+      <div class="form-grid">
+        <div class="form-group full">
+          <label class="form-label">工程名 <span class="req">*</span></label>
+          <input class="form-input" name="process_name" required placeholder="例：組立ライン A工程、検査工程 3番台">
+        </div>
+
+        <div class="form-group full">
+          <label class="form-label">課題・問題点 <span class="req">*</span></label>
+          <textarea class="form-textarea" name="issue" required
+            placeholder="例：ネジ締め工程の手待ちが多く、タクトタイムを超えている。工程内停滞が慢性的に発生している。"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">現状数値</label>
+          <div class="form-row-inline">
+            <input class="form-input" name="current_value" type="number" step="any" placeholder="例：45">
+            <select class="form-select" name="current_unit" style="width:100px">
+              <option value="秒">秒</option>
+              <option value="分">分</option>
+              <option value="%">%</option>
+              <option value="個/時">個/時</option>
+              <option value="ppm">ppm</option>
+              <option value="m">m</option>
+              <option value="回">回</option>
+              <option value="円">円</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">目標数値</label>
+          <div class="form-row-inline">
+            <input class="form-input" name="target_value" type="number" step="any" placeholder="例：30">
+            <span class="unit-label" id="target-unit-label">（同単位）</span>
+          </div>
+        </div>
+
+        <div class="form-group full">
+          <label class="form-label">現状データ・補足情報</label>
+          <textarea class="form-textarea" name="current_data"
+            placeholder="計測データ、観測結果、背景情報などを自由に記入してください。&#10;例：1シフト8時間中、手待ちが約1.5時間（稼働分析より）。主原因は前工程の部品供給遅れ。"></textarea>
+          <span class="form-hint">Claudeへの入力情報になります。詳細なほど精度の高いコメントが得られます。</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">動画ファイル（任意）</label>
+          <input class="upload-input" type="file" id="video-file" accept="video/*">
+          <span class="form-hint">MP4/MOV/AVI/WebM · 最大200MB</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">音声ファイル（任意）</label>
+          <input class="upload-input" type="file" id="audio-file" accept="audio/*">
+          <span class="form-hint">MP3/WAV/M4A/AAC · 最大200MB</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+        <button type="submit" class="form-submit-btn" id="submit-btn">
+          ✚ 登録 &amp; AIコメント生成
+        </button>
+        <span class="form-hint" id="submit-msg"></span>
+      </div>
+    </form>
+
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>IE-LMS &copy; 2026 — Industrial Engineering Learning Platform</p>
+</footer>
+
+<script>
+  let currentStatus = null;
+
+  function showTab(name) {
+    document.getElementById('tab-list').style.display = name === 'list' ? '' : 'none';
+    document.getElementById('tab-new').style.display = name === 'new' ? '' : 'none';
+    document.querySelectorAll('.tab-btn').forEach((b, i) => {
+      b.classList.toggle('active', (i === 0 && name === 'list') || (i === 1 && name === 'new'));
+    });
+    if (name === 'list') loadList(currentStatus);
+  }
+
+  function statusLabel(s) {
+    return { open: '未着手', in_progress: '進行中', completed: '完了' }[s] || s;
+  }
+
+  function statusClass(s) {
+    return `status-${s}`;
+  }
+
+  function fmtDate(s) {
+    if (!s) return '';
+    return s.replace('T', ' ').slice(0, 16);
+  }
+
+  async function loadList(status, btn) {
+    currentStatus = status;
+    if (btn) {
+      document.querySelectorAll('#tab-list .filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    const container = document.getElementById('impr-list-container');
+    container.innerHTML = '<div class="empty-state"><div class="empty-icon">⏳</div><div>読み込み中…</div></div>';
+
+    try {
+      const url = status ? `/api/improvements?status=${status}` : '/api/improvements';
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const items = await res.json();
+
+      if (!items.length) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">📋</div>
+            <div class="empty-text">案件はまだありません</div>
+            <div class="empty-sub">「新規登録」タブから改善案件を追加してください</div>
+          </div>`;
+        return;
+      }
+
+      container.innerHTML = `<div class="impr-list">${items.map(renderCard).join('')}</div>`;
+    } catch (e) {
+      container.innerHTML = `<div class="alert alert-error">サーバーに接続できません。<code>start.sh</code>でサーバーを起動してください。<br>${e.message}</div>`;
+    }
+  }
+
+  function renderCard(imp) {
+    const hasVideo = imp.video_path ? '🎬 動画' : '';
+    const hasAudio = imp.audio_path ? '🎙️ 音声' : '';
+    const mediaBadges = [hasVideo, hasAudio].filter(Boolean).map(m =>
+      `<span class="impr-media-badge">${m}</span>`
+    ).join('');
+
+    const metrics = [];
+    if (imp.current_value != null) metrics.push(`<div class="impr-metric"><span class="impr-metric-label">現状</span>${imp.current_value}${imp.current_unit||''}</div>`);
+    if (imp.target_value != null) metrics.push(`<div class="impr-metric"><span class="impr-metric-label">目標</span>${imp.target_value}${imp.current_unit||''}</div>`);
+    if (imp.current_value && imp.target_value) {
+      const rate = Math.abs(imp.target_value - imp.current_value) / imp.current_value * 100;
+      metrics.push(`<div class="impr-metric"><span class="impr-metric-label">改善幅</span>${rate.toFixed(1)}%</div>`);
+    }
+
+    const claudeBlock = imp.claude_comment
+      ? `<div class="impr-claude">
+           <div class="impr-claude-label">🤖 Claude IE コメント</div>
+           <div class="impr-claude-text">${escHtml(imp.claude_comment)}</div>
+         </div>`
+      : `<div class="impr-claude">
+           <div class="impr-claude-label">🤖 Claude IE コメント</div>
+           <div class="impr-claude-pending">AIコメント生成中… しばらく待って「🔄 更新」してください</div>
+         </div>`;
+
+    const uploadHtml = `
+      <form style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px"
+        onsubmit="uploadFiles(event,${imp.id})">
+        <label style="font-size:12px;color:#6b7280">動画追加:
+          <input type="file" name="video" accept="video/*" style="font-size:11px">
+        </label>
+        <label style="font-size:12px;color:#6b7280">音声追加:
+          <input type="file" name="audio" accept="audio/*" style="font-size:11px">
+        </label>
+        <button type="submit" style="padding:4px 10px;font-size:12px;border:1px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer">アップロード</button>
+      </form>`;
+
+    return `
+      <div class="impr-card" id="card-${imp.id}">
+        <div class="impr-card-header">
+          <div>
+            <span class="impr-status-badge ${statusClass(imp.status)}">${statusLabel(imp.status)}</span>
+          </div>
+          <div class="impr-process">${escHtml(imp.process_name)}</div>
+          <div class="impr-date">${fmtDate(imp.created_at)}</div>
+        </div>
+        <div class="impr-card-body">
+          <div class="impr-issue">${escHtml(imp.issue)}</div>
+          ${metrics.length ? `<div class="impr-metrics">${metrics.join('')}</div>` : ''}
+          ${imp.current_data ? `<div style="font-size:13px;color:#6b7280;margin-bottom:8px">📋 ${escHtml(imp.current_data)}</div>` : ''}
+          ${claudeBlock}
+          ${uploadHtml}
+        </div>
+        <div class="impr-card-footer">
+          ${mediaBadges}
+          <div style="display:flex;gap:8px;margin-left:auto">
+            <select class="form-select" style="padding:4px 8px;font-size:12px"
+              onchange="updateStatus(${imp.id},this.value)">
+              <option value="open" ${imp.status==='open'?'selected':''}>未着手</option>
+              <option value="in_progress" ${imp.status==='in_progress'?'selected':''}>進行中</option>
+              <option value="completed" ${imp.status==='completed'?'selected':''}>完了</option>
+            </select>
+            <button class="impr-analyze-btn" onclick="reanalyze(${imp.id})">🤖 再生成</button>
+            <button class="impr-analyze-btn" style="color:#ef4444;border-color:#ef4444"
+              onclick="deleteImp(${imp.id})">削除</button>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function escHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+  }
+
+  async function submitNew(e) {
+    e.preventDefault();
+    const form = e.target;
+    const btn = document.getElementById('submit-btn');
+    const msg = document.getElementById('submit-msg');
+    btn.disabled = true;
+    msg.textContent = '登録中…';
+
+    const fd = new FormData(form);
+    const body = {
+      process_name: fd.get('process_name'),
+      issue: fd.get('issue'),
+      current_value: fd.get('current_value') ? parseFloat(fd.get('current_value')) : null,
+      current_unit: fd.get('current_unit') || null,
+      target_value: fd.get('target_value') ? parseFloat(fd.get('target_value')) : null,
+      current_data: fd.get('current_data') || null,
+    };
+
+    try {
+      const res = await fetch('/api/improvements', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const imp = await res.json();
+
+      // Upload files if selected
+      const videoFile = document.getElementById('video-file').files[0];
+      const audioFile = document.getElementById('audio-file').files[0];
+
+      if (videoFile) {
+        const vf = new FormData();
+        vf.append('file', videoFile);
+        await fetch(`/api/improvements/${imp.id}/upload-video`, { method: 'POST', body: vf });
+      }
+      if (audioFile) {
+        const af = new FormData();
+        af.append('file', audioFile);
+        await fetch(`/api/improvements/${imp.id}/upload-audio`, { method: 'POST', body: af });
+      }
+
+      msg.textContent = '✓ 登録しました！AIコメントはバックグラウンドで生成されます。';
+      msg.style.color = 'var(--success)';
+      form.reset();
+      showTab('list');
+    } catch (err) {
+      msg.textContent = `⚠️ エラー: ${err.message}`;
+      msg.style.color = '#ef4444';
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  async function reanalyze(id) {
+    const btn = event.target;
+    btn.disabled = true;
+    btn.textContent = '生成中…';
+    try {
+      const res = await fetch(`/api/improvements/${id}/analyze`, { method: 'POST' });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      loadList(currentStatus);
+    } catch (err) {
+      alert('エラー: ' + err.message);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '🤖 再生成';
+    }
+  }
+
+  async function updateStatus(id, status) {
+    try {
+      await fetch(`/api/improvements/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status })
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async function deleteImp(id) {
+    if (!confirm('この案件を削除しますか？')) return;
+    try {
+      await fetch(`/api/improvements/${id}`, { method: 'DELETE' });
+      document.getElementById(`card-${id}`)?.remove();
+    } catch (e) {
+      alert('削除エラー: ' + e.message);
+    }
+  }
+
+  async function uploadFiles(e, id) {
+    e.preventDefault();
+    const form = e.target;
+    const videoFile = form.video.files[0];
+    const audioFile = form.audio.files[0];
+    if (!videoFile && !audioFile) { alert('ファイルを選択してください'); return; }
+
+    try {
+      if (videoFile) {
+        const vf = new FormData();
+        vf.append('file', videoFile);
+        await fetch(`/api/improvements/${id}/upload-video`, { method: 'POST', body: vf });
+      }
+      if (audioFile) {
+        const af = new FormData();
+        af.append('file', audioFile);
+        await fetch(`/api/improvements/${id}/upload-audio`, { method: 'POST', body: af });
+      }
+      loadList(currentStatus);
+    } catch (err) {
+      alert('アップロードエラー: ' + err.message);
+    }
+  }
+
+  // Init
+  loadList(null);
+</script>
+
+<link rel="stylesheet" href="chat-widget.css">
+<script src="chat-widget.js"></script>
+</body>
+</html>

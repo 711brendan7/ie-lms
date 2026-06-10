@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IE-LMS — 講座</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .reading-bar { position:fixed; top:60px; left:0; width:0; height:3px; background:var(--accent); z-index:200; transition:width 0.1s; }
+
+  /* Resource links sidebar card */
+  .resource-section-title {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: #6b7280; margin: 14px 0 6px;
+  }
+  .resource-section-title:first-child { margin-top: 0; }
+  .resource-link-list { list-style: none; padding: 0; margin: 0 0 4px; }
+  .resource-link-list li { margin-bottom: 5px; }
+  .resource-link-list a {
+    display: flex; align-items: flex-start; gap: 6px;
+    font-size: 12px; color: #374151; text-decoration: none;
+    line-height: 1.45;
+    transition: color 0.15s;
+  }
+  .resource-link-list a:hover { color: #7c3aed; }
+  .resource-link-list a .rl-icon { flex-shrink: 0; font-size: 13px; margin-top: 1px; }
+  .resource-link-list a .rl-text { flex: 1; }
+  .resource-link-list a[target="_blank"] .rl-text::after {
+    content: " ↗"; font-size: 10px; opacity: 0.5;
+  }
+  .resource-divider { border: none; border-top: 1px solid #f3f4f6; margin: 10px 0; }
+  .en-badge {
+    display: inline-block; font-size: 9px; font-weight: 700; line-height: 1;
+    padding: 2px 4px; border-radius: 3px;
+    background: #dbeafe; color: #1d4ed8;
+    vertical-align: middle; margin-left: 4px; flex-shrink: 0;
+  }
+  .resource-lang-bar {
+    display: flex; align-items: center; justify-content: flex-end; gap: 6px;
+    margin-bottom: 10px;
+  }
+  .resource-lang-label { font-size: 10px; color: #9ca3af; }
+  .resource-lang-btns {
+    display: flex; border: 1px solid #e5e7eb; border-radius: 4px; overflow: hidden;
+  }
+  .resource-lang-btn {
+    font-size: 10px; font-weight: 700; padding: 2px 8px;
+    border: none; background: #fff; color: #9ca3af; cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .resource-lang-btn + .resource-lang-btn { border-left: 1px solid #e5e7eb; }
+  .resource-lang-btn.active { background: #7c3aed; color: #fff; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo">
+      <div class="logo-icon">🏭</div>
+      <div>
+        <div class="logo-text">IE-LMS</div>
+        <div class="logo-sub">Industrial Engineering Platform</div>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="index.html" class="nav-link">講座一覧</a>
+      <a href="cases.html" class="nav-link">事例集</a>
+      <a href="papers.html" class="nav-link">論文・文献</a>
+      <a href="improvements.html" class="nav-link">改善案件</a>
+    </nav>
+  </div>
+</header>
+
+<div class="reading-bar" id="reading-bar"></div>
+
+<main class="main-content">
+
+  <a href="index.html" class="back-link">← 講座一覧に戻る</a>
+
+  <div class="course-layout" id="course-layout">
+    <!-- JS renders here -->
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>IE-LMS &copy; 2026 — Industrial Engineering Learning Platform</p>
+</footer>
+
+<script src="data/course_links.js"></script>
+<script src="data/ie_additional_courses.js"></script>
+<script src="data/qc_courses.js"></script>
+<script src="data/tpm_courses.js"></script>
+<script src="data/ps_courses.js"></script>
+<script src="data/courses.js"></script>
+<script>
+  const LEVEL_LABELS = ['', '入門', '基礎', '応用', '発展'];
+
+  // ---- Markdown renderer (enhanced) ----
+  function renderMarkdown(md) {
+    // 1. Protect fenced code blocks (``` or ~~~)
+    const codeBlocks = [];
+    md = md.replace(/(?:~~~|```)[^\n]*\n([\s\S]*?)(?:~~~|```)/g, (_, code) => {
+      const placeholder = `\x00CODE${codeBlocks.length}\x00`;
+      codeBlocks.push(`<pre><code>${escapeHtml(code.trim())}</code></pre>`);
+      return placeholder;
+    });
+
+    // 2. Callout boxes  :::type\ncontent\n:::
+    md = md.replace(/:::(tip|point|warn|example|formula)\n([\s\S]*?):::/g, (_, type, content) => {
+      const cfg = {
+        tip:     { icon: '💡', label: 'ポイント',   cls: 'callout-tip' },
+        point:   { icon: '🎯', label: 'KEY POINT', cls: 'callout-point' },
+        warn:    { icon: '⚠️', label: '注意',       cls: 'callout-warn' },
+        example: { icon: '📝', label: '実例',       cls: 'callout-example' },
+        formula: { icon: '🧮', label: '計算式',     cls: 'callout-formula' },
+      }[type];
+      const inner = renderMarkdown(content.trim());
+      return `<div class="callout ${cfg.cls}"><div class="callout-header">${cfg.icon} ${cfg.label}</div><div class="callout-body">${inner}</div></div>`;
+    });
+
+    // 3. Tables
+    md = md.replace(/(\|.+\|\n)+/g, renderTable);
+
+    // 4. Inline formatting
+    md = md
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/`([^`]+)`/g, '<code>$1</code>');
+
+    // 5. Headers
+    md = md
+      .replace(/^#### (.+)$/gm, '<h4>$1</h4>')
+      .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+      .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+      .replace(/^# (.+)$/gm, '<h1>$1</h1>');
+
+    // 6. Horizontal rule
+    md = md.replace(/^---$/gm, '<hr>');
+
+    // 7. Ordered lists
+    md = md.replace(/(^\d+\. .+\n?)+/gm, block => {
+      const items = block.trim().split('\n')
+        .map(l => `<li>${l.replace(/^\d+\. /, '')}</li>`).join('');
+      return `<ol>${items}</ol>`;
+    });
+
+    // 8. Unordered lists
+    md = md.replace(/(^- .+\n?)+/gm, block => {
+      const items = block.trim().split('\n')
+        .map(l => `<li>${l.replace(/^- /, '')}</li>`).join('');
+      return `<ul>${items}</ul>`;
+    });
+
+    // 9. Paragraphs
+    md = md.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>');
+    md = `<p>${md}</p>`;
+
+    // 10. Restore code blocks
+    codeBlocks.forEach((block, i) => {
+      md = md.replace(`<p>\x00CODE${i}\x00</p>`, block)
+             .replace(`\x00CODE${i}\x00`, block);
+    });
+
+    return md;
+  }
+
+  function renderTable(block) {
+    const rows = block.trim().split('\n');
+    if (rows.length < 2) return block;
+    const isSep = row => /^\|[-|\s:]+\|$/.test(row);
+    const parseRow = row => row.split('|').slice(1, -1).map(c => c.trim());
+
+    let html = '<table>';
+    rows.forEach((row, i) => {
+      if (isSep(row)) return;
+      const cells = parseRow(row);
+      if (i === 0) {
+        html += '<thead><tr>' + cells.map(c => `<th>${c}</th>`).join('') + '</tr></thead><tbody>';
+      } else {
+        html += '<tr>' + cells.map(c => `<td>${c}</td>`).join('') + '</tr>';
+      }
+    });
+    html += '</tbody></table>';
+    return html;
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  // ---- Main ----
+  const params = new URLSearchParams(location.search);
+  const courseId = params.get('id');
+  const course = COURSES.find(c => c.id === courseId);
+
+  if (!course) {
+    document.getElementById('course-layout').innerHTML =
+      '<p style="color:#ef4444">講座が見つかりませんでした。<a href="index.html">一覧に戻る</a></p>';
+  } else {
+    document.title = `${course.title} | IE-LMS`;
+
+    // Level dots
+    const dots = Array.from({length: 4}, (_, i) =>
+      `<div class="dot ${i < course.level ? 'filled' : ''}"></div>`
+    ).join('');
+
+    // Audio narration (first 3 IE courses)
+    const AUDIO_COURSES = ['ie-overview', 'process-analysis', 'motion-study'];
+    const hasAudio = AUDIO_COURSES.includes(course.id);
+
+    // Sections HTML
+    const sectionsHtml = course.sections.map((sec, idx) => `
+      <div class="section-block" id="sec-${idx}">
+        <div class="section-block-header">
+          <span>${sec.title}</span>
+          ${hasAudio ? `<span class="section-playing-badge" id="playing-badge-${idx}" style="display:none">▶ 再生中</span>` : ''}
+        </div>
+        <div class="section-block-body md-content">
+          ${renderMarkdown(sec.content)}
+        </div>
+      </div>
+    `).join('');
+
+    // Audio player panel HTML
+    const audioPanelHtml = hasAudio ? `
+      <div class="audio-panel">
+        <div class="audio-panel-header">
+          <span class="audio-panel-icon">🔊</span>
+          <div>
+            <div class="audio-panel-title">音声解説</div>
+            <div class="audio-panel-sub">セクションを選んで再生してください</div>
+          </div>
+          <div class="audio-panel-status" id="audio-status">停止中</div>
+        </div>
+        <div class="audio-panel-tracks">
+          ${course.sections.map((sec, idx) => `
+            <button class="audio-track-btn" id="audio-btn-${idx}" onclick="toggleAudio(${idx})">
+              <span class="audio-track-num">${idx + 1}</span>
+              <span class="audio-track-title">${sec.title}</span>
+              <span class="audio-track-icon">▶</span>
+            </button>
+          `).join('')}
+        </div>
+      </div>
+    ` : '';
+
+    // ToC
+    const tocHtml = course.sections.map((sec, idx) => `
+      <li class="toc-item">
+        <a class="toc-link" onclick="scrollToSection(${idx})">${sec.title}</a>
+      </li>
+    `).join('');
+
+    // Related courses (same category, different id)
+    const related = COURSES.filter(c => c.id !== course.id && c.category === course.category).slice(0, 3);
+    const relatedHtml = related.length > 0
+      ? related.map(c => `
+          <a href="course.html?id=${c.id}" class="related-link">
+            <span class="related-icon">${c.icon}</span>
+            <div class="related-info">
+              <div class="related-title">${c.title}</div>
+              <div class="related-cat">${c.category} · Lv.${c.level}</div>
+            </div>
+          </a>
+        `).join('')
+      : '<p style="font-size:13px;color:#9ca3af">同カテゴリの他の講座はありません</p>';
+
+    // Resource links
+    const links = (typeof getCourseLinks === 'function') ? getCourseLinks(course) : null;
+
+    function renderResourceLink(l) {
+      if (l.lang === 'en') {
+        const urlEn = l.url;
+        const urlJa = l.urlJa || `https://translate.google.com/translate?sl=en&tl=ja&u=${encodeURIComponent(l.url)}`;
+        return `<li><a href="${urlJa}" data-url-en="${urlEn}" data-url-ja="${urlJa}" target="_blank" rel="noopener"><span class="rl-icon">🔗</span><span class="rl-text"><span class="rl-lang-text" data-ja="${l.title}" data-en="${l.titleEn || l.title}">${l.title}</span><span class="en-badge rl-lang-badge" data-ja="翻訳" data-en="英語">翻訳</span></span></a></li>`;
+      }
+      return `<li><a href="${l.url}" target="_blank" rel="noopener"><span class="rl-icon">🔗</span><span class="rl-text">${l.title}</span></a></li>`;
+    }
+
+    const hasEnLinks = links && [...links.externalImprovement, ...links.externalAnalysis].some(l => l.lang === 'en');
+
+    const resourceHtml = links ? `
+      ${hasEnLinks ? `
+      <div class="resource-lang-bar">
+        <span class="resource-lang-label">表示言語</span>
+        <div class="resource-lang-btns">
+          <button class="resource-lang-btn active" id="rl-btn-ja" onclick="setResourceLang('ja')">JA</button>
+          <button class="resource-lang-btn"        id="rl-btn-en" onclick="setResourceLang('en')">EN</button>
+        </div>
+      </div>` : ''}
+      <div class="resource-section-title">📚 関連する事例集</div>
+      <ul class="resource-link-list">
+        <li><a href="${links.casesUrl}"><span class="rl-icon">📋</span><span class="rl-text">事例集を見る（${course.subject || 'IE'}）</span></a></li>
+      </ul>
+      <hr class="resource-divider">
+      <div class="resource-section-title">📄 関連する論文・文献</div>
+      <ul class="resource-link-list">
+        <li><a href="${links.papersUrl}"><span class="rl-icon">📖</span><span class="rl-text">論文・文献一覧を見る（${course.subject || 'IE'}）</span></a></li>
+      </ul>
+      <hr class="resource-divider">
+      <div class="resource-section-title">🔧 外部URL（改善事例）</div>
+      <ul class="resource-link-list">
+        ${links.externalImprovement.map(renderResourceLink).join('')}
+      </ul>
+      <hr class="resource-divider">
+      <div class="resource-section-title">🔬 外部URL（分析事例）</div>
+      <ul class="resource-link-list">
+        ${links.externalAnalysis.map(renderResourceLink).join('')}
+      </ul>
+    ` : '';
+
+    document.getElementById('course-layout').innerHTML = `
+      <div class="course-main">
+        <div class="course-hero">
+          <div class="course-hero-icon">${course.icon}</div>
+          <div class="course-hero-badge">
+            <span class="badge badge-category" style="background:rgba(255,255,255,0.2);color:#fff">${course.category}</span>
+          </div>
+          <h1>${course.title}</h1>
+          <div class="course-hero-sub">${course.subtitle}</div>
+          <div class="course-hero-desc">${course.description}</div>
+          <div class="course-hero-meta">
+            <span>⏱ ${course.duration}</span>
+            <span>📘 ${course.sections.length}セクション</span>
+            <span>レベル ${dots}</span>
+          </div>
+        </div>
+
+        <div class="objectives-box">
+          <h3>🎯 この講座で身につくこと</h3>
+          <ul class="objectives-list">
+            ${course.objectives.map(o => `<li>${o}</li>`).join('')}
+          </ul>
+        </div>
+
+        ${audioPanelHtml}
+
+        ${sectionsHtml}
+
+        ${course.quiz ? renderQuiz(course) : ''}
+      </div>
+
+      <aside class="course-sidebar">
+        <div class="sidebar-card">
+          <h4>目次</h4>
+          <ul class="toc-list">${tocHtml}</ul>
+        </div>
+        <div class="sidebar-card">
+          <h4>関連講座</h4>
+          <div class="related-courses">${relatedHtml}</div>
+        </div>
+        ${resourceHtml ? `
+        <div class="sidebar-card">
+          <h4>関連リソース</h4>
+          ${resourceHtml}
+        </div>
+        ` : ''}
+      </aside>
+    `;
+
+    // Level dots need to be rendered inside flex
+    document.querySelectorAll('.course-hero-meta span:last-child').forEach(el => {
+      el.innerHTML = `レベル <span class="level-dots">${dots}</span>`;
+    });
+  }
+
+  function scrollToSection(idx) {
+    const el = document.getElementById(`sec-${idx}`);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.querySelectorAll('.toc-link').forEach((l, i) => {
+      l.classList.toggle('active', i === idx);
+    });
+  }
+
+  // ---- Quiz ----
+  function renderQuiz(course) {
+    const qHtml = course.quiz.map((q, qi) => `
+      <div class="quiz-question" id="qq-${qi}">
+        <div class="quiz-q-num">Q${qi + 1}</div>
+        <div class="quiz-q-text">${q.q}</div>
+        <div class="quiz-options">
+          ${q.options.map((opt, oi) => `
+            <label class="quiz-option" id="qo-${qi}-${oi}">
+              <input type="radio" name="q${qi}" value="${oi}" onchange="onAnswer(${qi},${oi})">
+              <span>${opt}</span>
+            </label>
+          `).join('')}
+        </div>
+        <div class="quiz-feedback" id="qf-${qi}"></div>
+      </div>
+    `).join('');
+
+    return `
+      <div class="quiz-box" id="quiz-box">
+        <div class="quiz-header">
+          <span class="quiz-icon">📝</span>
+          <div>
+            <div class="quiz-title">理解度テスト</div>
+            <div class="quiz-subtitle">${course.quiz.length}問 · 全問正解で合格</div>
+          </div>
+        </div>
+        <div class="quiz-body" id="quiz-body">${qHtml}</div>
+        <div class="quiz-footer" id="quiz-footer" style="display:none">
+          <div class="quiz-score" id="quiz-score"></div>
+          <button class="quiz-submit-btn" onclick="submitResult()">結果を保存する</button>
+          <div class="quiz-save-msg" id="quiz-save-msg"></div>
+        </div>
+      </div>
+    `;
+  }
+
+  const answers = {};
+
+  function onAnswer(qi, oi) {
+    const q = course.quiz[qi];
+    const isCorrect = oi === q.answer;
+    answers[qi] = { qi, chosen: oi, correct: q.answer, isCorrect };
+
+    // Visual feedback
+    document.querySelectorAll(`#qq-${qi} .quiz-option`).forEach((el, i) => {
+      el.classList.remove('correct', 'wrong', 'selected');
+      if (i === q.answer) el.classList.add('correct');
+      if (i === oi && !isCorrect) el.classList.add('wrong');
+      if (i === oi) el.classList.add('selected');
+    });
+    const fb = document.getElementById(`qf-${qi}`);
+    fb.textContent = isCorrect ? '✓ 正解！' : `✗ 不正解。正解は「${q.options[q.answer]}」`;
+    fb.className = 'quiz-feedback ' + (isCorrect ? 'correct' : 'wrong');
+
+    // Show submit button after all answered
+    if (Object.keys(answers).length === course.quiz.length) {
+      const correct = Object.values(answers).filter(a => a.isCorrect).length;
+      const total = course.quiz.length;
+      const score = Math.round(correct / total * 100);
+      const footer = document.getElementById('quiz-footer');
+      const scoreEl = document.getElementById('quiz-score');
+      scoreEl.innerHTML = `
+        <span class="${score >= 80 ? 'pass' : 'fail'}">${score}点</span>
+        <span class="score-detail">${correct}/${total}問正解 · ${score >= 80 ? '✓ 合格' : '再挑戦してみてください'}</span>
+      `;
+      footer.style.display = 'flex';
+    }
+  }
+
+  async function submitResult() {
+    const correct = Object.values(answers).filter(a => a.isCorrect).length;
+    const total = course.quiz.length;
+    const score = Math.round(correct / total * 100);
+    const msg = document.getElementById('quiz-save-msg');
+    msg.textContent = '保存中…';
+
+    try {
+      const res = await fetch('/api/tests/results', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          course_id: course.id,
+          score,
+          total_questions: total,
+          correct_answers: correct,
+          answers: Object.values(answers).map(a => ({
+            question_index: a.qi,
+            chosen: a.chosen,
+            correct: a.correct,
+            is_correct: a.isCorrect
+          }))
+        })
+      });
+      if (res.ok) {
+        msg.textContent = '✓ 結果を保存しました';
+        msg.className = 'quiz-save-msg saved';
+        document.querySelector('.quiz-submit-btn').disabled = true;
+      } else {
+        msg.textContent = '⚠️ 保存に失敗しました（サーバーエラー）';
+      }
+    } catch {
+      msg.textContent = '⚠️ サーバーに接続できません（ローカルファイルでは動作しません。start.shでサーバーを起動してください）';
+    }
+  }
+
+  // ---- Resource language toggle ----
+  function setResourceLang(lang) {
+    // タイトルテキストを切り替え
+    document.querySelectorAll('.rl-lang-text').forEach(el => {
+      el.textContent = el.dataset[lang] || el.dataset.ja;
+    });
+    // バッジテキストを切り替え（翻訳 ↔ 英語）
+    document.querySelectorAll('.rl-lang-badge').forEach(el => {
+      el.textContent = el.dataset[lang] || el.dataset.ja;
+    });
+    // リンク先URLを切り替え（JA: Google翻訳, EN: 原文）
+    document.querySelectorAll('a[data-url-en]').forEach(a => {
+      a.href = lang === 'en' ? a.dataset.urlEn : a.dataset.urlJa;
+    });
+    // ボタンのアクティブ状態を更新
+    document.querySelectorAll('.resource-lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.id === `rl-btn-${lang}`);
+    });
+  }
+
+  // ---- Reading progress bar ----
+  window.addEventListener('scroll', () => {
+    const doc = document.documentElement;
+    const scrolled = doc.scrollTop / (doc.scrollHeight - doc.clientHeight) * 100;
+    document.getElementById('reading-bar').style.width = Math.min(scrolled, 100) + '%';
+  });
+
+  // Intersection Observer for ToC highlight
+  window.addEventListener('load', () => {
+    const sections = document.querySelectorAll('.section-block');
+    if (!sections.length) return;
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const idx = parseInt(entry.target.id.replace('sec-', ''));
+          document.querySelectorAll('.toc-link').forEach((l, i) => {
+            l.classList.toggle('active', i === idx);
+          });
+        }
+      });
+    }, { threshold: 0.3 });
+    sections.forEach(s => observer.observe(s));
+  });
+
+  // ---- Audio narration (Web Speech API) ----
+  let _audioIdx = -1;
+
+  function _stripHtml(html) {
+    const el = document.createElement('div');
+    el.innerHTML = html;
+    return (el.textContent || el.innerText || '').replace(/\s+/g, ' ').trim();
+  }
+
+  function _setAudioState(idx, state) {
+    const btn = document.getElementById('audio-btn-' + idx);
+    const badge = document.getElementById('playing-badge-' + idx);
+    const status = document.getElementById('audio-status');
+    if (btn) {
+      const iconMap = { idle: '▶', playing: '⏸', paused: '▶' };
+      btn.querySelector('.audio-track-icon').textContent = iconMap[state] || '▶';
+      btn.classList.toggle('is-playing', state === 'playing');
+      btn.classList.toggle('is-paused', state === 'paused');
+    }
+    if (badge) badge.style.display = state === 'playing' ? '' : 'none';
+    if (status) {
+      const statusMap = { idle: '停止中', playing: '再生中…', paused: '一時停止' };
+      status.textContent = statusMap[state] || '停止中';
+      status.className = 'audio-panel-status' + (state === 'playing' ? ' is-playing' : '');
+    }
+  }
+
+  function toggleAudio(idx) {
+    const synth = window.speechSynthesis;
+    if (!synth) { alert('このブラウザは音声合成に対応していません。'); return; }
+
+    if (synth.speaking) {
+      if (_audioIdx === idx) {
+        if (synth.paused) { synth.resume(); _setAudioState(idx, 'playing'); }
+        else              { synth.pause();  _setAudioState(idx, 'paused');  }
+        return;
+      }
+      synth.cancel();
+      _setAudioState(_audioIdx, 'idle');
+    }
+
+    const body = document.querySelector('#sec-' + idx + ' .section-block-body');
+    const text = course.sections[idx].title + '。' + _stripHtml(body.innerHTML);
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'ja-JP';
+    utter.rate = 0.92;
+    const jaVoice = synth.getVoices().find(v => v.lang.startsWith('ja'));
+    if (jaVoice) utter.voice = jaVoice;
+
+    utter.onstart = () => { _audioIdx = idx; _setAudioState(idx, 'playing'); };
+    utter.onend   = () => { _audioIdx = -1;  _setAudioState(idx, 'idle');    };
+    utter.onerror = () => { _audioIdx = -1;  _setAudioState(idx, 'idle');    };
+
+    _audioIdx = idx;
+    synth.speak(utter);
+
+    // Scroll to that section
+    const sec = document.getElementById('sec-' + idx);
+    if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+</script>
+
+
+<link rel="stylesheet" href="chat-widget.css">
+<script src="chat-widget.js"></script>
+</body>
+</html>

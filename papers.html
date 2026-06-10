@@ -1,0 +1,2150 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>参考文献・論文集 | IE/QC/TPM-LMS</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .papers-hero {
+      background: linear-gradient(135deg, #4c1d95 0%, #6d28d9 60%, #7c3aed 100%);
+      color: #fff;
+      padding: 48px 24px 40px;
+      text-align: center;
+    }
+    .papers-hero h1 { font-size: 28px; font-weight: 800; margin-bottom: 10px; }
+    .papers-hero p { font-size: 15px; opacity: 0.85; max-width: 640px; margin: 0 auto; }
+
+    .papers-filter { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; align-items: center; }
+
+    .paper-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
+    }
+
+    .paper-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      transition: box-shadow 0.2s, transform 0.15s;
+      display: flex;
+      flex-direction: column;
+    }
+    .paper-card:hover { box-shadow: 0 6px 18px rgba(0,0,0,0.12); transform: translateY(-2px); }
+
+    .paper-card-header {
+      padding: 16px 18px 12px;
+      border-bottom: 1px solid #f3f4f6;
+    }
+    .paper-title { font-size: 14px; font-weight: 700; color: #1f2937; line-height: 1.5; margin-bottom: 6px; }
+    .paper-title-ja { font-size: 13px; color: #4b5563; margin-bottom: 8px; line-height: 1.4; }
+    .paper-authors { font-size: 12px; color: #6b7280; margin-bottom: 4px; }
+    .paper-journal { font-size: 12px; color: #6b7280; font-style: italic; }
+    .paper-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+    .paper-tag {
+      font-size: 11px; padding: 2px 8px; border-radius: 20px;
+      font-weight: 600;
+    }
+    .tag-ie  { background: #dbeafe; color: #1e40af; }
+    .tag-qc  { background: #d1fae5; color: #065f46; }
+    .tag-tpm { background: #fef3c7; color: #92400e; }
+    .tag-ps  { background: #ede9fe; color: #5b21b6; }
+    .tag-book { background: #f1f5f9; color: #334155; }
+
+    .paper-card-body { padding: 14px 18px 10px; flex: 1; }
+    .paper-summary { font-size: 13px; color: #374151; line-height: 1.6; }
+
+    .paper-points { list-style: none; padding: 0; margin: 8px 0 0; }
+    .paper-points li {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 12px; color: #374151; padding: 3px 0;
+    }
+    .paper-points li::before { content: "▸"; color: #7c3aed; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+    .year-badge {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      background: #f5f3ff; color: #5b21b6; border: 1px solid #c4b5fd;
+      border-radius: 6px; padding: 1px 7px; margin-right: 6px;
+    }
+
+    .paper-card-footer {
+      padding: 10px 18px 14px;
+      font-size: 11px; color: #9ca3af;
+      display: flex; align-items: center; gap: 6px;
+      border-top: 1px solid #f3f4f6;
+    }
+    .paper-card-footer a { color: #7c3aed; text-decoration: none; }
+    .paper-card-footer a:hover { text-decoration: underline; }
+
+    .section-sep {
+      font-size: 18px; font-weight: 700; color: #1f2937;
+      margin: 40px 0 16px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .section-sep::after { content: ''; flex: 1; height: 1px; background: #e5e7eb; }
+    .section-sep-icon { font-size: 22px; }
+
+    .paper-note {
+      background: #f9fafb; border: 1px solid #e5e7eb;
+      border-radius: 8px; padding: 12px 16px;
+      font-size: 12px; color: #6b7280; margin-bottom: 24px;
+    }
+
+    .classic-badge {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      background: #fef3c7; color: #92400e; border: 1px solid #fcd34d;
+      border-radius: 6px; padding: 1px 7px; margin-left: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo">
+      <div class="logo-icon">🏭</div>
+      <div>
+        <div class="logo-text">IE/QC/TPM-LMS</div>
+        <div class="logo-sub">製造業専門技術者育成プラットフォーム</div>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="index.html" class="nav-link">講座一覧</a>
+      <a href="cases.html" class="nav-link">事例集</a>
+      <a href="papers.html" class="nav-link active">論文・文献</a>
+      <a href="improvements.html" class="nav-link">改善案件</a>
+    </nav>
+  </div>
+</header>
+
+<div class="papers-hero">
+  <h1>📄 参考文献・論文集</h1>
+  <p>IE・QC・TPM・課題解決に関する重要な学術論文・技術文献・書籍を体系的に紹介。各講座の理論的背景を深く理解するための参考資料集です。</p>
+</div>
+
+<main class="main-content">
+
+  <div class="papers-filter filter-row">
+    <span class="filter-label">絞り込み：</span>
+    <button class="filter-btn active" onclick="filterPapers('all',this)">すべて</button>
+    <button class="filter-btn" onclick="filterPapers('IE',this)">IE（生産工学）</button>
+    <button class="filter-btn" onclick="filterPapers('QC',this)">QC（品質管理）</button>
+    <button class="filter-btn" onclick="filterPapers('TPM',this)">TPM（設備保全）</button>
+    <button class="filter-btn" onclick="filterPapers('PS',this)">課題解決</button>
+    <button class="filter-btn" onclick="filterPapers('book',this)">書籍・教科書</button>
+  </div>
+
+  <div class="paper-note">
+    ※ 掲載文献は各分野の代表的な学術論文・書籍・業界標準文書です。タイトル・著者・掲載誌・概要は公開情報に基づきます。学習・研究目的での参照をお勧めします。
+  </div>
+
+  <!-- ===== IE PAPERS ===== -->
+  <div class="section-sep" data-subject="IE">
+    <span class="section-sep-icon">🏭</span> IE（生産工学・インダストリアルエンジニアリング）
+  </div>
+  <div class="paper-grid" id="ie-papers">
+
+    <div class="paper-card" data-tags="IE book">
+      <div class="paper-card-header">
+        <div class="paper-title">Motion and Time Study: Design and Measurement of Work</div>
+        <div class="paper-title-ja">動作・時間研究：作業の設計と測定（第7版）</div>
+        <div class="paper-authors">Ralph M. Barnes</div>
+        <div class="paper-journal">John Wiley &amp; Sons, 1980</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ie">IE基礎</span>
+          <span class="paper-tag tag-ie">動作研究</span>
+          <span class="paper-tag tag-ie">時間研究</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">動作研究・時間研究のバイブル。サーブリッグ分析・ワークサンプリング・PTS法（MTM）の基礎理論を網羅。時間研究のレイティング手法も詳述。現代のIE教科書の原典。</div>
+        <ul class="paper-points">
+          <li>サーブリッグ18種類の完全な定義と分析手法</li>
+          <li>ワークサンプリングの統計的理論（サンプル数計算式の導出）</li>
+          <li>MTM（Methods-Time Measurement）の基本動作データ</li>
+          <li>余裕率の種類と設定方法（内部・個人・疲労余裕）</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">1980</span> <span class="classic-badge">クラシック</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="IE book">
+      <div class="paper-card-header">
+        <div class="paper-title">Industrial Engineering Handbook (5th ed.)</div>
+        <div class="paper-title-ja">産業工学ハンドブック（第5版）</div>
+        <div class="paper-authors">Kjell B. Zandin（編）</div>
+        <div class="paper-journal">McGraw-Hill, 2001</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ie">IE全般</span>
+          <span class="paper-tag tag-ie">工程設計</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">IE全分野を網羅した標準ハンドブック。工程設計・設備配置・人間工学・生産管理・品質工学まで幅広く収録。IE専門技術者の参照書として世界標準の地位を確立。</div>
+        <ul class="paper-points">
+          <li>BasicMOST・MaxiMOST等のPTS法の完全解説</li>
+          <li>施設レイアウト設計の系統的手法（SLP理論）</li>
+          <li>人間工学とワークデザインの章が特に詳細</li>
+          <li>生産計画・スケジューリングのオペレーションズリサーチ</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">2001</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="IE">
+      <div class="paper-card-header">
+        <div class="paper-title">Learning to See: Value Stream Mapping to Add Value and Eliminate MUDA</div>
+        <div class="paper-title-ja">リーン生産方式を学ぶ：バリューストリームマッピングで付加価値を増やしムダを排除する</div>
+        <div class="paper-authors">Mike Rother, John Shook</div>
+        <div class="paper-journal">Lean Enterprise Institute, 1998</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ie">VSM</span>
+          <span class="paper-tag tag-ie">リーン</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">バリューストリームマッピング（VSM）の実践マニュアル。現状マップ・将来マップの描き方を具体的なアイコンとルールで解説。世界中のリーン改善活動の標準教科書となった。</div>
+        <ul class="paper-points">
+          <li>VSM標準アイコン体系の確立（工場・情報フロー記号）</li>
+          <li>タクトタイム・サイクルタイム・リードタイムの関係性</li>
+          <li>タイムライン分析とPCE（工程サイクル効率）の計算方法</li>
+          <li>将来マップの設計原則（ループ分割・かんばん設計）</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">1998</span> <span class="classic-badge">クラシック</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="IE">
+      <div class="paper-card-header">
+        <div class="paper-title">A Revolution in Manufacturing: The SMED System</div>
+        <div class="paper-title-ja">製造の革命：SMEDシステム（シングル段取り）</div>
+        <div class="paper-authors">Shigeo Shingo（新郷重夫）</div>
+        <div class="paper-journal">Productivity Press, 1985</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ie">SMED</span>
+          <span class="paper-tag tag-ie">段取り改善</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">SMED（Single Minute Exchange of Die）の創始者・新郷重夫による原典。トヨタ生産方式の段取り改善思想を体系化。「内段取り・外段取り」概念と、シングル化（9分59秒以下）の4ステップ手法を提唱。</div>
+        <ul class="paper-points">
+          <li>内段取り・外段取りの概念と分類手法の提唱</li>
+          <li>SMED達成の4ステップ（観察→分類→転換→短縮）</li>
+          <li>実際の事例：プレス段取りを8時間→3分に短縮した実例</li>
+          <li>ポカヨケとSMEDの連携による品質向上効果</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">1985</span> <span class="classic-badge">クラシック</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="IE">
+      <div class="paper-card-header">
+        <div class="paper-title">Assembly line balancing: A survey of developments and directions for future research</div>
+        <div class="paper-title-ja">組立ラインバランシング：研究動向と将来課題のサーベイ</div>
+        <div class="paper-authors">Scholl, A., Becker, C.</div>
+        <div class="paper-journal">European Journal of Operational Research, 168(2), 394-426, 2006</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ie">ラインバランシング</span>
+          <span class="paper-tag tag-ie">OR</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">ラインバランシング問題（ALBP）の包括的サーベイ論文。単純・複合・混合モデルの数理的定式化と解法を整理。ヒューリスティクス・メタヒューリスティクスの比較を通じ、実用的なアルゴリズム選択の指針を提供。</div>
+        <ul class="paper-points">
+          <li>SALBP（Simple Assembly Line Balancing Problem）の数理モデル</li>
+          <li>ランク位置重み法・最長作業時間法等のヒューリスティクス比較</li>
+          <li>多品種ラインバランシング（MALBP）の問題定式化</li>
+          <li>遺伝的アルゴリズム等のメタヒューリスティクスの有効性検証</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📄 学術論文 <span class="year-badge">2006</span> European Journal of Operational Research
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="IE">
+      <div class="paper-card-header">
+        <div class="paper-title">Systematic Layout Planning（SLP）</div>
+        <div class="paper-title-ja">系統的配置計画法</div>
+        <div class="paper-authors">Richard Muther</div>
+        <div class="paper-journal">Industrial Education International, 1973（第2版）</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ie">施設レイアウト</span>
+          <span class="paper-tag tag-ie">工場設計</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">SLP（系統的配置計画）の創始者Mutherによる原典。工場・施設のレイアウト設計を体系的・科学的に行うための手法フレームワークを確立。P-Q分析・フロム・ツーチャート・近接性ダイアグラムの手順を提唱。</div>
+        <ul class="paper-points">
+          <li>P（製品）-Q（量）分析による生産形態の分類手法</li>
+          <li>フロム・ツーチャートによる物流強度の定量化</li>
+          <li>近接性ダイアグラム（Closeness Rating）の作成手順</li>
+          <li>スペース関係ダイアグラムから最終レイアウト案への展開</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">1973</span> <span class="classic-badge">クラシック</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="IE">
+      <div class="paper-card-header">
+        <div class="paper-title">Work Measurement and Methods Engineering</div>
+        <div class="paper-title-ja">作業測定と方法工学（邦訳：IE概論）</div>
+        <div class="paper-authors">Niebel, B.W., Freivalds, A.</div>
+        <div class="paper-journal">McGraw-Hill Education, 2003（第11版）</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ie">標準時間</span>
+          <span class="paper-tag tag-ie">方法改善</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">IEの標準的な大学教科書。標準時間設定の全手法（ストップウォッチ法・ワークサンプリング・PTS法）とレイティング・余裕率の理論を体系的に解説。米国IIE（現IISE）推薦教材。</div>
+        <ul class="paper-points">
+          <li>レイティング手法（Westinghouse法・速度評価法）の詳細比較</li>
+          <li>余裕率の種類と設定方法（ILO標準を含む）</li>
+          <li>MTM-1・MTM-2・MOST等PTS法の比較評価</li>
+          <li>人間工学とエルゴノミクスとの統合アプローチ</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">2003</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="IE">
+      <div class="paper-card-header">
+        <div class="paper-title">The effect of lean production on the productive efficiency and human performance of manufacturing: a systematic review</div>
+        <div class="paper-title-ja">リーン生産が製造の生産性と人的パフォーマンスに与える影響：システマティックレビュー</div>
+        <div class="paper-authors">Tortorella, G.L. et al.</div>
+        <div class="paper-journal">International Journal of Production Research, 59(5), 1443-1462, 2021</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ie">リーン</span>
+          <span class="paper-tag tag-ie">生産性</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">リーン生産方式の生産性・品質・作業者パフォーマンスへの効果を研究した176論文のシステマティックレビュー。リーン実施企業の平均生産性+23%、品質不良率-38%という定量的な効果量を推定。</div>
+        <ul class="paper-points">
+          <li>5S・かんばん・SMED・VSMの手法別効果量のメタ分析</li>
+          <li>リーン導入企業の生産性平均+23%、品質不良▲38%</li>
+          <li>作業者のストレス・疲労への影響も定量的に評価</li>
+          <li>製造業種別（自動車・電子・食品等）の効果差異</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📄 学術論文 <span class="year-badge">2021</span> International Journal of Production Research
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="IE book">
+      <div class="paper-card-header">
+        <div class="paper-title">The Machine That Changed the World</div>
+        <div class="paper-title-ja">リーン生産方式が世界の自動車産業をこう変える（邦訳あり）</div>
+        <div class="paper-authors">Womack, J.P., Jones, D.T., Roos, D.</div>
+        <div class="paper-journal">Free Press, 1990</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ie">リーン</span>
+          <span class="paper-tag tag-ie">TPS</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">MITの国際自動車プログラム（IMVP）の研究成果をまとめた書籍。「リーン生産方式（Lean Production）」という言葉を初めて定義し、トヨタ方式と欧米大量生産方式の生産性差（2倍）を国際比較データで明示した。製造業の経営者・研究者必読の古典。</div>
+        <ul class="paper-points">
+          <li>トヨタと欧米自動車工場の生産性・品質・柔軟性の定量比較</li>
+          <li>「リーン生産方式」という概念の提唱（TPS の国際的再定義）</li>
+          <li>工場の欠陥率・在庫水準・スペース効率の業種別ベンチマーク</li>
+          <li>大量生産→リーンへの移行に必要な組織変革の要件</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">1990</span> <span class="classic-badge">クラシック</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="IE book">
+      <div class="paper-card-header">
+        <div class="paper-title">Lean Thinking: Banish Waste and Create Wealth in Your Corporation</div>
+        <div class="paper-title-ja">リーン・シンキング：企業のムダを排除し富を生み出す（邦訳あり）</div>
+        <div class="paper-authors">Womack, J.P., Jones, D.T.</div>
+        <div class="paper-journal">Free Press, 1996</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ie">リーン</span>
+          <span class="paper-tag tag-ie">価値流れ</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">「ザ・マシン」の続編として、リーン思考の5原則（価値の定義→価値の流れ→流れ→プル→完全性）を体系化。製造業以外への展開事例（病院・建設・航空）も収録し、IEの適用範囲を大きく拡張した。</div>
+        <ul class="paper-points">
+          <li>リーン5原則（Value, Value Stream, Flow, Pull, Perfection）の定義</li>
+          <li>価値を「顧客が定義する」という思想転換とムダの7種類</li>
+          <li>プル方式（かんばん）とプッシュ方式の概念的差異</li>
+          <li>製造業以外への適用事例（医療・建設・サービス）</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">1996</span> <span class="classic-badge">クラシック</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="IE">
+      <div class="paper-card-header">
+        <div class="paper-title">The Toyota Production System: Beyond Large-Scale Production</div>
+        <div class="paper-title-ja">トヨタ生産方式：大量生産を超えて（邦訳あり）</div>
+        <div class="paper-authors">Ohno, T.（大野耐一）</div>
+        <div class="paper-journal">Productivity Press, 1988（原著1978）</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ie">TPS</span>
+          <span class="paper-tag tag-ie">JIT</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">トヨタ生産方式の創設者・大野耐一副社長自身による原典。JIT（ジャスト・イン・タイム）とニンベン付きの自働化（Jidoka）の2本柱、かんばん方式の誕生経緯、7つのムダの定義を初めて体系的に記述した著作。</div>
+        <ul class="paper-points">
+          <li>7つのムダ（作り過ぎ・手待ち・運搬・加工・在庫・動作・不良）の提唱</li>
+          <li>JITとニンベンの付いた自働化（Jidoka）の二本柱</li>
+          <li>かんばんシステムの考案経緯とスーパーマーケット方式の着想</li>
+          <li>多工程持ちと少人化（労働の柔軟性）の思想</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">1978</span> <span class="classic-badge">クラシック</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="IE">
+      <div class="paper-card-header">
+        <div class="paper-title">Zero Quality Control: Source Inspection and the Poka-Yoke System</div>
+        <div class="paper-title-ja">ゼロ品質管理：源流検査とポカヨケ・システム</div>
+        <div class="paper-authors">Shingo, S.（新郷重夫）</div>
+        <div class="paper-journal">Productivity Press, 1986</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ie">ポカヨケ</span>
+          <span class="paper-tag tag-ie">源流管理</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">ポカヨケ（Poka-Yoke / Mistake Proofing）の概念と適用事例を体系化した書籍。「検査は不良を見つけるためでなく、不良を作らないための仕組みを作るため」という源流管理の思想を確立。IEと品質管理の融合点を示した古典。</div>
+        <ul class="paper-points">
+          <li>源流検査・自主検査・連続検査・抜き取り検査の優劣比較</li>
+          <li>ポカヨケの分類：接触式・定数式・動作ステップ式</li>
+          <li>フールプルーフとフェイルセーフの概念的区別</li>
+          <li>200事例を超えるポカヨケ適用例の体系的紹介</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">1986</span> <span class="classic-badge">クラシック</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="IE">
+      <div class="paper-card-header">
+        <div class="paper-title">A systematic review of simulation models for facility layout planning</div>
+        <div class="paper-title-ja">施設レイアウト計画のシミュレーションモデルに関するシステマティックレビュー</div>
+        <div class="paper-authors">Singh, S.P., Sharma, R.R.K.</div>
+        <div class="paper-journal">International Journal of Advanced Manufacturing Technology, 2006</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ie">施設レイアウト</span>
+          <span class="paper-tag tag-ie">シミュレーション</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">施設レイアウト設計における定量的・シミュレーションベースの手法に関する60論文のレビュー。CRAFT・ALDEP・CORELAPなどの古典的アルゴリズムから遺伝的アルゴリズム等の最適化手法まで網羅的に整理。</div>
+        <ul class="paper-points">
+          <li>CRAFT（Computerized Relative Allocation of Facilities Technique）の解説</li>
+          <li>遺伝的アルゴリズム・シミュレーテッドアニーリングによるレイアウト最適化</li>
+          <li>離散型・連続型・混合型レイアウト問題の数理モデル整理</li>
+          <li>セルラーレイアウトと機能別レイアウトのシミュレーション比較</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📄 学術論文 <span class="year-badge">2006</span> International Journal of Advanced Manufacturing Technology
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="IE">
+      <div class="paper-card-header">
+        <div class="paper-title">工場管理便覧（第4版）</div>
+        <div class="paper-title-ja">日本語版 IE・生産管理の体系的ハンドブック</div>
+        <div class="paper-authors">日本経営工学会（編）</div>
+        <div class="paper-journal">丸善出版, 2002</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ie">IE全般</span>
+          <span class="paper-tag tag-ie">生産管理</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">日本語圏最大規模のIE・生産管理ハンドブック。工程分析・時間研究・動作研究・設備管理・品質管理・生産計画の全分野を網羅。日本経営工学会が監修し、日本のIEの標準的な参考書として50年以上使われている。</div>
+        <ul class="paper-points">
+          <li>日本規格（JIS）準拠の工程分析・標準時間の定義と手順</li>
+          <li>日本の製造業特有の改善手法（QCサークル・ゼロ欠点運動）の解説</li>
+          <li>多品種少量生産への対応：GT（グループテクノロジー）の活用</li>
+          <li>コンピュータ支援IEの導入指針（PTS法ソフトウェア等）</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">2002</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="IE">
+      <div class="paper-card-header">
+        <div class="paper-title">Cellular Manufacturing Systems: Design, Analysis and Control</div>
+        <div class="paper-title-ja">セル生産システム：設計・分析・制御</div>
+        <div class="paper-authors">Irani, S.A.（編）</div>
+        <div class="paper-journal">CRC Press, 1999</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ie">セル生産</span>
+          <span class="paper-tag tag-ie">GT</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">セル生産方式（Cellular Manufacturing）の設計・評価・改善に特化したハンドブック。グループテクノロジー（GT）による部品族分類・機械セル形成・人員配置の最適化手法を体系的に解説。多品種少量製造業に必須の参考書。</div>
+        <ul class="paper-points">
+          <li>グループテクノロジー（GT）コーディングシステムの種類と選択</li>
+          <li>Production Flow Analysis（PFA）によるセル形成手順</li>
+          <li>機械セル形成の数理モデルと解法（二進マトリクス法）</li>
+          <li>人員の柔軟配置（多工程持ち）とセル内タクトタイム管理</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">1999</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="IE">
+      <div class="paper-card-header">
+        <div class="paper-title">A review of ergonomics and human factors in the workplace: future directions</div>
+        <div class="paper-title-ja">職場における人間工学・ヒューマンファクターのレビュー：将来の方向性</div>
+        <div class="paper-authors">Dul, J. et al.</div>
+        <div class="paper-journal">Ergonomics, 55(5), 377-395, 2012</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ie">人間工学</span>
+          <span class="paper-tag tag-ie">作業設計</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">製造業の作業設計における人間工学の最新動向をレビューした論文。作業者の身体的・認知的負荷の定量評価手法（REBA・RULA・NIOSH）と、IE手法との統合アプローチを論じる。高齢化社会における作業設計の将来課題も展望。</div>
+        <ul class="paper-points">
+          <li>REBA・RULA手法による姿勢負担評価の信頼性・妥当性の検証</li>
+          <li>NIOSHリフティング式による持ち上げ作業の許容重量計算</li>
+          <li>作業関連筋骨格系疾患（WMSD）予防とIE改善の相乗効果</li>
+          <li>認知的エルゴノミクスと視覚的管理の融合（Industry 4.0）</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📄 学術論文 <span class="year-badge">2012</span> Ergonomics
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="IE">
+      <div class="paper-card-header">
+        <div class="paper-title">Industry 4.0 implications in logistics: an overview</div>
+        <div class="paper-title-ja">インダストリー4.0の物流への影響：概要</div>
+        <div class="paper-authors">Barreto, L., Amaral, A., Pereira, T.</div>
+        <div class="paper-journal">Procedia Manufacturing, 13, 1245-1252, 2017</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ie">物流分析</span>
+          <span class="paper-tag tag-ie">IoT</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">Industry 4.0（IoT・AI・デジタルツイン）が工場内物流・マテリアルハンドリングに与える影響を論じた論文。AGV（無人搬送車）・RFID・リアルタイムWMSがIE従来手法（物流分析・運搬分析）をどのように変革するかを整理。</div>
+        <ul class="paper-points">
+          <li>AGV（自動走行搬送車）による水すまし自動化の効果事例</li>
+          <li>RFIDによるリアルタイム在庫追跡と物流強度の自動計測</li>
+          <li>デジタルツイン（工場の仮想コピー）によるレイアウトシミュレーション</li>
+          <li>AI最適化アルゴリズムによるルート最適化とIE分析の統合</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📄 学術論文 <span class="year-badge">2017</span> Procedia Manufacturing
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="IE">
+      <div class="paper-card-header">
+        <div class="paper-title">Predetermined Motion Time Systems: An Overview of BasicMOST</div>
+        <div class="paper-title-ja">あらかじめ定められた時間標準（PTS法）：BasicMOSTの概要</div>
+        <div class="paper-authors">Zandin, K.B.</div>
+        <div class="paper-journal">IIE Transactions, 22(2), 1990</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ie">標準時間</span>
+          <span class="paper-tag tag-ie">PTS法</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">BasicMOST（Maynard Operation Sequence Technique）の開発経緯・理論・適用手順を解説した論文。MTM-1と比較し、同等の精度を5〜10倍の速さで実現する効率性を実証。製造業・物流業でのPTS法普及に大きく貢献。</div>
+        <ul class="paper-points">
+          <li>BasicMOSTの3シーケンスモデル（A-B-G-A-B-P-A 等）の定義</li>
+          <li>TMU（時間測定単位：1TMU=0.036秒）の換算とパラメータ値体系</li>
+          <li>MTM-1との精度・時間比較：BasicMOSTは5〜10倍高速</li>
+          <li>繰り返し作業・非繰り返し作業への適用分岐基準</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📄 学術論文 <span class="year-badge">1990</span> IIE Transactions
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="IE">
+      <div class="paper-card-header">
+        <div class="paper-title">生産工学（第3版）</div>
+        <div class="paper-title-ja">日本の大学IE教育の標準教科書</div>
+        <div class="paper-authors">新井泰次郎・古野雅人・石渡政義</div>
+        <div class="paper-journal">実教出版, 2009</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ie">IE教育</span>
+          <span class="paper-tag tag-ie">工程分析</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">日本の工学部・経営工学科でIEを学ぶ際の標準的な教科書。工程分析・稼働分析・時間研究・動作研究から生産計画・在庫管理まで、IEの全体系を日本語でわかりやすく解説。JIS用語に準拠した日本語IEの定番テキスト。</div>
+        <ul class="paper-points">
+          <li>JIS Z 8141準拠の工程分析記号と分析票の記入手順</li>
+          <li>ワークサンプリングの必要観測数計算式の導出と実施手順</li>
+          <li>ラインバランシング：ランク位置重み法の算定手順</li>
+          <li>生産計画・MRP（資材所要量計画）の基礎</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">2009</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="IE">
+      <div class="paper-card-header">
+        <div class="paper-title">Digital Transformation in Manufacturing: Industry 4.0 and Lean Manufacturing</div>
+        <div class="paper-title-ja">製造業のデジタルトランスフォーメーション：インダストリー4.0とリーン製造</div>
+        <div class="paper-authors">Kamble, S.S., Gunasekaran, A., Sharma, R.</div>
+        <div class="paper-journal">International Journal of Production Research, 56(8), 2018</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ie">デジタルIE</span>
+          <span class="paper-tag tag-ie">Industry 4.0</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">インダストリー4.0とリーン思想の融合（Lean 4.0）を論じた論文。IoTセンサーによるリアルタイム工程分析・AIによる稼働分析の自動化・デジタルツインによるレイアウト最適化など、従来のIE手法がデジタル化によって高度化される様子を論じる。</div>
+        <ul class="paper-points">
+          <li>IoTセンサーによるワークサンプリングの自動化（人手観察が不要に）</li>
+          <li>機械学習による異常工程の自動検出（稼働分析の進化）</li>
+          <li>デジタルツインによるVSM（仮想工場でのシミュレーション）</li>
+          <li>Lean 4.0のROI：伝統的リーン比+25〜30%の追加効果</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📄 学術論文 <span class="year-badge">2018</span> International Journal of Production Research
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="IE">
+      <div class="paper-card-header">
+        <div class="paper-title">Kaizen Express: Fundamentals for Your Lean Journey</div>
+        <div class="paper-title-ja">カイゼン・エクスプレス：リーンの旅の基礎知識</div>
+        <div class="paper-authors">Ohno Institute, Productivity Press</div>
+        <div class="paper-journal">Lean Enterprise Institute, 2009</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ie">カイゼン</span>
+          <span class="paper-tag tag-ie">改善活動</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">大野耐一研究所監修によるカイゼン（現場改善）の基礎テキスト。カイゼンイベント（Kaizen Blitz）の計画・実施・フォローアップの手順を実践的に解説。改善提案の書き方・A3思考・標準作業との連携を詳述。</div>
+        <ul class="paper-points">
+          <li>カイゼンイベント（集中改善活動）の5日間スケジュール</li>
+          <li>標準作業と改善の関係：標準なき改善なしの原則</li>
+          <li>改善前後の比較評価方法（ビフォーアフター文書化）</li>
+          <li>カイゼン文化の醸成と改善提案制度の設計</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">2009</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="IE">
+      <div class="paper-card-header">
+        <div class="paper-title">Operations Management: Sustainability and Supply Chain Management (14th ed.)</div>
+        <div class="paper-title-ja">オペレーションズマネジメント：持続可能性とサプライチェーン管理（第14版）</div>
+        <div class="paper-authors">Heizer, J., Render, B., Munson, C.</div>
+        <div class="paper-journal">Pearson, 2020</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ie">生産管理</span>
+          <span class="paper-tag tag-ie">SCM</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">オペレーションズマネジメント（OM）の世界最大手の教科書。IE手法を経営・SCM・サービス業と統合した視点で解説。需要予測・生産計画・在庫モデル（EOQ・安全在庫）・クリティカルパス（CPM/PERT）を網羅。MBA・工学系大学院の標準テキスト。</div>
+        <ul class="paper-points">
+          <li>EOQ（経済的注文量）の計算式と感度分析</li>
+          <li>MRP・MRP II・ERPの違いと適用場面</li>
+          <li>クリティカルパス法（CPM）による工程管理と短縮手法</li>
+          <li>待ち行列モデル（M/M/1等）によるサービス工程の分析</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">2020</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="IE">
+      <div class="paper-card-header">
+        <div class="paper-title">Takt Time Groups and Production System Design</div>
+        <div class="paper-title-ja">タクトタイムグループと生産システム設計</div>
+        <div class="paper-authors">Klug, F.</div>
+        <div class="paper-journal">International Journal of Production Economics, 140(2), 2012</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ie">タクトタイム</span>
+          <span class="paper-tag tag-ie">生産システム</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">タクトタイムの概念を拡張し、複数品種・変量生産への対応を論じた論文。混流生産ライン（Mixed-Model Assembly Line）のタクトタイム設定問題を定式化し、品種別タクトタイムグループ分割の最適化アルゴリズムを提案。</div>
+        <ul class="paper-points">
+          <li>変量生産における平均タクトタイムと変動タクトタイムの比較</li>
+          <li>品種別タクトタイムグループ分割の最適化モデル</li>
+          <li>自動車業界の実際の混流ラインへの適用事例</li>
+          <li>需要変動に対するタクトタイム動的調整（Flexible Takt）の提案</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📄 学術論文 <span class="year-badge">2012</span> International Journal of Production Economics
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== QC PAPERS ===== -->
+  <div class="section-sep" data-subject="QC">
+    <span class="section-sep-icon">🔍</span> QC（品質管理・Quality Control）
+  </div>
+  <div class="paper-grid" id="qc-papers">
+
+    <div class="paper-card" data-tags="QC book">
+      <div class="paper-card-header">
+        <div class="paper-title">Statistical Quality Control Handbook</div>
+        <div class="paper-title-ja">統計的品質管理ハンドブック</div>
+        <div class="paper-authors">Western Electric Company</div>
+        <div class="paper-journal">Western Electric Co., 1956（初版）</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-qc">SPC</span>
+          <span class="paper-tag tag-qc">管理図</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">Shewhart管理図の実務適用を体系化した原典的ハンドブック。X̄-R管理図・p管理図・c管理図等の種類別作成手順・解析ルール（Western Electric Rules）を定義。現在のSPC標準の礎。</div>
+        <ul class="paper-points">
+          <li>Western Electric ルール（管理外れの8パターン判断基準）</li>
+          <li>計量値・計数値の管理図の種類と選択基準</li>
+          <li>工程能力指数Cpk・Cp の計算と解釈基準</li>
+          <li>管理図の読み方・打ち切り・再計算の手順</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">1956</span> <span class="classic-badge">クラシック</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="QC book">
+      <div class="paper-card-header">
+        <div class="paper-title">Total Quality Management: The Key to Business Improvement</div>
+        <div class="paper-title-ja">TQM：ビジネス改善の鍵（邦訳：TQC・TQM実践の教科書）</div>
+        <div class="paper-authors">Besterfield, D.H. et al.</div>
+        <div class="paper-journal">Pearson / Prentice Hall, 2003</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-qc">TQM</span>
+          <span class="paper-tag tag-qc">QC7つ道具</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">TQM（全社的品質管理）の体系的教科書。QC7つ道具（パレート図・特性要因図・層別・管理図・ヒストグラム・散布図・チェックシート）と新QC7つ道具の実践方法を解説。</div>
+        <ul class="paper-points">
+          <li>QC7つ道具の各手法の作成手順と読み取り方法</li>
+          <li>新QC7つ道具（親和図・連関図・PDPC等）の活用場面</li>
+          <li>品質コスト（予防・評価・内部失敗・外部失敗コスト）の体系</li>
+          <li>ISO 9001との対応関係と品質マネジメントシステム</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">2003</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="QC">
+      <div class="paper-card-header">
+        <div class="paper-title">Robust Design: Key Points of the Taguchi Method</div>
+        <div class="paper-title-ja">ロバストデザイン：タグチメソッドの要点（邦訳：田口の品質工学）</div>
+        <div class="paper-authors">Taguchi, G.（田口玄一）</div>
+        <div class="paper-journal">American Supplier Institute, 1993</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-qc">品質工学</span>
+          <span class="paper-tag tag-qc">タグチメソッド</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">田口玄一博士による品質工学（タグチメソッド）の原典。損失関数・SN比（シグナルノイズ比）・直交表による実験計画法を体系化。製品設計段階での品質作り込み手法として世界に普及。</div>
+        <ul class="paper-points">
+          <li>品質損失関数（Quality Loss Function）の概念と定式化</li>
+          <li>望目特性・望小特性・望大特性のSN比の計算式</li>
+          <li>直交表L8・L9・L16を用いた実験計画の設計手順</li>
+          <li>パラメータ設計・許容差設計の二段階最適化アプローチ</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">1993</span> <span class="classic-badge">クラシック</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="QC">
+      <div class="paper-card-header">
+        <div class="paper-title">Statistical Process Control: SPC and Its Application</div>
+        <div class="paper-title-ja">統計的工程管理（SPC）の理論と応用</div>
+        <div class="paper-authors">Montgomery, D.C.</div>
+        <div class="paper-journal">John Wiley &amp; Sons, 2020（第8版 "Introduction to Statistical Quality Control"）</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-qc">SPC</span>
+          <span class="paper-tag tag-qc">品質統計</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">品質統計の世界標準テキスト。ShewhartからCUSUM・EWMA管理図まで、統計的品質管理の全手法を体系的に解説。工程能力分析・抜き取り検査・設計実験も網羅。世界60か国以上で採用。</div>
+        <ul class="paper-points">
+          <li>Shewhart管理図からCUSUM・EWMA管理図への発展系譜</li>
+          <li>工程能力指数Cp・Cpk・Cpm・Cpmkの定義と使い分け</li>
+          <li>計数値管理図（p図・np図・c図・u図）の適用条件</li>
+          <li>多変量管理図（T²統計量）による複数品質特性の同時管理</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">2020</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="QC">
+      <div class="paper-card-header">
+        <div class="paper-title">The impact of Six Sigma on organizational performance: A review of implementation</div>
+        <div class="paper-title-ja">シックスシグマが組織パフォーマンスに与える影響：導入実績のレビュー</div>
+        <div class="paper-authors">Kwak, Y.H., Anbari, F.T.</div>
+        <div class="paper-journal">European Management Journal, 24(2-3), 2006</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-qc">シックスシグマ</span>
+          <span class="paper-tag tag-qc">DMAIC</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">シックスシグマ（6σ）の導入効果に関する包括的文献レビュー。GE・Motorola・3Mの事例分析を含み、DMAIC（Define→Measure→Analyze→Improve→Control）の各フェーズの効果を定量化。</div>
+        <ul class="paper-points">
+          <li>シックスシグマ先行導入企業の財務効果のメタ分析</li>
+          <li>GE：1997年〜2002年の累計節減額36億ドルの分析</li>
+          <li>Motorola：6σ導入後の不良率99.99966%達成の道筋</li>
+          <li>DMAIC各フェーズの成功要因と落とし穴</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📄 学術論文 <span class="year-badge">2006</span> European Management Journal
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="QC book">
+      <div class="paper-card-header">
+        <div class="paper-title">品質管理入門（第3版）</div>
+        <div class="paper-title-ja">日本のQC教育の標準教科書（石川馨 著）</div>
+        <div class="paper-authors">石川馨</div>
+        <div class="paper-journal">日科技連出版社, 1989</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-qc">QC基礎</span>
+          <span class="paper-tag tag-qc">QCサークル</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">特性要因図（石川図・フィッシュボーン図）の考案者・石川馨東大教授によるQCの入門書。日本のQCサークル活動を理論的に支えた書。QC7つ道具の使い方と問題解決への連携を、製造業の豊富な事例とともに解説する。</div>
+        <ul class="paper-points">
+          <li>特性要因図（石川図）の考案経緯と作成手順（4M：人・機械・材料・方法）</li>
+          <li>QCサークル活動の運営方法とPDCAサイクルとの連携</li>
+          <li>QC7つ道具の選択指針：「どの問題にどの道具を使うか」</li>
+          <li>統計的考え方の基礎：正規分布・工程能力・サンプリング</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">1989</span> <span class="classic-badge">クラシック</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="QC book">
+      <div class="paper-card-header">
+        <div class="paper-title">Out of the Crisis</div>
+        <div class="paper-title-ja">危機からの脱出（デミング著・邦訳あり）</div>
+        <div class="paper-authors">Deming, W.E.</div>
+        <div class="paper-journal">MIT Press, 1982（初版）</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-qc">TQM</span>
+          <span class="paper-tag tag-qc">デミング</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">統計的品質管理の父・W.E.デミングによる代表作。「デミングの14原則」と「PDCA（デミングサイクル）」の理論的背景を解説。日本の戦後品質管理革命の思想的源泉であり、TQM・TQCの国際的普及に最も貢献した一冊。</div>
+        <ul class="paper-points">
+          <li>デミングの14原則：品質経営のための経営者行動指針</li>
+          <li>PDCAサイクル（Plan-Do-Check-Act）の起源と本来の意図</li>
+          <li>共通原因変動（Special Cause）と偶然原因変動（Common Cause）の区別</li>
+          <li>「数値目標・割り当て・スローガン」の弊害に関するデミングの批判</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">1982</span> <span class="classic-badge">クラシック</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="QC">
+      <div class="paper-card-header">
+        <div class="paper-title">Failure Mode and Effects Analysis (FMEA): An Improved Systematic Approach</div>
+        <div class="paper-title-ja">FMEA（故障モード影響解析）：改良された体系的アプローチ</div>
+        <div class="paper-authors">Stamatis, D.H.</div>
+        <div class="paper-journal">ASQ Quality Press, 2003（第2版）</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-qc">FMEA</span>
+          <span class="paper-tag tag-qc">リスク管理</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">FMEA（故障モード影響解析）の実務解説書。設計FMEA・工程FMEA・システムFMEAの区分と、RPN（リスク優先数）の計算・評価・対策優先順位づけの手順を詳述。自動車業界（AIAG規格）への対応も解説。</div>
+        <ul class="paper-points">
+          <li>RPN（Risk Priority Number）= 発生度 × 検出度 × 影響度 の計算と解釈</li>
+          <li>設計FMEA・工程FMEA・システムFMEAの適用範囲と相違点</li>
+          <li>AIAG/VDA FMEA（2019版）における5ステップアプローチ</li>
+          <li>FMEAと管理計画書（Control Plan）の連携と品質保証への統合</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">2003</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="QC">
+      <div class="paper-card-header">
+        <div class="paper-title">Design of Experiments Using The Taguchi Approach</div>
+        <div class="paper-title-ja">タグチ法を用いた実験計画法</div>
+        <div class="paper-authors">Roy, R.K.</div>
+        <div class="paper-journal">John Wiley &amp; Sons, 2001</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-qc">実験計画法</span>
+          <span class="paper-tag tag-qc">タグチメソッド</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">田口玄一博士のタグチメソッドを用いた実験計画法の実践テキスト。直交表（L8・L9・L12・L16・L18・L27）の使い方を豊富な例題で解説。SN比の計算から最適水準の決定・確認実験まで、製造業での実務適用を重視した構成。</div>
+        <ul class="paper-points">
+          <li>直交表の種類（L4〜L64）と実験規模・精度のトレードオフ</li>
+          <li>内側直交表・外側直交表（ノイズ因子）の組み合わせ設計</li>
+          <li>SN比から最適水準を決定するグラフィカル分析手順</li>
+          <li>確認実験の設計と予測値との一致性評価</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">2001</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="QC">
+      <div class="paper-card-header">
+        <div class="paper-title">The Effects of ISO 9001 Certification on Firm Performance: A Comprehensive Review</div>
+        <div class="paper-title-ja">ISO 9001認証が企業業績に与える影響：包括的レビュー</div>
+        <div class="paper-authors">Boiral, O., Amara, N.</div>
+        <div class="paper-journal">International Journal of Quality &amp; Reliability Management, 26(1), 2009</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-qc">ISO 9001</span>
+          <span class="paper-tag tag-qc">品質マネジメント</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">ISO 9001認証取得が企業の財務・品質・顧客満足・従業員モチベーションに与える影響を論じた75論文のメタアナリシス。認証取得企業の不良率平均-28%・顧客クレーム-35%という定量的効果を推定。認証プロセスの落とし穴と真の効果発現条件も分析。</div>
+        <ul class="paper-points">
+          <li>ISO 9001認証企業の品質KPI改善効果のメタアナリシス</li>
+          <li>形式的取得（書類整備のみ）と実質的取得の効果差（3〜5倍）</li>
+          <li>中小製造業でのISO認証とQCサークル活動の相互補完効果</li>
+          <li>ISO 9001:2015版のリスクベース思考とFMEAとの整合性</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📄 学術論文 <span class="year-badge">2009</span> International Journal of Quality &amp; Reliability Management
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="QC">
+      <div class="paper-card-header">
+        <div class="paper-title">Multivariate Statistical Process Control with Industrial Applications</div>
+        <div class="paper-title-ja">産業応用に向けた多変量統計的工程管理</div>
+        <div class="paper-authors">Mason, R.L., Young, J.C.</div>
+        <div class="paper-journal">ASQ Press / SIAM, 2002</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-qc">多変量SPC</span>
+          <span class="paper-tag tag-qc">T²統計量</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">複数の品質特性を同時に管理する多変量統計的工程管理（MSPC）の専門書。Hotelling T²管理図・MEWMA・MCUSUMの構築・解釈・原因追及手順を解説。単変量管理図の限界（変数間の相関を無視する問題）を克服する手法として注目される。</div>
+        <ul class="paper-points">
+          <li>Hotelling T²統計量の計算式と管理限界の設定方法</li>
+          <li>T²管理外れの原因追及：個別変数への分解（Decomposition）</li>
+          <li>化学プロセス・半導体製造での多品質特性同時管理事例</li>
+          <li>主成分分析（PCA）との組み合わせによる次元削減</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">2002</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="QC">
+      <div class="paper-card-header">
+        <div class="paper-title">FMEA and FTA for Quality and Reliability Assurance in Manufacturing</div>
+        <div class="paper-title-ja">製造品質・信頼性保証のためのFMEAとFTA</div>
+        <div class="paper-authors">Huang, G.Q., Mak, K.L.</div>
+        <div class="paper-journal">Reliability Engineering &amp; System Safety, 59(1), 1998</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-qc">FTA</span>
+          <span class="paper-tag tag-qc">信頼性工学</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">FMEA（故障モード影響解析）とFTA（故障の木解析）を組み合わせた品質・信頼性保証の手法論文。トップダウン（FTA）とボトムアップ（FMEA）の両アプローチの相補性を示し、設計段階での品質作り込みへの統合適用を提案。</div>
+        <ul class="paper-points">
+          <li>FTA（故障の木解析）の論理ゲートの種類と確率計算</li>
+          <li>FMEAとFTAの相補性：FMEAで見つけた故障モードをFTAで深堀り</li>
+          <li>最小カットセット（MCS）による最重要故障経路の特定</li>
+          <li>製品設計段階での「信頼性ブロック図」との連携</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📄 学術論文 <span class="year-badge">1998</span> Reliability Engineering &amp; System Safety
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="QC">
+      <div class="paper-card-header">
+        <div class="paper-title">Quality Function Deployment: Linking a Company to Its Customers</div>
+        <div class="paper-title-ja">品質機能展開（QFD）：顧客要求を製品設計に連結する</div>
+        <div class="paper-authors">Cohen, L.</div>
+        <div class="paper-journal">Addison-Wesley, 1995</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-qc">QFD</span>
+          <span class="paper-tag tag-qc">品質展開</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">品質機能展開（QFD）の実践マニュアル。顧客の声（VOC）を品質特性→部品特性→工程→生産条件へと展開する「品質の家（House of Quality）」の作成手順を詳述。トヨタ・富士通等の実践事例も収録。</div>
+        <ul class="paper-points">
+          <li>品質の家（House of Quality）の行列構造と各要素の記入手順</li>
+          <li>顧客重要度・自社評価・競合比較による改善優先順位の決定</li>
+          <li>機能展開（FD）・品質展開（QD）・コスト展開の連携</li>
+          <li>QFDによる開発期間短縮効果：トヨタの事例（-50%）</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">1995</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="QC">
+      <div class="paper-card-header">
+        <div class="paper-title">Lean Six Sigma for Service: How to Use Lean Speed and Six Sigma Quality to Improve Services and Transactions</div>
+        <div class="paper-title-ja">サービス業のリーン・シックスシグマ</div>
+        <div class="paper-authors">George, M.L.</div>
+        <div class="paper-journal">McGraw-Hill, 2003</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-qc">リーンシックスシグマ</span>
+          <span class="paper-tag tag-ie">リーン</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">IEのリーン手法（スピード・流れ・ムダ排除）とシックスシグマ（品質・ばらつき低減）を統合した「リーンシックスシグマ（LSS）」の実践書。DMAIC×VSMの統合アプローチで製造・サービスの両方に適用可能。</div>
+        <ul class="paper-points">
+          <li>リーンとシックスシグマの統合ロードマップ（DMAIC × VSM）</li>
+          <li>プロセスサイクル効率（PCE）とDPMO（百万機会当たりの欠陥数）の統合指標</li>
+          <li>リーンシックスシグマのROI：平均投資対効果5〜10倍のデータ</li>
+          <li>医療・金融・ITへの適用事例と製造業との比較</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">2003</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="QC">
+      <div class="paper-card-header">
+        <div class="paper-title">A literature review on the use of expert opinion in probabilistic risk analysis</div>
+        <div class="paper-title-ja">確率的リスク分析における専門家意見の活用に関する文献レビュー</div>
+        <div class="paper-authors">Hora, S.C.</div>
+        <div class="paper-journal">Reliability Engineering &amp; System Safety, 93(5), 2008</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-qc">リスク分析</span>
+          <span class="paper-tag tag-qc">信頼性</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">製造業の品質・安全リスク分析における専門家意見の活用方法と限界を論じた論文。デルファイ法・ベイズ更新・確率分布の割り当て手法を整理。リスク定量化における主観的確率と客観的確率の使い分けを論じる。</div>
+        <ul class="paper-points">
+          <li>デルファイ法：専門家の意見収束プロセスと適用条件</li>
+          <li>ベイズ更新による事前確率から事後確率への改訂手順</li>
+          <li>製造品質リスクの定量化：FMEA×確率的手法の統合</li>
+          <li>専門家意見の認知バイアス（過信・アンカリング）の補正方法</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📄 学術論文 <span class="year-badge">2008</span> Reliability Engineering &amp; System Safety
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== TPM PAPERS ===== -->
+  <div class="section-sep" data-subject="TPM">
+    <span class="section-sep-icon">⚙️</span> TPM（全員参加の生産保全・Total Productive Maintenance）
+  </div>
+  <div class="paper-grid" id="tpm-papers">
+
+    <div class="paper-card" data-tags="TPM book">
+      <div class="paper-card-header">
+        <div class="paper-title">TPM Development Program: Implementing Total Productive Maintenance</div>
+        <div class="paper-title-ja">TPM開発プログラム：全員参加の生産保全の展開</div>
+        <div class="paper-authors">Nakajima, S.（中嶋清一）</div>
+        <div class="paper-journal">Productivity Press, 1988</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-tpm">TPM基礎</span>
+          <span class="paper-tag tag-tpm">OEE</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">TPMの創始者・中嶋清一（JIPM）によるTPMの原典。OEE（設備総合効率）の概念・計算式の確立と、TPM5本柱（自主保全・計画保全・初期管理・教育訓練・品質保全）の体系を提唱。</div>
+        <ul class="paper-points">
+          <li>OEE = 可用率 × 性能稼働率 × 良品率 の定義と計算式</li>
+          <li>6大ロス（故障・段取り・空転・速度低下・不良・立ち上がり）の体系</li>
+          <li>自主保全7ステップの展開手順と各ステップの評価基準</li>
+          <li>TPM賞審査基準の解説とTPM活動の定量的評価方法</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">1988</span> <span class="classic-badge">クラシック</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="TPM book">
+      <div class="paper-card-header">
+        <div class="paper-title">Introduction to TPM: Total Productive Maintenance</div>
+        <div class="paper-title-ja">TPM入門（邦訳：TPM実践プログラム）</div>
+        <div class="paper-authors">Nakajima, S.（中嶋清一）</div>
+        <div class="paper-journal">Productivity Press, 1988</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-tpm">16大ロス</span>
+          <span class="paper-tag tag-tpm">自主保全</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">TPM実践の入門書として世界で最も普及した書籍。16大ロスの分類体系・なぜなぜ分析による故障原因追及・PM分析（物理的メカニズム分析）の手順を解説。製造業TPM活動の教科書的存在。</div>
+        <ul class="paper-points">
+          <li>16大ロスの体系（設備ロス8種・人ロス5種・材料・エネルギーロス3種）</li>
+          <li>MTBF（平均故障間隔）・MTTR（平均修復時間）の計算と改善指標</li>
+          <li>PM分析（Physical Mechanism Analysis）による慢性不具合の解析手順</li>
+          <li>コベルコ・昭和電工等のTPM優秀賞受賞企業の実績データ</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">1988</span> <span class="classic-badge">クラシック</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="TPM">
+      <div class="paper-card-header">
+        <div class="paper-title">Impact of Total Productive Maintenance practices on manufacturing performance</div>
+        <div class="paper-title-ja">TPM実践が製造パフォーマンスに与える影響</div>
+        <div class="paper-authors">Ahuja, I.P.S., Khamba, J.S.</div>
+        <div class="paper-journal">Journal of Quality in Maintenance Engineering, 14(2), 2008</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-tpm">TPM効果</span>
+          <span class="paper-tag tag-tpm">実証研究</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">インド製造業90社のTPM導入効果を実証的に研究した論文。設備稼働率・品質不良率・安全事故率・生産性向上への定量的影響を統計的に分析。TPMの効果を確認した代表的実証研究。</div>
+        <ul class="paper-points">
+          <li>TPM導入企業のOEE平均+18%向上（非導入企業比）</li>
+          <li>自主保全強度と設備故障率の負の相関（r=-0.73）</li>
+          <li>TPM継続年数と財務効果の累積関係（3年以降で急増）</li>
+          <li>トップコミットメントがTPM効果の最重要成功要因と判定</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📄 学術論文 <span class="year-badge">2008</span> Journal of Quality in Maintenance Engineering
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="TPM">
+      <div class="paper-card-header">
+        <div class="paper-title">Overall Equipment Effectiveness: A Powerful Production/Maintenance Tool for Increased Profits</div>
+        <div class="paper-title-ja">OEE：利益向上のための強力な生産・保全ツール</div>
+        <div class="paper-authors">Robert C. Hansen</div>
+        <div class="paper-journal">Industrial Press, 2001</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-tpm">OEE</span>
+          <span class="paper-tag tag-tpm">設備管理</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">OEEの実践的な活用方法を解説した書籍。World Class OEE（85%以上）の定義・ベンチマーク・改善ロードマップを提示。OEEの各要素（可用率・性能率・良品率）を改善するための具体的手法を詳述。</div>
+        <ul class="paper-points">
+          <li>World Class OEEの定義：可用率90%・性能率95%・良品率99.9%</li>
+          <li>OEEの各要素別改善ターゲットとKPIツリー</li>
+          <li>OEEデータ収集の自動化・IoT活用方法</li>
+          <li>業種別OEEベンチマーク（自動車・食品・化学等）</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">2001</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="TPM book">
+      <div class="paper-card-header">
+        <div class="paper-title">TPM in Process Industries</div>
+        <div class="paper-title-ja">プロセス産業のTPM（化学・食品・製紙工場向け）</div>
+        <div class="paper-authors">Suzuki, T.（鈴木哲郎）</div>
+        <div class="paper-journal">Productivity Press, 1994</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-tpm">プロセス産業</span>
+          <span class="paper-tag tag-tpm">連続生産</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">連続プロセス型工場（化学・食品・製紙・石油化学）向けのTPM展開方法を解説した書籍。離散型製造と異なるプロセス産業特有の問題（チョコ停・速度低下・突発故障）と、それに対応した自主保全・計画保全の適用手順を体系化。</div>
+        <ul class="paper-points">
+          <li>連続プロセス設備の16大ロスの再定義（プロセス停止ロス等）</li>
+          <li>化学工場の自主保全：汚れ・詰まり・腐食・漏れへの対処</li>
+          <li>CBM（状態監視保全）：振動診断・油分析・熱画像の活用</li>
+          <li>プロセスパラメータ管理とSPCの統合（QM（品質保全）との連携）</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">1994</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="TPM">
+      <div class="paper-card-header">
+        <div class="paper-title">Reliability-Centered Maintenance (RCM): A Key to Maintenance Excellence</div>
+        <div class="paper-title-ja">信頼性中心保全（RCM）：保全エクセレンスへの鍵</div>
+        <div class="paper-authors">Smith, A.M., Hinchcliffe, G.R.</div>
+        <div class="paper-journal">Elsevier / Butterworth-Heinemann, 2004</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-tpm">RCM</span>
+          <span class="paper-tag tag-tpm">信頼性工学</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">RCM（信頼性中心保全）の実践書。「何を・どんな方法で・どの頻度で保全するか」を故障の影響度と発生確率に基づいて論理的に決定する手順を解説。TPMの計画保全との統合アプローチとして注目される。</div>
+        <ul class="paper-points">
+          <li>RCMの7ステップ：機能→故障モード→影響→原因→保全戦略決定</li>
+          <li>故障モードと保全戦略の対応（TBM・CBM・RTF・改善保全）</li>
+          <li>故障統計（ワイブル解析）による最適保全インターバルの決定</li>
+          <li>TPM自主保全との統合：予防保全業務の作業者と保全員の役割分担</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">2004</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="TPM">
+      <div class="paper-card-header">
+        <div class="paper-title">Condition Monitoring and Fault Diagnosis of Electrical Motors</div>
+        <div class="paper-title-ja">電動機の状態監視と故障診断</div>
+        <div class="paper-authors">Thomson, W.T., Fenger, M.</div>
+        <div class="paper-journal">IEEE Transactions on Industry Applications, 37(6), 2001</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-tpm">CBM</span>
+          <span class="paper-tag tag-tpm">振動診断</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">製造設備に最も普及している電動モーターの状態監視・故障診断手法を網羅した論文。電流解析（MCSA）・振動解析・熱画像の組み合わせによる早期故障検出を実証。CBM（状態監視保全）の基礎技術として広く参照される。</div>
+        <ul class="paper-points">
+          <li>MCSA（モーター電流スペクトル解析）による軸受・巻線故障の検出</li>
+          <li>振動周波数スペクトルによる故障部位の同定（FFT解析）</li>
+          <li>実工場での早期故障検出事例：警告から故障まで平均42日の猶予</li>
+          <li>IoTセンサーと機械学習を用いた次世代CBMへの展望</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📄 学術論文 <span class="year-badge">2001</span> IEEE Transactions on Industry Applications
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="TPM">
+      <div class="paper-card-header">
+        <div class="paper-title">Weibull Analysis Handbook</div>
+        <div class="paper-title-ja">ワイブル解析ハンドブック（信頼性工学・保全計画立案の基礎）</div>
+        <div class="paper-authors">Dodson, B., Schwab, H.</div>
+        <div class="paper-journal">ASQ Quality Press, 2006</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-tpm">ワイブル分析</span>
+          <span class="paper-tag tag-tpm">信頼性設計</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">製造設備の寿命分布解析（ワイブル分布）の実務ハンドブック。故障データからワイブルパラメータ（形状・尺度）を推定し、最適保全インターバル・在庫部品数・信頼度寿命（B10寿命等）を算定する手順を解説。保全計画立案のための統計基礎。</div>
+        <ul class="paper-points">
+          <li>ワイブル確率紙によるグラフィカル解析手順とパラメータ推定</li>
+          <li>バスタブ曲線（初期故障・偶発故障・摩耗故障）の段階と対策</li>
+          <li>B10寿命・MTTF・MTBFの計算式と保全判断への応用</li>
+          <li>打ち切りデータ（稼働中の設備）の扱い方（Kaplan-Meier法）</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">2006</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="TPM">
+      <div class="paper-card-header">
+        <div class="paper-title">A review of TPM implementation in manufacturing: effects on OEE and improvement methods</div>
+        <div class="paper-title-ja">製造業のTPM導入レビュー：OEEへの効果と改善手法</div>
+        <div class="paper-authors">Eti, M.C., Ogaji, S.O.T., Probert, S.D.</div>
+        <div class="paper-journal">Applied Energy, 83(11), 2006</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-tpm">TPM効果</span>
+          <span class="paper-tag tag-tpm">OEE</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">製造業96工場のTPM導入事例を分析し、OEE改善に最も寄与する活動を特定した論文。自主保全（特に清掃・点検の徹底）がOEEに与える影響が最大であることを実証。TPM活動の段階別の投資対効果も定量化。</div>
+        <ul class="paper-points">
+          <li>自主保全強度とOEEの相関係数：r=0.81（最高の相関）</li>
+          <li>TPM導入後3年間のOEE推移：平均+3.5%/年の継続改善</li>
+          <li>清掃・点検の徹底が微欠陥の早期発見→故障ゼロにつながるメカニズム</li>
+          <li>TPM失敗パターン：トップコミットメント欠如・活動の形骸化</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📄 学術論文 <span class="year-badge">2006</span> Applied Energy
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="TPM">
+      <div class="paper-card-header">
+        <div class="paper-title">設備管理の教科書（改訂版）</div>
+        <div class="paper-title-ja">日本プラントメンテナンス協会（JIPM）編 設備保全の総合テキスト</div>
+        <div class="paper-authors">公益社団法人 日本プラントメンテナンス協会（JIPM）編</div>
+        <div class="paper-journal">日本プラントメンテナンス協会, 2016</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-tpm">設備管理</span>
+          <span class="paper-tag tag-tpm">保全技術</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">JIPM（日本プラントメンテナンス協会）が監修する日本の設備管理・保全の標準教科書。TPM8本柱の各活動内容・設備効率の計算方法・保全コスト管理・設備診断技術の実務を体系的に解説。設備管理者向け日本語の決定版テキスト。</div>
+        <ul class="paper-points">
+          <li>設備効率の定義：可動率・稼働率・OEEの違いと使い分け</li>
+          <li>保全コスト構造（予防保全費・修繕費・損失コスト）の管理手法</li>
+          <li>初期管理（MP設計）：設備の生まれながらの保全性向上</li>
+          <li>品質保全（QM）：設備条件と品質特性の相関マトリクス</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">2016</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="TPM">
+      <div class="paper-card-header">
+        <div class="paper-title">Predictive Maintenance 4.0: Beyond the Hype</div>
+        <div class="paper-title-ja">予知保全4.0：誇張を超えた現実</div>
+        <div class="paper-authors">PwC / Mainnovation</div>
+        <div class="paper-journal">PwC Research Report, 2018</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-tpm">予知保全</span>
+          <span class="paper-tag tag-tpm">AI・IoT</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">製造業268社のIoT活用予知保全の実態調査レポート。AI・機械学習を活用した予知保全の効果（保全コスト-25%・設備可用率+25%）を定量化。TPM×IoTの統合と、実装に向けたロードマップを提示。Industry 4.0時代の保全変革の全体像を示す。</div>
+        <ul class="paper-points">
+          <li>予知保全導入企業の保全コスト平均-25%・可用率+25%の効果</li>
+          <li>機械学習アルゴリズムの種類（ランダムフォレスト・LSTM等）と適用場面</li>
+          <li>IoTセンサーデータ収集からAI故障予測モデル構築までの手順</li>
+          <li>TPM自主保全とIoT監視の役割分担（人の感覚＋データの融合）</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📄 業界レポート <span class="year-badge">2018</span> PwC Research
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== PS PAPERS ===== -->
+  <div class="section-sep" data-subject="PS">
+    <span class="section-sep-icon">🎯</span> PS（課題設定・課題解決・思考フレームワーク）
+  </div>
+  <div class="paper-grid" id="ps-papers">
+
+    <div class="paper-card" data-tags="PS book">
+      <div class="paper-card-header">
+        <div class="paper-title">The Goal: A Process of Ongoing Improvement</div>
+        <div class="paper-title-ja">ザ・ゴール：継続的改善のプロセス（邦訳あり）</div>
+        <div class="paper-authors">Goldratt, E.M., Cox, J.</div>
+        <div class="paper-journal">North River Press, 1984</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ps">TOC</span>
+          <span class="paper-tag tag-ps">制約理論</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">制約理論（TOC: Theory of Constraints）の入門書。小説形式で「システムの目標は何か」「ボトルネックとは何か」「スループット会計とは何か」を解説。製造業の問題解決思考に革命を起こした。</div>
+        <ul class="paper-points">
+          <li>TOC（制約理論）の5ステップ改善プロセスの提唱</li>
+          <li>スループット・在庫・業務費用という3指標による製造業の評価</li>
+          <li>ドラム・バッファー・ロープ（DBR）スケジューリング手法</li>
+          <li>「ボトルネックを1時間失うのは全工場を1時間失うのと同じ」の洞察</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">1984</span> <span class="classic-badge">クラシック</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="PS book">
+      <div class="paper-card-header">
+        <div class="paper-title">Thinking, Fast and Slow</div>
+        <div class="paper-title-ja">ファスト＆スロー：あなたの意思はどのように決まるか（邦訳あり）</div>
+        <div class="paper-authors">Kahneman, D.</div>
+        <div class="paper-journal">Farrar, Straus and Giroux, 2011</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ps">意思決定</span>
+          <span class="paper-tag tag-ps">認知バイアス</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">ノーベル経済学賞受賞者Kahnemanによる認知心理学の集大成。「システム1（直感的・速い思考）とシステム2（論理的・遅い思考）」の二重プロセス理論。製造業の管理者・IEが陥りやすい認知バイアスを理解する上で必読。</div>
+        <ul class="paper-points">
+          <li>アンカリングバイアス：「最初の数値が判断を歪める」問題と対策</li>
+          <li>確証バイアス：「自分の仮説に合う証拠だけを集める」問題</li>
+          <li>損失回避：「改善案のリスク」を過大評価しやすい傾向</li>
+          <li>計画錯誤：「プロジェクト工期を常に過小見積もる」傾向</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">2011</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="PS book">
+      <div class="paper-card-header">
+        <div class="paper-title">The Toyota Way: 14 Management Principles from the World's Greatest Manufacturer</div>
+        <div class="paper-title-ja">トヨタ・ウェイ：世界最大の製造業から学ぶ14の経営原則（邦訳あり）</div>
+        <div class="paper-authors">Liker, J.K.</div>
+        <div class="paper-journal">McGraw-Hill, 2004</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ps">問題解決</span>
+          <span class="paper-tag tag-ie">TPS</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">トヨタ生産方式（TPS）の根底にある思考・哲学を14原則として体系化。「なぜなぜ分析」「現地現物」「カイゼン文化」「A3思考」等の問題解決手法と背景にある考え方を詳述。世界で最も読まれたものづくり経営書。</div>
+        <ul class="paper-points">
+          <li>なぜなぜ分析（5 Whys）：表面問題から根本原因への掘り下げ手順</li>
+          <li>A3思考法：1枚のA3用紙に問題解決の全プロセスを構造化</li>
+          <li>「流れ」を作る：大ロット生産から1個流しへの思想転換</li>
+          <li>カイゼン文化の醸成：改善提案制度と現場主導改善のメカニズム</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">2004</span> <span class="classic-badge">クラシック</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="PS">
+      <div class="paper-card-header">
+        <div class="paper-title">What is Strategy?</div>
+        <div class="paper-title-ja">戦略とは何か（邦訳あり）</div>
+        <div class="paper-authors">Porter, M.E.</div>
+        <div class="paper-journal">Harvard Business Review, 74(6), 61-78, 1996</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ps">戦略</span>
+          <span class="paper-tag tag-ps">競争優位</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">Porterによる「戦略と効率化は違う」という洞察を展開した論文。「オペレーショナルエクセレンス（IEによる改善）だけでは競争優位は持続しない」という主張は、IEを学ぶ者が経営視点を持つ上で重要な示唆を与える。</div>
+        <ul class="paper-points">
+          <li>オペレーショナルエクセレンスと戦略ポジショニングの区別</li>
+          <li>改善活動（IE）が競争優位につながる条件と限界</li>
+          <li>トレードオフの重要性：「すべてを改善しようとする」企業の罠</li>
+          <li>製造業がIE改善を戦略と統合するためのフレームワーク</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📄 論文 <span class="year-badge">1996</span> Harvard Business Review
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="PS">
+      <div class="paper-card-header">
+        <div class="paper-title">Managing the Unexpected: Resilient Performance in an Age of Uncertainty</div>
+        <div class="paper-title-ja">想定外をマネジメントする：不確実な時代のレジリエントなパフォーマンス</div>
+        <div class="paper-authors">Weick, K.E., Sutcliffe, K.M.</div>
+        <div class="paper-journal">Jossey-Bass, 2007（第2版）</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ps">リスク管理</span>
+          <span class="paper-tag tag-ps">HRO</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">高信頼性組織（HRO: High Reliability Organization）の特性を研究した書籍。航空管制・原子力発電所・空母オペレーションから学ぶ「予期しない問題への対処能力」の構築方法を解説。製造業の安全・品質管理に直結する組織論。</div>
+        <ul class="paper-points">
+          <li>HROの5原則：失敗への敏感性・単純化回避・オペレーション重視等</li>
+          <li>「弱いシグナル（ヒヤリハット）」を見逃さない組織文化の作り方</li>
+          <li>正常化の偏見：「いつもと同じだろう」という慣れが事故を生む</li>
+          <li>製造業のヒヤリハット活動とHRO理論の対応関係</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">2007</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="PS book">
+      <div class="paper-card-header">
+        <div class="paper-title">The Fifth Discipline: The Art and Practice of The Learning Organization</div>
+        <div class="paper-title-ja">第五の規律：学習する組織の技術と実践（邦訳あり）</div>
+        <div class="paper-authors">Senge, P.M.</div>
+        <div class="paper-journal">Doubleday, 1990</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ps">学習する組織</span>
+          <span class="paper-tag tag-ps">システム思考</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">「学習する組織」の概念を提唱した経営思想の古典。システム思考・メンタルモデル・共有ビジョン・チーム学習・自己マスタリーの5つの規律を解説。製造業の継続的改善文化（カイゼン）を組織レベルに昇華させるための理論的基盤を提供する。</div>
+        <ul class="paper-points">
+          <li>システム思考：現象の背後にある構造（フィードバックループ）を見る</li>
+          <li>「ビール・ゲーム」：需要増幅（ブルウィップ効果）のシステム的説明</li>
+          <li>メンタルモデルが改善活動の妨げになるメカニズム</li>
+          <li>製造業のカイゼン文化と学習する組織の理論的対応関係</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">1990</span> <span class="classic-badge">クラシック</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="PS book">
+      <div class="paper-card-header">
+        <div class="paper-title">The Structure of Scientific Revolutions</div>
+        <div class="paper-title-ja">科学革命の構造（邦訳あり）</div>
+        <div class="paper-authors">Kuhn, T.S.</div>
+        <div class="paper-journal">University of Chicago Press, 1962</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ps">パラダイム転換</span>
+          <span class="paper-tag tag-ps">思考フレームワーク</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">「パラダイム」概念を提唱した科学史の古典。従来の常識（パラダイム）が異常事例の蓄積によって「パラダイムシフト」を迎えるプロセスを科学史から論証。「IE的改善」が積み重なった先に「生産方式の革命（TPSの誕生等）」が起きるメカニズムの理解に示唆を与える。</div>
+        <ul class="paper-points">
+          <li>パラダイムシフトの3段階：通常科学→危機→革命</li>
+          <li>製造業でのパラダイムシフト事例：大量生産→リーン→Industry 4.0</li>
+          <li>「問題が見えない」理由：既存パラダイムが観察を制約する</li>
+          <li>IEの限界と革新：改善の限界点でパラダイム転換が必要な理由</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">1962</span> <span class="classic-badge">クラシック</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="PS book">
+      <div class="paper-card-header">
+        <div class="paper-title">Competitive Advantage: Creating and Sustaining Superior Performance</div>
+        <div class="paper-title-ja">競争優位の戦略（邦訳あり）</div>
+        <div class="paper-authors">Porter, M.E.</div>
+        <div class="paper-journal">Free Press, 1985</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ps">競争戦略</span>
+          <span class="paper-tag tag-ps">バリューチェーン</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">Porterによる競争優位の体系書。バリューチェーン（価値連鎖）の概念を提唱し、製造業の各活動（購買・製造・物流・営業・サービス）がどのように価値と利益を生み出すかを分析する枠組みを提供。IEによる原価低減と競争優位の関係を理解するための基礎理論。</div>
+        <ul class="paper-points">
+          <li>バリューチェーンの構造：主活動（製造・物流等）と支援活動</li>
+          <li>コスト優位戦略と差別化戦略のトレードオフ</li>
+          <li>製造業でのコストドライバー分析とIE改善の連携</li>
+          <li>サプライチェーン全体での価値創出とSCM戦略</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">1985</span> <span class="classic-badge">クラシック</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="PS">
+      <div class="paper-card-header">
+        <div class="paper-title">A Theory of Human Motivation</div>
+        <div class="paper-title-ja">人間の動機づけ理論（マズローの欲求階層理論）</div>
+        <div class="paper-authors">Maslow, A.H.</div>
+        <div class="paper-journal">Psychological Review, 50(4), 370-396, 1943</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ps">動機づけ</span>
+          <span class="paper-tag tag-ps">人材育成</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">マズローの欲求階層理論の原典論文。生理的欲求→安全→社会的→承認→自己実現の5段階モデルは、製造現場の改善提案制度・QCサークル・TPMチーム活動の動機設計に直接応用される。なぜ「認められることが改善文化を生む」かを理論的に説明する。</div>
+        <ul class="paper-points">
+          <li>欲求の5段階とその充足が次の欲求を引き出すメカニズム</li>
+          <li>製造現場での応用：安全（第2層）確保なしに改善（第4・5層）は成立しない</li>
+          <li>QCサークル・改善提案制度が承認欲求（第4層）を刺激する仕組み</li>
+          <li>「自己実現欲求」を引き出す職場設計とモチベーション向上</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📄 論文 <span class="year-badge">1943</span> Psychological Review <span class="classic-badge">クラシック</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="PS">
+      <div class="paper-card-header">
+        <div class="paper-title">Critical Chain Project Management</div>
+        <div class="paper-title-ja">クリティカルチェーン・プロジェクトマネジメント（邦訳あり）</div>
+        <div class="paper-authors">Goldratt, E.M.</div>
+        <div class="paper-journal">North River Press, 1997</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ps">プロジェクト管理</span>
+          <span class="paper-tag tag-ps">CCPM</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">制約理論（TOC）をプロジェクト管理に適用したCCPM（クリティカルチェーン・プロジェクトマネジメント）の原典。「バッファー管理」によるプロジェクト工期短縮を提唱。IEプロジェクト（改善活動の計画・管理）への適用で工期短縮に貢献する手法。</div>
+        <ul class="paper-points">
+          <li>クリティカルチェーンの特定：資源競合を考慮した最長制約経路</li>
+          <li>プロジェクトバッファー・フィーディングバッファーの配置と管理</li>
+          <li>「学生症候群」「パーキンソンの法則」がプロジェクトを遅らせる問題</li>
+          <li>IEプロジェクトへの適用：改善活動の工期短縮とバッファー管理</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">1997</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="PS book">
+      <div class="paper-card-header">
+        <div class="paper-title">Influence: The Psychology of Persuasion</div>
+        <div class="paper-title-ja">影響力の武器（邦訳あり）</div>
+        <div class="paper-authors">Cialdini, R.B.</div>
+        <div class="paper-journal">HarperCollins, 1984（改訂版多数）</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ps">説得・交渉</span>
+          <span class="paper-tag tag-ps">行動経済学</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">社会心理学の知見を用いた影響力・説得の原理を解説した書籍。改善活動の推進者が現場作業者・管理職・経営層を動かす際に活用できる6原則（互恵・コミットメント・社会的証明・好意・権威・希少性）を実例とともに解説。</div>
+        <ul class="paper-points">
+          <li>互恵原理：「まず与えれば返ってくる」改善活動への応用</li>
+          <li>コミットメント効果：改善チームに宣言させることで定着率が向上</li>
+          <li>社会的証明：成功事例の共有が水平展開を加速する</li>
+          <li>権威原理：IEの数値根拠が経営者への説得力を高める理由</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">1984</span> <span class="classic-badge">クラシック</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="PS">
+      <div class="paper-card-header">
+        <div class="paper-title">Organizational Learning: A Theory of Action Perspective</div>
+        <div class="paper-title-ja">組織学習：行動の視点からの理論（アージリス・ション 著）</div>
+        <div class="paper-authors">Argyris, C., Schön, D.A.</div>
+        <div class="paper-journal">Addison-Wesley, 1978</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ps">組織学習</span>
+          <span class="paper-tag tag-ps">ダブルループ</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">シングルループ学習とダブルループ学習の概念を提唱した組織論の古典。「問題を解決する（シングルループ）」だけでなく「問題の前提を見直す（ダブルループ）」ことが組織の本質的改善につながるという考え方は、IEのPDCAサイクルを超えた改善論の理論基盤。</div>
+        <ul class="paper-points">
+          <li>シングルループ学習：誤りを修正するだけの学習（PDCA）</li>
+          <li>ダブルループ学習：問題の前提（価値観・ルール）を見直す学習</li>
+          <li>製造業への適用：「なぜその指標を使うか」を問い直す改善論</li>
+          <li>防衛ルーティン：組織が変化を拒む心理機制とその克服</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">1978</span> <span class="classic-badge">クラシック</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="PS">
+      <div class="paper-card-header">
+        <div class="paper-title">The Balanced Scorecard: Translating Strategy into Action</div>
+        <div class="paper-title-ja">バランスト・スコアカード（邦訳あり）</div>
+        <div class="paper-authors">Kaplan, R.S., Norton, D.P.</div>
+        <div class="paper-journal">Harvard Business School Press, 1996</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ps">KPI管理</span>
+          <span class="paper-tag tag-ps">戦略実行</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">バランスト・スコアカード（BSC）の提唱書。財務・顧客・内部プロセス・学習と成長の4視点で戦略を測定・管理する枠組みを提示。IE改善活動のKPI（標準時間・OEE・在庫削減等）を経営戦略と連動させる際の理論的基盤。</div>
+        <ul class="paper-points">
+          <li>BSC4視点の定義と因果連鎖（学習→内部プロセス→顧客→財務）</li>
+          <li>IEのKPI（OEE・標準時間遵守率）を内部プロセス視点に組み込む方法</li>
+          <li>戦略マップ：改善活動の優先順位を経営目標から逆算する手順</li>
+          <li>製造業でのBSC適用：30社の実践事例とKPIツリーの設計</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">1996</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="PS">
+      <div class="paper-card-header">
+        <div class="paper-title">Why Organizations Fail to Learn: Lessons from the Challenger and Columbia Disasters</div>
+        <div class="paper-title-ja">なぜ組織は学べないか：チャレンジャー・コロンビア事故からの教訓</div>
+        <div class="paper-authors">Starbuck, W.H., Farjoun, M.（編）</div>
+        <div class="paper-journal">Blackwell, 2005</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ps">組織の失敗</span>
+          <span class="paper-tag tag-ps">リスク管理</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">NASAのスペースシャトル事故（チャレンジャー1986年・コロンビア2003年）を事例に、なぜ優秀な組織が繰り返し同じ失敗をするかを論じた書籍。製造業の品質事故・重大事故の再発防止に応用できる組織論的分析フレームワークを提供。</div>
+        <ul class="paper-points">
+          <li>「正常化の偏見」：逸脱が継続すると異常が正常に見え始めるメカニズム</li>
+          <li>「沈黙の螺旋」：懸念を声に出せない組織文化が事故につながる</li>
+          <li>製造業への応用：ヒヤリハット報告制度が機能しない組織の特徴</li>
+          <li>心理的安全性（Psychological Safety）の概念と改善文化への接続</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">2005</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="PS">
+      <div class="paper-card-header">
+        <div class="paper-title">Psychological Safety and Learning Behavior in Work Teams</div>
+        <div class="paper-title-ja">職場チームにおける心理的安全性と学習行動</div>
+        <div class="paper-authors">Edmondson, A.C.</div>
+        <div class="paper-journal">Administrative Science Quarterly, 44(2), 350-383, 1999</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ps">心理的安全性</span>
+          <span class="paper-tag tag-ps">チーム学習</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">Googleの「プロジェクトAristotle」のベースとなった心理的安全性（Psychological Safety）の原著論文。「失敗を責めない・意見を言いやすい環境」がチームの学習行動を高め、製造品質・改善活動の成果に直結することを実証。QCサークル・TPMチームの活性化理論。</div>
+        <ul class="paper-points">
+          <li>心理的安全性が高いチームは学習行動（提案・質問・失敗共有）が3倍多い</li>
+          <li>病院チームの実証研究：安全なチームほどエラー報告が多いが実際の事故は少ない</li>
+          <li>QCサークルと心理的安全性の連関：提案数・改善品質への影響</li>
+          <li>管理者行動が心理的安全性に与える影響（叱責vs.好奇心的質問）</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📄 論文 <span class="year-badge">1999</span> Administrative Science Quarterly
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== JAPANESE STANDARDS ===== -->
+  <div class="section-sep">
+    <span class="section-sep-icon">📋</span> 日本産業規格（JIS）・業界標準
+  </div>
+  <div class="paper-grid">
+
+    <div class="paper-card" data-tags="IE QC">
+      <div class="paper-card-header">
+        <div class="paper-title">JIS Z 8141：2001 生産管理用語</div>
+        <div class="paper-title-ja">日本産業規格 生産管理用語（IE・生産技術分野の用語標準）</div>
+        <div class="paper-authors">日本産業標準調査会（JISC）</div>
+        <div class="paper-journal">日本規格協会, 2001</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ie">IE用語</span>
+          <span class="paper-tag tag-qc">用語標準</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">日本の生産管理・IEに関する用語を標準化したJIS規格。稼働分析・工程分析・ラインバランシング・標準時間等のIE用語の公式定義を収録。本LMSで使用する用語の多くはこの規格に準拠。</div>
+        <ul class="paper-points">
+          <li>工程分析の工程記号（加工・検査・停滞・運搬）の公式定義</li>
+          <li>標準時間の構成要素（正常時間・余裕率）の定義</li>
+          <li>ラインバランシング・編成効率の公式定義</li>
+          <li>かんばん・セル生産等のトヨタ生産方式用語の定義</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📋 JIS規格 <span class="year-badge">2001</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="QC">
+      <div class="paper-card-header">
+        <div class="paper-title">JIS Z 9020：2016 管理図</div>
+        <div class="paper-title-ja">日本産業規格 管理図（SPC用管理図の作成・解釈規格）</div>
+        <div class="paper-authors">日本産業標準調査会（JISC）</div>
+        <div class="paper-journal">日本規格協会, 2016</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-qc">管理図</span>
+          <span class="paper-tag tag-qc">SPC</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">管理図の作成・解釈に関するJIS規格。X̄-R管理図・X̄-s管理図・p管理図・c管理図・u管理図の作成手順と管理外れの判定ルールを規定。ISO 7870に対応。国内品質管理活動の標準。</div>
+        <ul class="paper-points">
+          <li>各種管理図の管理線計算式（UCL・LCL・CL）の定義</li>
+          <li>管理外れ判定ルール（JIS版8ルール）の定義</li>
+          <li>データの正規性確認手順と管理図の前提条件</li>
+          <li>工程能力指数Cp・Cpkの計算式と評価基準（1.33以上が望ましい）</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📋 JIS規格 <span class="year-badge">2016</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="TPM">
+      <div class="paper-card-header">
+        <div class="paper-title">JIPM-TPM賞審査基準（設備管理優良工場審査基準）</div>
+        <div class="paper-title-ja">公益社団法人日本プラントメンテナンス協会 TPM賞公式審査基準</div>
+        <div class="paper-authors">公益社団法人日本プラントメンテナンス協会（JIPM）</div>
+        <div class="paper-journal">JIPM（日本プラントメンテナンス協会）, 随時改訂</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-tpm">TPM</span>
+          <span class="paper-tag tag-tpm">OEE</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">世界最高峰のTPM賞（JIPM-TPM Award）の審査基準書。TPM活動の成熟度を5段階で評価し、各段階の達成要件を定義。現在まで世界60か国以上・4,600社以上が受賞している世界基準の品質。</div>
+        <ul class="paper-points">
+          <li>TPM活動の8本柱と各柱の評価指標</li>
+          <li>自主保全7ステップの各ステップ達成要件</li>
+          <li>OEE・故障強度率・品質損失率等の定量評価基準</li>
+          <li>TPM優秀賞・特別賞・世界水準賞の区分と基準値</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📋 業界標準 JIPM <span class="year-badge">随時改訂</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="IE QC">
+      <div class="paper-card-header">
+        <div class="paper-title">JIS Z 8101-1：2015 統計 — 用語と記号 第1部：確率及び一般統計用語</div>
+        <div class="paper-title-ja">日本産業規格 品質管理・統計手法の用語標準</div>
+        <div class="paper-authors">日本産業標準調査会（JISC）</div>
+        <div class="paper-journal">日本規格協会, 2015</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-qc">統計用語</span>
+          <span class="paper-tag tag-ie">標準用語</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">品質管理で使用する統計用語（平均・分散・標準偏差・信頼区間・仮説検定）を標準化したJIS規格。ISO 3534-1に対応し、QC7つ道具・SPC・工程能力分析で使用する用語の公式定義を収録。国際標準との整合性が確保されている。</div>
+        <ul class="paper-points">
+          <li>母集団・標本・推定量の公式定義と推定量の性質</li>
+          <li>信頼区間・有意水準・P値の定義と解釈基準</li>
+          <li>正規分布・t分布・χ²分布・F分布の定義と使い分け</li>
+          <li>工程能力指数Cp・Cpkの計算式（JIS準拠の公式定義）</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📋 JIS規格 <span class="year-badge">2015</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="QC">
+      <div class="paper-card-header">
+        <div class="paper-title">ISO 9001：2015 品質マネジメントシステム — 要求事項</div>
+        <div class="paper-title-ja">品質マネジメントシステムの国際標準規格（第5版）</div>
+        <div class="paper-authors">国際標準化機構（ISO）</div>
+        <div class="paper-journal">ISO / JIS Q 9001:2015</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-qc">ISO 9001</span>
+          <span class="paper-tag tag-qc">QMS</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">世界170か国以上・100万社以上が取得する品質マネジメントシステムの国際標準規格。2015版ではリスクベース思考・組織の状況分析・知識管理が強化。PDCA構造の規格体系とIE手法（工程管理・標準作業）との対応を理解するために不可欠。</div>
+        <ul class="paper-points">
+          <li>品質マネジメントの7原則（顧客重視・リーダーシップ等）の定義</li>
+          <li>リスクベース思考：FMEA・FTA等のリスク手法との対応</li>
+          <li>工程アプローチ：IEの工程分析との概念的連携</li>
+          <li>IATF 16949（自動車業界）・AS9100（航空宇宙）等の派生規格</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📋 国際規格 <span class="year-badge">2015</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="TPM">
+      <div class="paper-card-header">
+        <div class="paper-title">ISO 55001：2014 資産管理 — 管理システム — 要求事項</div>
+        <div class="paper-title-ja">設備・資産管理の国際標準規格（ISO 55000シリーズ）</div>
+        <div class="paper-authors">国際標準化機構（ISO）</div>
+        <div class="paper-journal">ISO / JIS Q 55001:2014</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-tpm">資産管理</span>
+          <span class="paper-tag tag-tpm">設備戦略</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">設備・インフラ等の物理的資産管理の国際標準。TPMを超えた「戦略的資産管理（Asset Management）」の概念を規定。設備の取得→運用→保全→廃棄のライフサイクル全体のコスト・リスク・パフォーマンス最適化を体系化。大型設備・インフラ業種必須の規格。</div>
+        <ul class="paper-points">
+          <li>資産管理の目的：コスト・リスク・パフォーマンスのトレードオフ最適化</li>
+          <li>資産管理戦略（AMS）：資産のライフサイクルコスト（LCC）分析</li>
+          <li>TPMとISO 55001の関係：TPMは実践手法、ISO 55001は管理システム</li>
+          <li>資産情報管理（AIM）とIoT・デジタルツインとの統合</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📋 国際規格 <span class="year-badge">2014</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="IE QC">
+      <div class="paper-card-header">
+        <div class="paper-title">JIS Z 9090：2006 測定システム解析（MSA）</div>
+        <div class="paper-title-ja">測定システムのばらつき評価規格（ゲージR&R分析）</div>
+        <div class="paper-authors">日本産業標準調査会（JISC）</div>
+        <div class="paper-journal">日本規格協会, 2006（AIAG MSA 4th版対応）</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-qc">MSA</span>
+          <span class="paper-tag tag-ie">測定精度</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">測定システム解析（MSA）の規格。ゲージR&R（繰り返し性・再現性）分析により、測定器・測定者・測定手順に起因するばらつきを定量化する手順を規定。標準時間設定の精度保証・SPC管理図の信頼性確保に不可欠。</div>
+        <ul class="paper-points">
+          <li>ゲージR&R分析の手順：繰り返し性（機器精度）と再現性（測定者差）の分離</li>
+          <li>%GRR（全変動に占める測定誤差）の計算と判定基準（10%以下が理想）</li>
+          <li>測定の「確かさ」と工程能力指数Cpkへの影響（測定誤差がCpkを過大評価）</li>
+          <li>破壊試験・非線形応答を持つ測定システムへの特殊対応手順</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📋 JIS規格 <span class="year-badge">2006</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="IE">
+      <div class="paper-card-header">
+        <div class="paper-title">ILO 作業研究（第4版）</div>
+        <div class="paper-title-ja">国際労働機関（ILO）発行の標準作業研究テキスト</div>
+        <div class="paper-authors">ILO（International Labour Organization）</div>
+        <div class="paper-journal">ILO（国際労働機関）, 1992</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ie">作業研究</span>
+          <span class="paper-tag tag-ie">ILO標準</span>
+          <span class="paper-tag tag-book">書籍</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">ILO（国際労働機関）が発行する「作業研究（Work Study）」の国際標準教科書。方法研究（Method Study）と作業測定（Work Measurement）の体系を国際的に標準化。余裕率の設定基準・レイティング手法・標準時間の計算式についてのILO公式見解を提示する。</div>
+        <ul class="paper-points">
+          <li>余裕率の種類と標準的設定値：個人余裕5%・疲労余裕4%・職場余裕1%（ILO推奨）</li>
+          <li>方法研究の6ステップ（選択→記録→検討→開発→定義→導入）</li>
+          <li>レイティング基準（Qualified Worker / Normal Pace）の国際的定義</li>
+          <li>途上国・新興国工場でのIE導入支援事業の実績データ</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📘 書籍 <span class="year-badge">1992</span>
+      </div>
+    </div>
+
+    <div class="paper-card" data-tags="IE QC TPM">
+      <div class="paper-card-header">
+        <div class="paper-title">Monozukuri Handbook（ものづくり白書）</div>
+        <div class="paper-title-ja">製造白書（経済産業省・厚生労働省・文部科学省 共同発行）</div>
+        <div class="paper-authors">経済産業省・厚生労働省・文部科学省</div>
+        <div class="paper-journal">経済産業省, 毎年発行</div>
+        <div class="paper-tags">
+          <span class="paper-tag tag-ie">製造業白書</span>
+          <span class="paper-tag tag-qc">産業政策</span>
+          <span class="paper-tag tag-tpm">ものづくり</span>
+        </div>
+      </div>
+      <div class="paper-card-body">
+        <div class="paper-summary">日本の製造業の現状・課題・政策を毎年体系的に分析する政府白書。IE・QC・TPMの普及状況・DX化の進捗・人材不足の実態を産業横断的に調査。日本の製造業のベンチマーク指標（生産性・品質水準・設備稼働率）を確認する公的資料として不可欠。</div>
+        <ul class="paper-points">
+          <li>製造業の労働生産性・付加価値生産性の経年推移（産業別）</li>
+          <li>スマート製造（IoT・AI活用）の導入状況と効果の調査データ</li>
+          <li>技能伝承・人材育成の課題と対策（IE人材不足の実態）</li>
+          <li>製造業のGDP・雇用への貢献と国際競争力の現状分析</li>
+        </ul>
+      </div>
+      <div class="paper-card-footer">
+        📋 政府白書 <span class="year-badge">毎年発行</span>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>IE/QC/TPM-LMS &copy; 2026 — 製造業専門技術者育成プラットフォーム</p>
+</footer>
+
+<script>
+function filterPapers(tag, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  document.querySelectorAll('.paper-card').forEach(card => {
+    const tags = (card.dataset.tags || '').split(' ');
+    if (tag === 'all' || tags.includes(tag)) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  document.querySelectorAll('.section-sep[data-subject]').forEach(sep => {
+    const subject = sep.dataset.subject;
+    const gridId = subject.toLowerCase() + '-papers';
+    const grid = document.getElementById(gridId);
+    if (!grid) return;
+    const visibleCards = grid.querySelectorAll('.paper-card:not([style*="display: none"])');
+    if (visibleCards.length === 0) {
+      sep.style.display = 'none';
+      grid.style.display = 'none';
+    } else {
+      sep.style.display = '';
+      grid.style.display = '';
+    }
+  });
+}
+
+// ---- Make cards clickable → paper.html ----
+(function initCardLinks() {
+  const allData = [];
+
+  document.querySelectorAll('.paper-card').forEach((card, index) => {
+    // Extract card data
+    const title    = card.querySelector('.paper-title')?.textContent?.trim() || '';
+    const titleJa  = card.querySelector('.paper-title-ja')?.textContent?.trim() || '';
+    const authors  = card.querySelector('.paper-authors')?.textContent?.trim() || '';
+    const journal  = card.querySelector('.paper-journal')?.textContent?.trim() || '';
+    const summary  = card.querySelector('.paper-summary')?.textContent?.trim() || '';
+    const points   = Array.from(card.querySelectorAll('.paper-points li')).map(li => li.textContent.trim());
+    const tags     = (card.dataset.tags || '').split(' ').filter(Boolean);
+    const footer   = card.querySelector('.paper-card-footer')?.textContent?.replace(/\s+/g,' ').trim() || '';
+    const isClassic = !!card.querySelector('.classic-badge');
+
+    // Extract year from footer badge
+    const yearMatch = footer.match(/\d{4}/);
+    const year = yearMatch ? yearMatch[0] : '';
+
+    const data = { index, title, titleJa, authors, journal, summary, points, tags, footer, isClassic, year };
+    allData.push(data);
+
+    // Add "詳細を見る" button to footer
+    const footerEl = card.querySelector('.paper-card-footer');
+    if (footerEl) {
+      const btn = document.createElement('a');
+      btn.href = `paper.html?i=${index}`;
+      btn.className = 'detail-btn';
+      btn.textContent = '詳細を見る →';
+      btn.style.cssText = 'margin-left:auto;font-size:12px;font-weight:700;color:#7c3aed;text-decoration:none;';
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        try { sessionStorage.setItem(`paper_${index}`, JSON.stringify(data)); } catch(err) {}
+      });
+      footerEl.style.display = 'flex';
+      footerEl.style.alignItems = 'center';
+      footerEl.appendChild(btn);
+    }
+
+    // Make whole card clickable
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', e => {
+      if (e.target.tagName === 'A') return;
+      try { sessionStorage.setItem(`paper_${index}`, JSON.stringify(data)); } catch(err) {}
+      window.location.href = `paper.html?i=${index}`;
+    });
+  });
+
+  // Cache all card data for related-papers feature in paper.html
+  try { sessionStorage.setItem('all_paper_cards', JSON.stringify(allData)); } catch(err) {}
+})();
+</script>
+
+<link rel="stylesheet" href="chat-widget.css">
+<script src="chat-widget.js"></script>
+</body>
+</html>
