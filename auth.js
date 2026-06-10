@@ -4,79 +4,61 @@
 
   if (sessionStorage.getItem(AUTH_KEY) === '1') return;
 
-  document.documentElement.style.visibility = 'hidden';
-  // オーバーレイ自身は visible に戻す（visibility は継承されるため）
+  /* オーバーレイを即座に body に書き込む */
+  function inject() {
+    var overlay = document.createElement('div');
+    overlay.setAttribute('id', 'auth-overlay');
+    overlay.setAttribute('style',
+      'position:fixed;top:0;left:0;width:100%;height:100%;' +
+      'background:#1e1b4b;display:flex;align-items:center;' +
+      'justify-content:center;z-index:2147483647;'
+    );
+    overlay.innerHTML =
+      '<div style="background:#fff;border-radius:12px;padding:40px 32px;' +
+        'width:300px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.4);">' +
+        '<div style="font-size:32px;margin-bottom:8px;">🏭</div>' +
+        '<h2 style="margin:0 0 6px;font-size:18px;color:#1e1b4b;font-family:sans-serif;">IE-LMS</h2>' +
+        '<p style="margin:0 0 20px;font-size:13px;color:#6b7280;font-family:sans-serif;">パスワードを入力してください</p>' +
+        '<input id="auth-pw" type="password" maxlength="20" ' +
+          'style="width:100%;padding:10px;font-size:20px;letter-spacing:8px;' +
+          'border:2px solid #e5e7eb;border-radius:8px;text-align:center;' +
+          'box-sizing:border-box;outline:none;" placeholder="••••">' +
+        '<button id="auth-go" ' +
+          'style="margin-top:10px;width:100%;padding:11px;background:#7c3aed;' +
+          'color:#fff;border:none;border-radius:8px;font-size:15px;' +
+          'font-weight:600;cursor:pointer;font-family:sans-serif;">ログイン</button>' +
+        '<div id="auth-msg" style="margin-top:8px;font-size:13px;color:#ef4444;' +
+          'font-family:sans-serif;min-height:18px;"></div>' +
+      '</div>';
 
-  async function verify(input) {
-    const buf  = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(input));
-    const hex  = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
-    return hex === PASS_HASH;
-  }
-
-  function showOverlay() {
-    const el = document.createElement('div');
-    el.id = 'auth-overlay';
-    el.innerHTML = `
-      <style>
-        #auth-overlay {
-          position:fixed; inset:0; background:#1e1b4b;
-          display:flex; align-items:center; justify-content:center;
-          z-index:99999; font-family:sans-serif;
-          visibility:visible;
-        }
-        #auth-box {
-          background:#fff; border-radius:12px; padding:40px 32px;
-          width:320px; text-align:center; box-shadow:0 8px 32px rgba(0,0,0,.3);
-        }
-        #auth-box h2 { margin:0 0 8px; font-size:20px; color:#1e1b4b; }
-        #auth-box p  { margin:0 0 24px; font-size:13px; color:#6b7280; }
-        #auth-input {
-          width:100%; padding:12px; font-size:18px; letter-spacing:6px;
-          border:2px solid #e5e7eb; border-radius:8px; text-align:center;
-          outline:none; box-sizing:border-box;
-        }
-        #auth-input:focus { border-color:#7c3aed; }
-        #auth-btn {
-          margin-top:12px; width:100%; padding:12px;
-          background:#7c3aed; color:#fff; border:none; border-radius:8px;
-          font-size:15px; font-weight:600; cursor:pointer;
-        }
-        #auth-btn:hover { background:#6d28d9; }
-        #auth-err { margin-top:10px; font-size:13px; color:#ef4444; min-height:18px; }
-      </style>
-      <div id="auth-box">
-        <h2>🏭 IE-LMS</h2>
-        <p>パスワードを入力してください</p>
-        <input id="auth-input" type="password" maxlength="20" placeholder="••••" autofocus>
-        <button id="auth-btn">ログイン</button>
-        <div id="auth-err"></div>
-      </div>
-    `;
-    document.body.appendChild(el);
+    document.body.appendChild(overlay);
 
     async function tryLogin() {
-      const val = document.getElementById('auth-input').value;
+      var val = document.getElementById('auth-pw').value;
       if (!val) return;
-      if (await verify(val)) {
+      var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(val));
+      var hex = Array.from(new Uint8Array(buf))
+        .map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+      if (hex === PASS_HASH) {
         sessionStorage.setItem(AUTH_KEY, '1');
-        document.documentElement.style.visibility = '';
-        el.remove();
+        overlay.parentNode.removeChild(overlay);
       } else {
-        document.getElementById('auth-err').textContent = 'パスワードが違います';
-        document.getElementById('auth-input').value = '';
-        document.getElementById('auth-input').focus();
+        document.getElementById('auth-msg').textContent = 'パスワードが違います';
+        document.getElementById('auth-pw').value = '';
+        document.getElementById('auth-pw').focus();
       }
     }
 
-    document.getElementById('auth-btn').addEventListener('click', tryLogin);
-    document.getElementById('auth-input').addEventListener('keydown', e => {
+    document.getElementById('auth-go').addEventListener('click', tryLogin);
+    document.getElementById('auth-pw').addEventListener('keydown', function(e) {
       if (e.key === 'Enter') tryLogin();
     });
+    document.getElementById('auth-pw').focus();
   }
 
   if (document.body) {
-    showOverlay();
+    inject();
   } else {
-    document.addEventListener('DOMContentLoaded', showOverlay);
+    document.addEventListener('DOMContentLoaded', inject);
   }
 })();
