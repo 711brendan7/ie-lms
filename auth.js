@@ -5,6 +5,7 @@
   if (sessionStorage.getItem(AUTH_KEY) === '1') return;
 
   document.documentElement.style.visibility = 'hidden';
+  // オーバーレイ自身は visible に戻す（visibility は継承されるため）
 
   async function verify(input) {
     const buf  = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(input));
@@ -21,6 +22,7 @@
           position:fixed; inset:0; background:#1e1b4b;
           display:flex; align-items:center; justify-content:center;
           z-index:99999; font-family:sans-serif;
+          visibility:visible;
         }
         #auth-box {
           background:#fff; border-radius:12px; padding:40px 32px;
@@ -57,8 +59,8 @@
       if (!val) return;
       if (await verify(val)) {
         sessionStorage.setItem(AUTH_KEY, '1');
-        el.remove();
         document.documentElement.style.visibility = '';
+        el.remove();
       } else {
         document.getElementById('auth-err').textContent = 'パスワードが違います';
         document.getElementById('auth-input').value = '';
