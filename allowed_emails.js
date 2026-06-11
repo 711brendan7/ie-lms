@@ -4,4 +4,5 @@
 // ===================================================
 const ALLOWED_EMAILS = [
   'brendan711@yahoo.co.jp',
+  'masato.takahashi3@agc.com',
 ];
