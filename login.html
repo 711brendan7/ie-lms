@@ -17,15 +17,17 @@
     }
     .icon { font-size: 40px; margin-bottom: 12px; }
     h1 { font-size: 22px; color: #1e1b4b; margin-bottom: 6px; }
-    p  { font-size: 13px; color: #6b7280; margin-bottom: 28px; }
+    p  { font-size: 13px; color: #6b7280; margin-bottom: 24px; }
+    .field { margin-bottom: 12px; text-align: left; }
+    .field label { font-size: 12px; color: #6b7280; display: block; margin-bottom: 4px; }
     input {
       width: 100%; padding: 12px 14px; font-size: 14px;
-      border: 2px solid #e5e7eb; border-radius: 10px;
-      text-align: left; outline: none;
+      border: 2px solid #e5e7eb; border-radius: 10px; outline: none;
     }
+    input#pw { font-size: 20px; letter-spacing: 8px; text-align: center; }
     input:focus { border-color: #7c3aed; }
     button {
-      margin-top: 14px; width: 100%; padding: 13px;
+      margin-top: 6px; width: 100%; padding: 13px;
       background: #7c3aed; color: #fff; border: none;
       border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer;
     }
@@ -37,39 +39,65 @@
   <div class="card">
     <div class="icon">🏭</div>
     <h1>IE-LMS</h1>
-    <p>登録済みのメールアドレスを入力してください</p>
-    <input type="email" id="email" placeholder="example@email.com" autofocus>
-    <button id="btn">アクセス</button>
+    <p>メールアドレスとパスワードを入力してください</p>
+    <div class="field">
+      <label>メールアドレス</label>
+      <input type="email" id="email" placeholder="example@email.com" autofocus>
+    </div>
+    <div class="field">
+      <label>パスワード（4桁）</label>
+      <input type="password" id="pw" maxlength="4" placeholder="••••">
+    </div>
+    <button id="btn">ログイン</button>
     <div class="err" id="err"></div>
   </div>
 
   <script src="allowed_emails.js"></script>
   <script>
+    const PASS_HASH = '2926a2731f4b312c08982cacf8061eb14bf65c1a87cc5d70e864e079c6220731'; // 8888
     const from = new URLSearchParams(location.search).get('from') || 'index.html';
 
+    async function sha256(str) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+    }
+
     async function tryLogin() {
-      const val = document.getElementById('email').value.trim().toLowerCase();
-      if (!val) return;
-      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(val));
-      const hex = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-      // ALLOWED_EMAILS の各アドレスをハッシュ化して照合
-      const hashes = await Promise.all(ALLOWED_EMAILS.map(async e => {
-        const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(e.trim().toLowerCase()));
-        return Array.from(new Uint8Array(b)).map(x => x.toString(16).padStart(2,'0')).join('');
-      }));
-      if (hashes.includes(hex)) {
+      const email = document.getElementById('email').value.trim().toLowerCase();
+      const pw    = document.getElementById('pw').value;
+      if (!email || !pw) {
+        document.getElementById('err').textContent = 'メールアドレスとパスワードを入力してください';
+        return;
+      }
+
+      const [emailHash, pwHash, ...allowedHashes] = await Promise.all([
+        sha256(email),
+        sha256(pw),
+        ...ALLOWED_EMAILS.map(e => sha256(e.trim().toLowerCase())),
+      ]);
+
+      const emailOk = allowedHashes.includes(emailHash);
+      const pwOk    = pwHash === PASS_HASH;
+
+      if (emailOk && pwOk) {
         sessionStorage.setItem('ie_lms_auth', '1');
         location.href = from;
-      } else {
+      } else if (!emailOk) {
         document.getElementById('err').textContent = 'このメールアドレスは登録されていません';
-        document.getElementById('email').value = '';
-        document.getElementById('email').focus();
+        document.getElementById('email').select();
+      } else {
+        document.getElementById('err').textContent = 'パスワードが違います';
+        document.getElementById('pw').value = '';
+        document.getElementById('pw').focus();
       }
     }
 
     document.getElementById('btn').addEventListener('click', tryLogin);
-    document.getElementById('email').addEventListener('keydown', e => {
+    document.getElementById('pw').addEventListener('keydown', e => {
       if (e.key === 'Enter') tryLogin();
+    });
+    document.getElementById('email').addEventListener('keydown', e => {
+      if (e.key === 'Enter') document.getElementById('pw').focus();
     });
   </script>
 </body>
