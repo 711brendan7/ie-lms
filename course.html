@@ -94,6 +94,7 @@
 <script src="data/tpm_courses.js"></script>
 <script src="data/ps_courses.js"></script>
 <script src="data/courses.js"></script>
+<script src="course-video.js"></script>
 <script>
   const LEVEL_LABELS = ['', '入門', '基礎', '応用', '発展'];
 
@@ -327,6 +328,8 @@
           </div>
         </div>
 
+        <section class="lesson-video" id="intro-video" hidden></section>
+
         <div class="objectives-box">
           <h3>🎯 この講座で身につくこと</h3>
           <ul class="objectives-list">
@@ -358,6 +361,8 @@
         ` : ''}
       </aside>
     `;
+
+    mountCourseVideo(document.getElementById('intro-video'), course);
 
     // Level dots need to be rendered inside flex
     document.querySelectorAll('.course-hero-meta span:last-child').forEach(el => {

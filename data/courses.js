@@ -6,6 +6,11 @@ const IE_COURSES = [
     level: 1,
     title: "IEとは何か",
     subtitle: "Industrial Engineering 概論",
+    video: {
+      title: "箱を閉じるのに、なぜ歩く？",
+      duration: "2分03秒",
+      portal: "https://ie-qc-tpm-learning.brendan711.chatgpt.site"
+    },
     duration: "45分",
     icon: "🏭",
     description: "IE（インダストリアルエンジニアリング）の定義・歴史・7つのムダ・主要手法体系を学ぶ入門講座。",

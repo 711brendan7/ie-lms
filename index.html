@@ -48,6 +48,8 @@
 
 <main class="main-content">
 
+  <section class="lesson-video lesson-video-featured" id="intro-video" hidden></section>
+
   <div class="filter-row">
     <span class="filter-label">科目：</span>
     <button class="filter-btn active" data-filter="all">すべて</button>
@@ -70,6 +72,7 @@
 <script src="data/tpm_courses.js"></script>
 <script src="data/ps_courses.js"></script>
 <script src="data/courses.js"></script>
+<script src="course-video.js"></script>
 <script>
   const LEVEL_LABELS = ['', '入門', '基礎', '応用', '発展'];
   const SUBJECT_CONFIG = {
@@ -155,6 +158,7 @@
   }
 
   // Init stats
+  mountCourseVideo(document.getElementById('intro-video'), COURSES.find(c => c.id === 'ie-overview'), true);
   document.getElementById('total-courses').textContent = COURSES.length;
   document.getElementById('total-minutes').textContent = calcTotalMinutes();
 

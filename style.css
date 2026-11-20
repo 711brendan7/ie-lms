@@ -158,6 +158,14 @@ body {
   padding: 40px 24px 80px;
 }
 
+.lesson-video { scroll-margin-top: 72px; margin: 0 0 1.5rem; padding: clamp(1.1rem, 3vw, 1.8rem); border: 1px solid #cddcf1; border-left: 4px solid var(--primary); border-radius: 10px; background: #fff; }
+.lesson-video[hidden] { display: none; }
+.lesson-video h2 { font-size: clamp(1.25rem, 3vw, 1.65rem); margin: 2px 0 4px; }
+.lesson-video-meta { color: var(--primary-dark); font-size: .875rem; font-weight: 700; }
+.lesson-video-open { display: inline-block; padding: .6rem 1rem; margin-top: .75rem; background: var(--primary-dark); color: white; font-weight: 650; border-radius: 6px; text-decoration: none; }
+.lesson-video-open:focus-visible { outline: 3px solid #e78a29; outline-offset: 3px; }
+.lesson-video-availability { color: #536071; font-size: .875rem; margin-top: .45rem; }
+
 /* ===== FILTER TABS ===== */
 .filter-row {
   display: flex;
